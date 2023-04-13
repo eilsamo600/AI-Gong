@@ -22,6 +22,18 @@ spring:
           uri: lb://CLASSROOM-SERVICE
           filters:
           - RewritePath=/v3/api-docs/classroom, /v3/api-docs
+        - id: reservation-service 
+          predicates: 
+            - Path=/reservation/**  
+          uri: lb://RESERVATION-SERVICE 
+          filters:
+          - RewritePath=/reservation/(?<segment>.*), /$\{segment}
+        - id: reservation-swagger
+          predicates:
+            - Path=/v3/api-docs/reservation
+          uri: lb://RESERVATION-SERVICE
+          filters:
+          - RewritePath=/v3/api-docs/reservation, /v3/api-docs
 eureka:
   client:
     service-url:

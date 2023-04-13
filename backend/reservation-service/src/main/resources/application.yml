@@ -1,6 +1,6 @@
 
 server:
-  port: 0
+  port: 8002
 spring:
   application:
     name: reservation-service
