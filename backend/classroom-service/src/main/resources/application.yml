@@ -1,9 +1,9 @@
 
 server:
-  port: 8081
+  port: 0
 spring:
   application:
-    name: classroomservice
+    name: classroom-service
 
 eureka:
   instance:

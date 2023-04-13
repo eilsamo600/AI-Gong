@@ -1,0 +1,24 @@
+server:
+  port: 8000
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes: # 라우팅 설정
+        - id: classroom-service # 구분하기 위한 id값으로 임의로 작성해도 무관
+          predicates: # 조건
+            - Path=/classroom/** # first-service/ 으로 요청이 들어오면 
+          uri: lb://CLASSROOM-SERVICE # 유레카 서버에서 MY-FIRST-SERVICE를 찾아서 그곳으로 요청을 보낸다.
+          filters:
+            # url 재정의
+            # ?<변수명>은 뒤에 나오는 정규식을 변수처럼 사용할 수 있도록 한다. ()는 하나의 묶음 처리 -> segment는 (.*)를 의미
+            # 콤마(,)를 기준으로 왼쪽 url을 오른쪽 url로 재정의한다.
+            # 콤마 기준 오른쪽 부분은 ${변수명}으로 url 가져오고 앞에 / 붙여준거라고 보면 된다.
+            - RewritePath=/classroom/(?<segment>.*), /$\{segment}
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+
