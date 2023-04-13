@@ -2,6 +2,8 @@ package gcu.backend.classroomservice.swagger;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -13,5 +15,15 @@ public class OpenApiConfig {
     public OpenAPI openAPI() {
         Info info = new Info().title("강의실 API Document").version("v1").description("강의실 API 명세서입니다.");
         return new OpenAPI().components(new Components()).info(info);
+    }
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**").allowedOrigins("*").allowedMethods("*").allowedHeaders("*");
+            }
+        };
     }
 }

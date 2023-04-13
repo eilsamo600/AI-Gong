@@ -1,0 +1,34 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-EurekaServerApplication<eureka_server>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "gcu.backend.eureka_server.EurekaServerApplication",
+            "projectName": "eureka_server",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-ClassroomServiceApplication<classroom-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "gcu.backend.classroomservice.ClassroomServiceApplication",
+            "projectName": "classroom-service",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-ApiGatewayApplication<api-gateway>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "gcu.backend.apigateway.ApiGatewayApplication",
+            "projectName": "api-gateway",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
