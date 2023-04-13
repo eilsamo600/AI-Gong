@@ -1,6 +1,6 @@
 
 server:
-  port: 0
+  port: 9000
 spring:
   application:
     name: classroom-service
@@ -15,4 +15,16 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
 
-
+# springdoc:
+#   default-consumes-media-type: application/json;charset=UTF-8
+#   default-produces-media-type: application/json;charset=UTF-8
+#   swagger-ui:
+#     path: /api-docs            # Swagger UI 경로 => localhost:8000/demo-ui.html
+#     tags-sorter: alpha            # alpha: 알파벳 순 태그 정렬, method: HTTP Method 순 정렬
+#     operations-sorter: alpha      # alpha: 알파벳 순 태그 정렬, method: HTTP Method 순 정렬
+#   api-docs:
+#     path: /api-docs/json
+#     groups:
+#       enabled: true
+#   cache:
+#     disabled: true
