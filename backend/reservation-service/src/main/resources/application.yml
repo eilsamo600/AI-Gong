@@ -3,7 +3,7 @@ server:
   port: 0
 spring:
   application:
-    name: classroom-service
+    name: reservation-service
 
 eureka:
   instance:
