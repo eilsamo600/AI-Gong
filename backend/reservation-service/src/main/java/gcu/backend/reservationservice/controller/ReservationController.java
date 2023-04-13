@@ -10,7 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @Tag(name = "Reservation", description = "예약 API")
-public class ClassroomControler {
+public class ReservationController {
     @GetMapping("/test2")
     @Operation(summary = "테스트2", description = "테스트2")
     public ResponseEntity<String> show() {
