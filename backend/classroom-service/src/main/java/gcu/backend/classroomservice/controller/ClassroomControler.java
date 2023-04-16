@@ -16,4 +16,10 @@ public class ClassroomControler {
     public ResponseEntity<String> show() {
         return ResponseEntity.ok("hello Gachon University!");
     }
+
+    @GetMapping("/test2")
+    @Operation(summary = "뚝딱 만듬 ~", description = "멋진 api")
+    public ResponseEntity<String> show2() {
+        return ResponseEntity.ok("안녕하세요 ㅋㅋ");
+    }
 }
