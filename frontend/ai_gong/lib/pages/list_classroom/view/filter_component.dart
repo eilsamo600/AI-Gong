@@ -13,10 +13,7 @@ class FilterComponent extends StatelessWidget {
       final onTap = controller.onTapList[index];
       return GestureDetector(
         onTap: () {
-          print(index);
-          print(ListClassRoomViewController.instance.onTapList.value);
           ListClassRoomViewController.instance.selectFilter(index);
-          print(ListClassRoomViewController.instance.onTapList.value);
         },
         child: Container(
           alignment: Alignment.center,
