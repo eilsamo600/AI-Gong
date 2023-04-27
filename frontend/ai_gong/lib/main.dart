@@ -1,8 +1,11 @@
+import 'package:ai_gong/common/common.dart';
+import 'package:ai_gong/restAPI/api_service.dart';
 import 'package:ai_gong/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 void main() async {
+  await initServices();
   runApp(GetMaterialApp(
     debugShowCheckedModeBanner: false,
     theme: ThemeData(
@@ -16,4 +19,9 @@ void main() async {
     getPages: CustomRouter.routes,
     themeMode: ThemeMode.light,
   ));
+}
+
+Future<void> initServices() async {
+  await Get.putAsync(() => Common().init());
+  await Get.putAsync(() => ApiService().init());
 }
