@@ -34,6 +34,17 @@ spring:
           uri: lb://RESERVATION-SERVICE
           filters:
           - RewritePath=/v3/api-docs/reservation, /v3/api-docs
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allow-credentials: true
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+
 eureka:
   client:
     service-url:
