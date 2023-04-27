@@ -9,6 +9,8 @@ import 'package:get/get.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class ApiService extends GetxService {
+  static ApiService get instance => Get.find<ApiService>();
+
   Dio dio = Dio(BaseOptions(baseUrl: Common.baseUrl));
   Options dioOptions = Options();
   Future<ApiService> init() async {
@@ -19,9 +21,9 @@ class ApiService extends GetxService {
     return this;
   }
 
-  Future<ApiResponse<ClassRoomListResponse>> getClassroomList() async {
+  Future<ApiResponse<ClassRoomListResponse>> getClassRoomList() async {
     try {
-      var response = await dio.post(
+      var response = await dio.get(
         '/classroom/classrooms',
         data: jsonEncode({}),
       );
