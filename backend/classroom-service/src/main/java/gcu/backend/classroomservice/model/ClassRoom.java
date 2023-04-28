@@ -32,6 +32,16 @@ public class ClassRoom {
     @Transient
     private boolean usable;
 
+    public ClassRoom(ObjectId _id, String 호, String 전공, int 층, int 수용인원, String 규모, List<Map<String, Object>> 강의목록) {
+        this._id = _id;
+        this.호 = 호;
+        this.전공 = 전공;
+        this.층 = 층;
+        this.수용인원 = 수용인원;
+        this.규모 = 규모;
+        this.강의목록 = 강의목록;
+    }
+
     public boolean getUsable() {
         return true;
     }
