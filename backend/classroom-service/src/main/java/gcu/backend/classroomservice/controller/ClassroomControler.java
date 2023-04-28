@@ -33,13 +33,6 @@ public class ClassroomControler {
         return ResponseEntity.ok("안녕하세요 ㅋㅋ");
     }
 
-    @GetMapping("/test3")
-    @Operation(summary = "강의실 목록 조회", description = "강의실 목록을 조회합니다.")
-    public ResponseEntity<List<ClassRoom>> test() {
-        List<ClassRoom> classRoomList = new ArrayList<ClassRoom>();
-        return new ResponseEntity<List<ClassRoom>>(classRoomList, HttpStatus.OK);
-    }
-
     @GetMapping("/classrooms")
     @Operation(summary = "모든 강의실 목록 조회", description = "모든 강의실 목록을 조회합니다.")
     public ResponseEntity<List<ClassRoom>> getClassRoomList() {
