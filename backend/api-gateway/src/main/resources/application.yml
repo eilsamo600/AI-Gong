@@ -34,6 +34,8 @@ spring:
           uri: lb://RESERVATION-SERVICE
           filters:
           - RewritePath=/v3/api-docs/reservation, /v3/api-docs
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE
       globalcors:
         corsConfigurations:
           '[/**]':

@@ -11,7 +11,7 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 class ApiService extends GetxService {
   static ApiService get instance => Get.find<ApiService>();
 
-  Dio dio = Dio(BaseOptions(baseUrl: Common.baseUrl));
+  Dio dio = Dio(BaseOptions(baseUrl: Common.baseUrl, headers: {"Flutter-Rest-Api": "true"}));
   Options dioOptions = Options();
   Future<ApiService> init() async {
     Common.logger.d('$runtimeType init!');
