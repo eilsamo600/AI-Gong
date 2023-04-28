@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -17,7 +18,7 @@ import lombok.AllArgsConstructor;
 public class ClassRoom {
 
     @Id
-    private Long id;
+    private ObjectId _id;
 
     private String 호;
     private String 전공;
