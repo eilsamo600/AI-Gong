@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Map;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
@@ -25,7 +26,7 @@ public class ClassRoom {
     private int 층;
     private int 수용인원;
     private String 규모;
-    private List 강의목록;
+    private List<Map<String, Object>> 강의목록;
     private boolean usable;
 
 }
