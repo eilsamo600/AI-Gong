@@ -28,7 +28,7 @@ class ClassRoomComponent extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                '${model.roomid ?? '???'}호',
+                model.roomid ?? '???호',
                 style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
               ),
               const SizedBox(
