@@ -41,7 +41,7 @@ public class ClassroomControler {
     }
 
     @GetMapping("/classrooms")
-    @Operation(summary = "강의실 목록 조회", description = "강의실 목록을 조회합니다.")
+    @Operation(summary = "모든 강의실 목록 조회", description = "모든 강의실 목록을 조회합니다.")
     public ResponseEntity<List<ClassRoom>> getClassRoomList() {
         List<ClassRoom> classRoomList = classRoomRepository.findAll();
         return new ResponseEntity<List<ClassRoom>>(classRoomList, HttpStatus.OK);
