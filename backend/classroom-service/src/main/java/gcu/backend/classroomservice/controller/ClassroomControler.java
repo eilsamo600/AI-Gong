@@ -14,7 +14,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@CrossOrigin(origins = "*")
 @Tag(name = "Classroom", description = "강의실 API")
 public class ClassroomControler {
     @GetMapping("/test")
