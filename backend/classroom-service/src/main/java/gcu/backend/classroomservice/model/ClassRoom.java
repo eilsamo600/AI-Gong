@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.AccessLevel;
@@ -27,6 +28,12 @@ public class ClassRoom {
     private int 수용인원;
     private String 규모;
     private List<Map<String, Object>> 강의목록;
+
+    @Transient
     private boolean usable;
+
+    public boolean getUsable() {
+        return true;
+    }
 
 }
