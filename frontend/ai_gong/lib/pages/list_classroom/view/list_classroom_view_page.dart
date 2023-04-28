@@ -73,25 +73,25 @@ class ListClassRoomViewPage extends StatelessWidget {
             const SizedBox(
               height: 30,
             ),
-            Expanded(
-              child: ListView.builder(
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return Column(
-                      children: const [
-                        ClassRoomComponent(),
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 20, top: 25),
-                          child: Divider(
-                            height: 1,
-                            thickness: 1,
-                          ),
-                        )
-                      ],
-                    );
-                  }),
-            )
+            Obx(() => Expanded(
+                  child: ListView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      itemCount: controller.classRoomList.length,
+                      itemBuilder: (context, index) {
+                        return Column(
+                          children: [
+                            ClassRoomComponent(model: controller.classRoomList.value[index]),
+                            const Padding(
+                              padding: EdgeInsets.only(bottom: 20, top: 25),
+                              child: Divider(
+                                height: 1,
+                                thickness: 1,
+                              ),
+                            )
+                          ],
+                        );
+                      }),
+                ))
           ],
         ));
   }

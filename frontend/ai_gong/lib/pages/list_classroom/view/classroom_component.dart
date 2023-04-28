@@ -1,7 +1,9 @@
+import 'package:ai_gong/restAPI/models/Classroom.dart';
 import 'package:flutter/material.dart';
 
 class ClassRoomComponent extends StatelessWidget {
-  const ClassRoomComponent({super.key});
+  final ClassRoom model;
+  const ClassRoomComponent({super.key, required this.model});
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +27,9 @@ class ClassRoomComponent extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                '304호',
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+              Text(
+                '${model.roomid ?? '???'}호',
+                style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
               ),
               const SizedBox(
                 height: 5,
@@ -37,27 +39,27 @@ class ClassRoomComponent extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      '소프트웨어 전공',
-                      style: TextStyle(fontSize: 12, color: Colors.black87),
+                    Text(
+                      model.department ?? '???전공',
+                      style: const TextStyle(fontSize: 12, color: Colors.black87),
                     ),
                     const SizedBox(
                       height: 7,
                     ),
-                    const Text(
-                      '3층, 수용 인원 50명',
-                      style: TextStyle(fontSize: 12, color: Colors.black54),
+                    Text(
+                      '${model.floor ?? '???'}층, 수용 인원 ${model.capacity ?? '???'}명',
+                      style: const TextStyle(fontSize: 12, color: Colors.black54),
                     ),
                     const SizedBox(
                       height: 7,
                     ),
                     Row(
-                      children: const [
+                      children: [
                         Text(
-                          '대형 강의실 | ',
-                          style: TextStyle(fontSize: 12, color: Colors.black54),
+                          '${model.scale ?? '???'} 강의실 | ',
+                          style: const TextStyle(fontSize: 12, color: Colors.black54),
                         ),
-                        Text('사용 가능', style: TextStyle(fontSize: 12, color: Colors.black)),
+                        Text((model.usable ?? true) ? '사용 가능' : '사용 불가', style: const TextStyle(fontSize: 12, color: Colors.black)),
                       ],
                     ),
                   ],

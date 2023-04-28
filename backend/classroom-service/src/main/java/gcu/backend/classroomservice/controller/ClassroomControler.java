@@ -32,12 +32,12 @@ public class ClassroomControler {
     @Operation(summary = "강의실 목록 조회", description = "강의실 목록을 조회합니다.")
     public ResponseEntity<List<ClassRoom>> getClassRoomList() {
         List<ClassRoom> classRoomList = new ArrayList<ClassRoom>();
-        classRoomList.add(new ClassRoom("1", "소프트웨어전공", 1, 30, "대형", true));
-        classRoomList.add(new ClassRoom("1", "소프트웨어전공", 1, 30, "대형", true));
-        classRoomList.add(new ClassRoom("1", "소프트웨어전공", 1, 30, "대형", true));
-        classRoomList.add(new ClassRoom("1", "소프트웨어전공", 1, 30, "대형", true));
-        classRoomList.add(new ClassRoom("1", "소프트웨어전공", 1, 30, "대형", true));
-        classRoomList.add(new ClassRoom("1", "소프트웨어전공", 1, 30, "대형", true));
+        classRoomList.add(new ClassRoom("301호", "소프트웨어전공", 3, 30, "중형", true));
+        classRoomList.add(new ClassRoom("302호", "기계공학과", 3, 50, "대형", true));
+        classRoomList.add(new ClassRoom("401호", "전기학과", 4, 60, "대형", false));
+        classRoomList.add(new ClassRoom("601호", "기계설비학과", 6, 50, "대형", false));
+        classRoomList.add(new ClassRoom("701호", "인공지능전공", 7, 50, "대형", true));
+        classRoomList.add(new ClassRoom("801호", "수학과", 8, 20, "중형", true));
         return new ResponseEntity<List<ClassRoom>>(classRoomList, HttpStatus.OK);
     }
 }

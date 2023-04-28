@@ -5,12 +5,12 @@ class ClassRoomListResponse {
 
   ClassRoomListResponse({this.classrooms});
 
-  ClassRoomListResponse.fromJson(Map<String, dynamic> json) {
-    if (json['classrooms'] != null) {
+  ClassRoomListResponse.fromJson(List<dynamic> jsonList) {
+    if (jsonList.isNotEmpty) {
       classrooms = <ClassRoom>[];
-      json['classrooms'].forEach((v) {
+      for (var v in jsonList) {
         classrooms!.add(ClassRoom.fromJson(v));
-      });
+      }
     }
   }
 }
