@@ -49,7 +49,12 @@ public class ClassRoom {
         int week = today.getDayOfWeek().getValue();
         float time = (now.getHour() + 1) * 60 + (now.getMinute() + 1);
 
-        for (Map<String, Object> lectureInfo : this.강의목록.get(Integer.toString(week))) {
+        List<Map<String, Object>> lectureList = this.강의목록.get(Integer.toString(week));
+        if (lectureList == null) {
+            this.usable = true;
+            return;
+        }
+        for (Map<String, Object> lectureInfo : lectureList) {
             float start = ((float) lectureInfo.get("시작시간") + 8) * 60;
             float end = (float) lectureInfo.get("종료시간");
             // 현재 시간에 맞는 강의가 있으면 usable을 false로 설정
