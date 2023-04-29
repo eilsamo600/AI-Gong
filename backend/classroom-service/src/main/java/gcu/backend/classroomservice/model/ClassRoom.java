@@ -71,8 +71,8 @@ public class ClassRoom {
                 this.currentLecture = new HashMap<String, String>();
                 this.currentLecture.put("이름", (String) lectureInfo.get("교과목명"));
                 this.currentLecture.put("담당교수", (String) lectureInfo.get("담당교수"));
-                this.currentLecture.put("시간", String.format("%02d:%02d ~ %02d:%02d", start / 60, start % 60,
-                        (start + duration) / 60, (start + duration) % 60));
+                this.currentLecture.put("시간", String.format("%02d:%02d ~ %02d:%02d", (int) start / 60, (int) start % 60,
+                        (int) (start + duration) / 60, (int) (start + duration) % 60));
                 this.usableLevel = 3;
                 if ((start + duration) - time < 15) {
                     this.usableLevel = 2;
