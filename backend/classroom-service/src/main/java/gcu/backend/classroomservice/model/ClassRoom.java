@@ -1,11 +1,9 @@
 package gcu.backend.classroomservice.model;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -51,7 +49,7 @@ public class ClassRoom {
         int week = today.getDayOfWeek().getValue();
         float time = (now.getHour() + 1) * 60 + (now.getMinute() + 1);
 
-        for (Map<String, Object> lectureInfo : this.강의목록.get(week)) {
+        for (Map<String, Object> lectureInfo : this.강의목록.get(Integer.toString(week))) {
             float start = ((float) lectureInfo.get("시작시간") + 8) * 60;
             float end = (float) lectureInfo.get("종료시간");
             // 현재 시간에 맞는 강의가 있으면 usable을 false로 설정
