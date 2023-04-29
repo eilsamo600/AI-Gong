@@ -12,7 +12,7 @@ class MainViewPage extends StatelessWidget {
     final controller = Get.put(MainViewController());
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Center(child: controller.bodyContent[controller.pageIndex.value]),
+      body: SafeArea(child: Center(child: controller.bodyContent[controller.pageIndex.value])),
       bottomNavigationBar: homeNavigationBar(),
     );
   }

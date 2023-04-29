@@ -6,6 +6,9 @@ class Common extends GetxService {
   static const bool isDev = true;
   static Logger logger = Logger(filter: MyFilter());
   static const String baseUrl = "http://43.201.81.76:8000/";
+
+  static double get getWidth => GetPlatform.isMobile ? Get.width : 500;
+
   Future<Common> init() async {
     Common.logger.d('$runtimeType init!');
     return this;

@@ -12,16 +12,18 @@ class RouteViewPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(RouteViewController());
     return Scaffold(
-      body: Center(
-        child: Column(
-          children: [
-            const Text('RouteViewPage'),
-            ElevatedButton(
-                onPressed: () {
-                  Get.toNamed(MainViewPage.url);
-                },
-                child: const Text('Main View Page', style: TextStyle(color: Colors.black)))
-          ],
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            children: [
+              const Text('RouteViewPage'),
+              ElevatedButton(
+                  onPressed: () {
+                    Get.toNamed(MainViewPage.url);
+                  },
+                  child: const Text('Main View Page', style: TextStyle(color: Colors.black)))
+            ],
+          ),
         ),
       ),
     );

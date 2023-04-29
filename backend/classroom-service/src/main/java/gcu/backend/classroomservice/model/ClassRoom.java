@@ -79,6 +79,16 @@ public class ClassRoom {
                 }
                 break;
             }
+
+            if (time < start) {
+                this.usableLevel = 2;
+                this.currentLecture = new HashMap<String, String>();
+                this.currentLecture.put("이름", (String) lectureInfo.get("교과목명"));
+                this.currentLecture.put("담당교수", (String) lectureInfo.get("담당교수"));
+                this.currentLecture.put("시간", String.format("%02d:%02d ~ %02d:%02d", (int) start / 60, (int) start % 60,
+                        (int) (start + duration) / 60, (int) (start + duration) % 60));
+                break;
+            }
         }
     }
 

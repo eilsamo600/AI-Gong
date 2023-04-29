@@ -2,7 +2,6 @@ import 'package:ai_gong/common/service_response.dart';
 import 'package:ai_gong/restAPI/api_service.dart';
 import 'package:ai_gong/restAPI/models/Classroom.dart';
 import 'package:ai_gong/restAPI/response/get_classroom_list_response.dart';
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 class ListClassRoomViewController extends GetxController {
@@ -16,7 +15,7 @@ class ListClassRoomViewController extends GetxController {
       classRoomList.value = response.value!.classrooms!;
     }
     classRoomList.refresh();
-    compute(checkTimer, null);
+    // compute(checkTimer, null);
   }
 
   void selectFilter(int index) {
@@ -26,7 +25,7 @@ class ListClassRoomViewController extends GetxController {
 
   void checkTimer(void _) async {
     while (true) {
-      await Future.delayed(const Duration(seconds: 30), () {
+      await Future.delayed(const Duration(seconds: 50), () {
         now.value = DateTime.now();
         print(now.value);
       });
@@ -36,5 +35,5 @@ class ListClassRoomViewController extends GetxController {
   Rx<DateTime> now = DateTime.now().obs;
 
   RxList<ClassRoom> classRoomList = RxList<ClassRoom>();
-  RxList<bool> onTapList = List.filled(3, false).obs;
+  RxList<bool> onTapList = List.filled(5, false).obs;
 }
