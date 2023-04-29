@@ -71,4 +71,8 @@ public class ClassRoom {
         }
     }
 
+    public boolean getUsable() {
+        return this.usable;
+    }
+
 }
