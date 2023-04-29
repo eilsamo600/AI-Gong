@@ -55,10 +55,11 @@ public class ClassRoom {
         LocalTime now = LocalTime.now();
         LocalDate today = LocalDate.now();
         int week = today.getDayOfWeek().getValue();
-        week = 1;
         int hour = now.getHour();
         int minute = now.getMinute();
-        hour = 10;
+        // 서버 시간 고정
+        // week = 1;
+        // hour = 10;
         float time = hour * 60 + minute;
         this.serverTime = String.format("%d-%02d:%02d", week, hour, minute);
 
