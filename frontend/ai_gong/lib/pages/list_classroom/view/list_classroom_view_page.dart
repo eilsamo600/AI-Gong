@@ -1,3 +1,4 @@
+import 'package:ai_gong/common/common.dart';
 import 'package:ai_gong/pages/list_classroom/controller/list_classroom_view_controller.dart';
 import 'package:ai_gong/pages/list_classroom/view/classroom_component.dart';
 import 'package:ai_gong/pages/list_classroom/view/filter_component.dart';
@@ -18,39 +19,40 @@ class ListClassRoomViewPage extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 40, bottom: 30),
-              child: Column(
-                children: [
-                  Row(
-                    children: const [
-                      Text('오늘은', style: textstyle),
-                      SizedBox(
-                        width: 7,
+                padding: const EdgeInsets.only(top: 40, bottom: 30),
+                child: Obx(
+                  () => Column(
+                    children: [
+                      Row(
+                        children: [
+                          const Text('오늘은', style: textstyle),
+                          const SizedBox(
+                            width: 7,
+                          ),
+                          Text(Common.instance.getNowWeek(controller.now.value), style: textstyle2)
+                        ],
                       ),
-                      Text('월요일', style: textstyle2)
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    children: const [
-                      Text(
-                        '현재 시간은',
-                        style: textstyle,
+                      const SizedBox(
+                        height: 10,
                       ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        '오후 3시 50분',
-                        style: textstyle2,
+                      Row(
+                        children: [
+                          const Text(
+                            '현재 시간은',
+                            style: textstyle,
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            Common.instance.getNowTime(controller.now.value),
+                            style: textstyle2,
+                          )
+                        ],
                       )
                     ],
-                  )
-                ],
-              ),
-            ),
+                  ),
+                )),
             SizedBox(
               height: 25,
               child: ListView.builder(
