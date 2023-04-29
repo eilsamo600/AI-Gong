@@ -58,7 +58,7 @@ class ListClassRoomViewPage extends StatelessWidget {
                             ],
                           ),
                         ))),
-                SliverPersistentHeader(pinned: true, delegate: HeaderDelegate(controller)),
+                SliverPersistentHeader(pinned: true, floating: true, delegate: HeaderDelegate(controller)),
                 Obx(
                   () => SliverList(
                       delegate: SliverChildBuilderDelegate(
@@ -70,7 +70,7 @@ class ListClassRoomViewPage extends StatelessWidget {
                             if (index == 0) const SizedBox(height: 20),
                             ClassRoomComponent(model: controller.classRoomList.value[index]),
                             const Padding(
-                              padding: EdgeInsets.only(bottom: 20, top: 25),
+                              padding: EdgeInsets.only(bottom: 10, top: 15),
                               child: Divider(
                                 height: 1,
                                 thickness: 1,

@@ -15,7 +15,7 @@ class ListClassRoomViewController extends GetxController {
       classRoomList.value = response.value!.classrooms!;
     }
     classRoomList.refresh();
-    // compute(checkTimer, null);
+    checkTimer();
   }
 
   void selectFilter(int index) {
@@ -23,7 +23,7 @@ class ListClassRoomViewController extends GetxController {
     onTapList.refresh();
   }
 
-  void checkTimer(void _) async {
+  void checkTimer() async {
     while (true) {
       await Future.delayed(const Duration(seconds: 50), () {
         now.value = DateTime.now();
