@@ -56,8 +56,8 @@ public class ClassRoom {
             return;
         }
         for (Map<String, Object> lectureInfo : lectureList) {
-            float start = ((float) lectureInfo.get("시작시간") + 8) * 60;
-            float end = (float) lectureInfo.get("종료시간");
+            float start = (((Integer) lectureInfo.get("시작시간")).floatValue() + 8) * 60;
+            float end = ((Integer) lectureInfo.get("종료시간")).floatValue();
             // 현재 시간에 맞는 강의가 있으면 usable을 false로 설정
             if (time >= start && time <= start + end) {
                 this.usable = false;
