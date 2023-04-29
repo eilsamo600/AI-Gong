@@ -16,9 +16,13 @@ class ClassRoomComponent extends StatelessWidget {
             margin: const EdgeInsets.only(top: 13),
             width: 11,
             height: 11,
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Colors.red,
+              color: (model.usableLevel ?? 1) == 1
+                  ? Colors.green
+                  : model.usableLevel == 2
+                      ? Colors.orange
+                      : Colors.red,
             ),
           ),
           const SizedBox(
@@ -74,13 +78,13 @@ class ClassRoomComponent extends StatelessWidget {
             ],
           ),
           const Spacer(),
-          const Padding(
-            padding: EdgeInsets.only(top: 12.0),
-            child: Text(
-              '다음 수업이 없습니다.',
-              style: TextStyle(fontSize: 12, color: Colors.black87),
-            ),
-          )
+          // Padding(
+          //   padding: const EdgeInsets.only(top: 12.0),
+          //   child: Text(
+          //     model.currentLecture == null ? '다음 수업이 없습니다.' : '${model.currentLecture?.name ?? '???'}',
+          //     style: const TextStyle(fontSize: 12, color: Colors.black87),
+          //   ),
+          // )
         ],
       ),
     );

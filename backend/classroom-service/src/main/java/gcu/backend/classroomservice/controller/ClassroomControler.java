@@ -37,6 +37,9 @@ public class ClassroomControler {
     @Operation(summary = "모든 강의실 목록 조회", description = "모든 강의실 목록을 조회합니다.")
     public ResponseEntity<List<ClassRoom>> getClassRoomList() {
         List<ClassRoom> classRoomList = classRoomRepository.findAll();
+        for (ClassRoom classRoom : classRoomList) { // 강의목록 삭제해서 보냄
+            classRoom.set강의목록(null);
+        }
         return new ResponseEntity<List<ClassRoom>>(classRoomList, HttpStatus.OK);
     }
 }

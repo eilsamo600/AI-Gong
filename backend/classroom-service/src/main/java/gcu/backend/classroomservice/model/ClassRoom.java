@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,6 +36,9 @@ public class ClassRoom {
     @Transient
     private String serverTime;
 
+    @Transient
+    private Map<String, String> currentLecture;
+
     // @Transient를 사용할 때는 따로 Constructor를 만들어줘야함
     public ClassRoom(ObjectId _id, String 호, String 전공, int 층, int 수용인원, String 규모,
             Map<String, List<Map<String, Object>>> 강의목록) {
@@ -47,6 +51,7 @@ public class ClassRoom {
         this.강의목록 = 강의목록;
 
         this.usableLevel = 1;
+
         LocalTime now = LocalTime.now();
         LocalDate today = LocalDate.now();
         int week = today.getDayOfWeek().getValue();
@@ -63,6 +68,11 @@ public class ClassRoom {
             float duration = ((Number) lectureInfo.get("수업시간")).floatValue();
             // 현재 시간에 맞는 강의가 있으면 usable을 false로 설정
             if (time >= start && time <= start + duration) {
+                this.currentLecture = new HashMap<String, String>();
+                this.currentLecture.put("이름", (String) lectureInfo.get("교과목명"));
+                this.currentLecture.put("담당교수", (String) lectureInfo.get("담당교수"));
+                this.currentLecture.put("시간", String.format("%02d:%02d ~ %02d:%02d", (int) start / 60, (int) start % 60,
+                        (int) (start + duration) / 60, (int) (start + duration) % 60));
                 this.usableLevel = 3;
                 if ((start + duration) - time < 15) {
                     this.usableLevel = 2;
