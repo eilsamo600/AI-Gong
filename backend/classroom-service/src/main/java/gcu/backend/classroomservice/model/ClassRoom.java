@@ -56,8 +56,11 @@ public class ClassRoom {
         LocalDate today = LocalDate.now();
         int week = today.getDayOfWeek().getValue();
         week = 1;
-        float time = now.getHour() * 60 + now.getMinute();
-        this.serverTime = String.format("%d-%02d:%02d", week, now.getHour(), now.getMinute());
+        int hour = now.getHour();
+        int minute = now.getMinute();
+        hour = 10;
+        float time = hour * 60 + minute;
+        this.serverTime = String.format("%d-%02d:%02d", week, hour, minute);
 
         List<Map<String, Object>> lectureList = this.강의목록.get(Integer.toString(week));
         if (lectureList == null) {
@@ -81,12 +84,15 @@ public class ClassRoom {
             }
 
             if (time < start) {
-                this.usableLevel = 2;
                 this.currentLecture = new HashMap<String, String>();
                 this.currentLecture.put("이름", (String) lectureInfo.get("교과목명"));
                 this.currentLecture.put("담당교수", (String) lectureInfo.get("담당교수"));
                 this.currentLecture.put("시간", String.format("%02d:%02d ~ %02d:%02d", (int) start / 60, (int) start % 60,
                         (int) (start + duration) / 60, (int) (start + duration) % 60));
+
+                if ((start - time) < 15) {
+                    this.usableLevel = 2;
+                }
                 break;
             }
         }
