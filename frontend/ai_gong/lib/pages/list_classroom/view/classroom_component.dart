@@ -59,7 +59,13 @@ class ClassRoomComponent extends StatelessWidget {
                           '${model.scale ?? '???'} 강의실 | ',
                           style: const TextStyle(fontSize: 12, color: Colors.black54),
                         ),
-                        Text((model.usable ?? true) ? '사용 가능' : '사용 불가', style: const TextStyle(fontSize: 12, color: Colors.black)),
+                        Text(
+                            (model.usableLevel ?? 1) == 1
+                                ? '사용 가능'
+                                : model.usableLevel == 2
+                                    ? '곧 사용 가능'
+                                    : '사용 불가',
+                            style: const TextStyle(fontSize: 12, color: Colors.black)),
                       ],
                     ),
                   ],

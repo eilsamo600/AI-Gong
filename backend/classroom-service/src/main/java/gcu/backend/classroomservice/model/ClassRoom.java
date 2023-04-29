@@ -30,7 +30,7 @@ public class ClassRoom {
     private Map<String, List<Map<String, Object>>> 강의목록;
 
     @Transient // 데이터 베이스에 없는 필드는 @Transient 어노테이션을 붙여준다.
-    private boolean usable;
+    private int usableLevel; // 1은 사용가능, 2는 곧 끝남, 3은 사용불가능
 
     @Transient
     private String serverTime;
@@ -46,7 +46,7 @@ public class ClassRoom {
         this.규모 = 규모;
         this.강의목록 = 강의목록;
 
-        this.usable = true;
+        this.usableLevel = 1;
         LocalTime now = LocalTime.now();
         LocalDate today = LocalDate.now();
         int week = today.getDayOfWeek().getValue();
@@ -56,7 +56,6 @@ public class ClassRoom {
 
         List<Map<String, Object>> lectureList = this.강의목록.get(Integer.toString(week));
         if (lectureList == null) {
-            this.usable = true;
             return;
         }
         for (Map<String, Object> lectureInfo : lectureList) {
@@ -64,7 +63,10 @@ public class ClassRoom {
             float duration = ((Number) lectureInfo.get("수업시간")).floatValue();
             // 현재 시간에 맞는 강의가 있으면 usable을 false로 설정
             if (time >= start && time <= start + duration) {
-                this.usable = false;
+                this.usableLevel = 3;
+                if ((start + duration) - time < 15) {
+                    this.usableLevel = 2;
+                }
                 break;
             }
         }
