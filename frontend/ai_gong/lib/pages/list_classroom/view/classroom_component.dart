@@ -78,13 +78,37 @@ class ClassRoomComponent extends StatelessWidget {
             ],
           ),
           const Spacer(),
-          // Padding(
-          //   padding: const EdgeInsets.only(top: 12.0),
-          //   child: Text(
-          //     model.currentLecture == null ? '다음 수업이 없습니다.' : '${model.currentLecture?.name ?? '???'}',
-          //     style: const TextStyle(fontSize: 12, color: Colors.black87),
-          //   ),
-          // )
+          Padding(
+            padding: const EdgeInsets.only(top: 12.0),
+            child: model.currentLecture == null
+                ? const Text(
+                    '다음 수업이 없습니다.',
+                    style: TextStyle(fontSize: 12, color: Colors.black87),
+                  )
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        model.currentLecture!['이름'] ?? '???',
+                        style: const TextStyle(fontSize: 12, color: Colors.black87),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        '${model.currentLecture!['담당교수'] ?? '???'} 교수',
+                        style: const TextStyle(fontSize: 12, color: Colors.black87),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        model.currentLecture!['시간'] ?? '???',
+                        style: const TextStyle(fontSize: 12, color: Colors.black87),
+                      ),
+                    ],
+                  ),
+          )
         ],
       ),
     );
