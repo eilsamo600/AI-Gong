@@ -29,14 +29,14 @@ public class ClassRoom {
     private String 규모;
     // 강의목록 : { 날짜 : [강의1, 강의2, ...]}
     // 강의 : { 교과목명: '', 담당교수: '', 강의실: '', 정원: '', 개설조직: '', 시작시간: '', 수업시간: ''}
-    private List<Map<String, Object>> 강의목록;
+    private Map<String, List<Map<String, Object>>> 강의목록;
 
     @Transient // 데이터 베이스에 없는 필드는 @Transient 어노테이션을 붙여준다.
     private boolean usable;
 
     // @Transient를 사용할 때는 따로 Constructor를 만들어줘야함
     public ClassRoom(ObjectId _id, String 호, String 전공, int 층, int 수용인원, String 규모,
-            List<Map<String, Object>> 강의목록) {
+            Map<String, List<Map<String, Object>>> 강의목록) {
         this._id = _id;
         this.호 = 호;
         this.전공 = 전공;
@@ -45,35 +45,21 @@ public class ClassRoom {
         this.규모 = 규모;
         this.강의목록 = 강의목록;
 
-        // LocalTime now = LocalTime.now();
-        // LocalDate today = LocalDate.now();
-        // int week = today.getDayOfWeek().getValue();
-        // float time = (now.getHour() + 1) * 60 + (now.getMinute() + 1);
-        // this.usable = true;
-        // // 강의목록을 순회하면서 현재 시간에 맞는 강의실이 있는지 확인
-        // for (Map<String, Object> lecture : 강의목록) {
-        // for (String date : lecture.keySet()) {
-        // // 오늘 강의가 있는지 확인
-        // if (date.equals(Integer.toString(week))) {
-        // // 오늘 강의가 있는 강의실이면 강의 목록을 순회하면서 현재 시간에 맞는 강의가 있는지 확인
-        // for (Map<String, Object> lectureInfo : (List<Map<String, Object>>)
-        // lecture.get(date)) {
-        // float start = ((float) lectureInfo.get("시작시간") + 8) * 60;
-        // float end = (float) lectureInfo.get("종료시간");
-        // // 현재 시간에 맞는 강의가 있으면 usable을 false로 설정
-        // if (time >= start && time <= start + end) {
-        // this.usable = false;
-        // break;
-        // }
+        this.usable = true;
+        LocalTime now = LocalTime.now();
+        LocalDate today = LocalDate.now();
+        int week = today.getDayOfWeek().getValue();
+        float time = (now.getHour() + 1) * 60 + (now.getMinute() + 1);
 
-        // }
-        // }
-        // }
-        // }
-    }
-
-    public boolean getUsable() {
-        return this.usable;
+        for (Map<String, Object> lectureInfo : this.강의목록.get(week)) {
+            float start = ((float) lectureInfo.get("시작시간") + 8) * 60;
+            float end = (float) lectureInfo.get("종료시간");
+            // 현재 시간에 맞는 강의가 있으면 usable을 false로 설정
+            if (time >= start && time <= start + end) {
+                this.usable = false;
+                break;
+            }
+        }
     }
 
 }
