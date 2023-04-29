@@ -47,6 +47,7 @@ public class ClassRoom {
         LocalTime now = LocalTime.now();
         LocalDate today = LocalDate.now();
         int week = today.getDayOfWeek().getValue();
+        week = 1;
         float time = (now.getHour() + 1) * 60 + (now.getMinute() + 1);
 
         List<Map<String, Object>> lectureList = this.강의목록.get(Integer.toString(week));
