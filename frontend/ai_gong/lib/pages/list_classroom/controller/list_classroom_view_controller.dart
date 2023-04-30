@@ -33,6 +33,13 @@ class ListClassRoomViewController extends GetxController {
     onTapList.refresh();
   }
 
+  void restFilter() {
+    for (var i = 0; i < onTapList.length; i++) {
+      onTapList[i] = false;
+    }
+    onTapList.refresh();
+  }
+
   void checkTimer() async {
     while (true) {
       await Future.delayed(const Duration(minutes: 60), () {

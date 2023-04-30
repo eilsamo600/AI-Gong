@@ -17,6 +17,7 @@ class FilterComponent extends StatelessWidget {
           if (index == 0) {
             controller.getClassRoomList();
             controller.scrollcontroller.value.animateTo(0.0, duration: const Duration(milliseconds: 300), curve: Curves.ease);
+            controller.restFilter();
             return;
           }
 
