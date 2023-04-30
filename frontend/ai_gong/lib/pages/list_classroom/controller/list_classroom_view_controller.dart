@@ -33,6 +33,13 @@ class ListClassRoomViewController extends GetxController {
     onTapList.refresh();
   }
 
+  void restFilter() {
+    for (var i = 0; i < onTapList.length; i++) {
+      onTapList[i] = false;
+    }
+    onTapList.refresh();
+  }
+
   void checkTimer() async {
     while (true) {
       await Future.delayed(const Duration(minutes: 60), () {
@@ -45,5 +52,6 @@ class ListClassRoomViewController extends GetxController {
   Rx<DateTime> now = DateTime.now().obs;
 
   RxList<ClassRoom> classRoomList = RxList<ClassRoom>();
-  RxList<bool> onTapList = List.filled(5, false).obs;
+  RxList<bool> onTapList = List.filled(4, false).obs;
+  RxList<String> filterList = ['새로고침', '즐겨찾기', '바로', '곧 끝나는'].obs;
 }

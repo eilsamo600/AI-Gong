@@ -14,9 +14,10 @@ class FilterComponent extends StatelessWidget {
       final onTap = controller.onTapList[index];
       return GestureDetector(
         onTap: () {
+          controller.scrollcontroller.value.animateTo(0.0, duration: const Duration(milliseconds: 300), curve: Curves.ease);
           if (index == 0) {
-            controller.getClassRoomList();
-            controller.scrollcontroller.value.animateTo(0.0, duration: const Duration(milliseconds: 300), curve: Curves.ease);
+            controller.restFilter();
+            Future.delayed(const Duration(milliseconds: 350), () => controller.getClassRoomList());
             return;
           }
 
@@ -29,7 +30,7 @@ class FilterComponent extends StatelessWidget {
             border: Border.all(color: onTap ? Colors.transparent : Colors.grey.shade300, width: 1),
             borderRadius: BorderRadius.circular(10),
           ),
-          padding: EdgeInsets.symmetric(horizontal: index == 0 ? 8 : 15),
+          padding: const EdgeInsets.symmetric(horizontal: 8),
           height: 25,
           child: index == 0
               ? const Icon(
@@ -38,7 +39,7 @@ class FilterComponent extends StatelessWidget {
                   color: Colors.black54,
                 )
               : Text(
-                  '필터',
+                  controller.filterList[index],
                   style: TextStyle(fontSize: 13, fontWeight: FontWeight.w900, color: onTap ? const Color.fromRGBO(75, 130, 238, 1.0) : Colors.black54),
                 ),
         ),
