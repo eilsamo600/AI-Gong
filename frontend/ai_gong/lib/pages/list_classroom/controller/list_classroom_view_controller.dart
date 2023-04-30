@@ -2,6 +2,7 @@ import 'package:ai_gong/common/service_response.dart';
 import 'package:ai_gong/restAPI/api_service.dart';
 import 'package:ai_gong/restAPI/models/Classroom.dart';
 import 'package:ai_gong/restAPI/response/get_classroom_list_response.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ListClassRoomViewController extends GetxController {
@@ -10,28 +11,37 @@ class ListClassRoomViewController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+    await getClassRoomList();
+    now.value = DateTime.now();
+    await Future.delayed(Duration(seconds: 60 - now.value.second), () {
+      now.value = DateTime.now();
+    });
+    checkTimer();
+  }
+
+  Future<void> getClassRoomList() async {
     ApiResponse<ClassRoomListResponse> response = await ApiService.instance.getClassRoomList();
     if (response.result) {
       classRoomList.value = response.value!.classrooms!;
     }
     classRoomList.refresh();
-    checkTimer();
   }
 
   void selectFilter(int index) {
+    index = index;
     onTapList.value[index] = !onTapList.value[index];
     onTapList.refresh();
   }
 
   void checkTimer() async {
     while (true) {
-      await Future.delayed(const Duration(seconds: 50), () {
+      await Future.delayed(const Duration(minutes: 60), () {
         now.value = DateTime.now();
-        print(now.value);
       });
     }
   }
 
+  Rx<ScrollController> scrollcontroller = ScrollController().obs;
   Rx<DateTime> now = DateTime.now().obs;
 
   RxList<ClassRoom> classRoomList = RxList<ClassRoom>();

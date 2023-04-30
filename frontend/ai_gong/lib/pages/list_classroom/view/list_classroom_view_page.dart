@@ -1,14 +1,13 @@
 import 'package:ai_gong/common/common.dart';
 import 'package:ai_gong/pages/list_classroom/controller/list_classroom_view_controller.dart';
-import 'package:ai_gong/pages/list_classroom/view/classroom_component.dart';
-import 'package:ai_gong/pages/list_classroom/view/filter_component.dart';
+import 'package:ai_gong/pages/list_classroom/view/component/classroom_component.dart';
+import 'package:ai_gong/pages/list_classroom/view/component/filter_component.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ListClassRoomViewPage extends StatelessWidget {
   const ListClassRoomViewPage({super.key});
 
-  static const String url = '/list_classroom';
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(ListClassRoomViewController());
@@ -20,11 +19,12 @@ class ListClassRoomViewPage extends StatelessWidget {
           children: [
             Expanded(
                 child: CustomScrollView(
+              controller: controller.scrollcontroller.value,
               physics: const BouncingScrollPhysics(),
               slivers: [
                 SliverToBoxAdapter(
                     child: Padding(
-                        padding: const EdgeInsets.only(left: 15, top: 20, bottom: 20),
+                        padding: const EdgeInsets.only(left: 15, top: 25, bottom: 25),
                         child: Obx(
                           () => Column(
                             children: [
@@ -105,7 +105,7 @@ class HeaderDelegate extends SliverPersistentHeaderDelegate {
           itemCount: controller.onTapList.value.length,
           itemBuilder: (context, index) {
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 7.0),
+              padding: const EdgeInsets.symmetric(horizontal: 5.0),
               child: Column(
                 children: [
                   FilterComponent(
