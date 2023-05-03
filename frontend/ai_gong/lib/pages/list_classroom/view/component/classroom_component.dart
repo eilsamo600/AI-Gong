@@ -39,7 +39,9 @@ class ClassRoomComponent extends StatelessWidget {
                     ? Colors.green
                     : model.usableLevel == 2
                         ? Colors.orange
-                        : Colors.red,
+                        : model.usableLevel == 4
+                            ? const Color.fromARGB(255, 206, 0, 0)
+                            : Colors.red,
               ),
             ),
             const SizedBox(
@@ -85,7 +87,9 @@ class ClassRoomComponent extends StatelessWidget {
                                   ? '사용 가능'
                                   : model.usableLevel == 2
                                       ? '곧 사용 가능'
-                                      : '사용 불가',
+                                      : model.usableLevel == 4
+                                          ? '곧 수업 시작'
+                                          : '사용 불가',
                               style: const TextStyle(fontSize: 12, color: Colors.black)),
                         ],
                       ),
