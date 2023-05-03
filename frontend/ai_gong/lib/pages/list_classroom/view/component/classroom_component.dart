@@ -1,3 +1,4 @@
+import 'package:ai_gong/common/widget/panel_component.dart';
 import 'package:ai_gong/restAPI/models/Classroom.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +9,21 @@ class ClassRoomComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        showModalBottomSheet(
+            isScrollControlled: true,
+            context: context,
+            builder: ((context) {
+              return PanelComponent(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Text('해당 강의 알려주기'),
+                  ],
+                ),
+              );
+            }));
+      },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Row(
@@ -24,7 +39,9 @@ class ClassRoomComponent extends StatelessWidget {
                     ? Colors.green
                     : model.usableLevel == 2
                         ? Colors.orange
-                        : Colors.red,
+                        : model.usableLevel == 4
+                            ? const Color.fromARGB(255, 206, 0, 0)
+                            : Colors.red,
               ),
             ),
             const SizedBox(
@@ -70,7 +87,9 @@ class ClassRoomComponent extends StatelessWidget {
                                   ? '사용 가능'
                                   : model.usableLevel == 2
                                       ? '곧 사용 가능'
-                                      : '사용 불가',
+                                      : model.usableLevel == 4
+                                          ? '곧 수업 시작'
+                                          : '사용 불가',
                               style: const TextStyle(fontSize: 12, color: Colors.black)),
                         ],
                       ),
