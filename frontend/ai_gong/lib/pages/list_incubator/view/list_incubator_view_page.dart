@@ -7,8 +7,8 @@ import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:ai_gong/common/common.dart';
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
 
 
 class ListIncubatorViewPage extends StatelessWidget {
@@ -17,7 +17,7 @@ class ListIncubatorViewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    
     List<Widget> buttons = [];
     final now = DateTime.now().toUtc();
     final firstTime = DateFormat('d').format(DateTime.utc(now.year, now.month, now.day - (now.weekday - 1)));
@@ -26,7 +26,7 @@ class ListIncubatorViewPage extends StatelessWidget {
   
     final controller = Get.put(ListIncubatorViewController());
     const textstyle = TextStyle(fontSize: 20);
-    const textstyle2 = TextStyle(fontSize: 22, fontWeight: FontWeight.bold);
+    const textstyle2 = TextStyle(fontSize: 25, fontWeight: FontWeight.bold);
     return Scaffold(
       body: Column(
         children: [
@@ -86,11 +86,13 @@ class ListIncubatorViewPage extends StatelessWidget {
                                   height: 50,
                                   child: Row(
                                     children: [
-                                      for(var i=int.parse(firstTime),j=0;i<=int.parse(lastTime);i++,j++)
+                                      for(var i=int.parse(firstTime),j=1;i<=int.parse(lastTime);i++,j++)
                                         Expanded(
                                           child: Column(
                                             children: [
-                                                Text(i.toString()),
+                                                Text(i.toString(),style: TextStyle(
+                                                  color: (j == 6 || j == 7) ? Color(0xffC7D0DB) : Colors.black,
+                                                  decoration: (j==6 || j==7)? TextDecoration.lineThrough:null)),
                                             ],
                                           ),
                                         ),
@@ -107,272 +109,89 @@ class ListIncubatorViewPage extends StatelessWidget {
                                     child:Row(children: [
                                       SizedBox(height: 70,),
                                       SizedBox(width: 20,),
-                                      Text('예약가능 시간',style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold,),)
+                                      Text('예약가능 시간',style: TextStyle(fontSize: 19,fontWeight: FontWeight.bold,),)
                                     ],)                                    
                                   ),
-                                  Wrap(
-                                    spacing: 40.0, // 각 버튼 사이의 가로 간격
-                                    runSpacing: 30.0, // 각 버튼 사이의 세로 간격
+                                Center(
+                                  child: Wrap(
+                                    spacing: 50.0, // 각 버튼 사이의 가로 간격
+                                    runSpacing: 40.0, // 버튼 사이 세로 간격
                                     children: [
-                                      Container(
-                                        width: 100,
-                                        height: 50,
-                                        child: OutlinedButton(
-                                          onPressed: () {},
-                                          child: Text(
-                                            '9:00',
-                                            style: TextStyle(color: Colors.black, fontSize: 14),
+                                      for(double i=9.0,j=1.0;i<=17.0;i+=0.5,j++)
+                                        Container(
+                                          width: 110,
+                                          height: 55,
+                                          child: OutlinedButton(
+                                            onPressed: () {},
+                                            child: Text(
+                                              '${i.toInt()}:${(i % 1 == 0.5) ? "30" : "00"}',
+                                              style: TextStyle(color: Colors.black, fontSize: 15),
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      Container(
-                                        width: 100,
-                                        height: 50,
-                                        child: OutlinedButton(
-                                          onPressed: () {},
-                                          child: Text(
-                                            '9:30',
-                                            style: TextStyle(color: Colors.black, fontSize: 14),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        width: 100,
-                                        height: 50,
-                                        child: OutlinedButton(
-                                          onPressed: () {},
-                                          child: Text(
-                                            '10:00',
-                                            style: TextStyle(color: Colors.black, fontSize: 14),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        width: 100,
-                                        height: 50,
-                                        child: ElevatedButton(
-                                          onPressed: () {},
-                                          child: Text(
-                                            '10:30',
-                                            style: TextStyle(color: Colors.black, fontSize: 14),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        width: 100,
-                                        height: 50,
-                                        child: ElevatedButton(
-                                          onPressed: () {},
-                                          child: Text(
-                                            '11:00',
-                                            style: TextStyle(color: Colors.black, fontSize: 14),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        width: 100,
-                                        height: 50,
-                                        child: ElevatedButton(
-                                          onPressed: () {},
-                                          child: Text(
-                                            '11:30',
-                                            style: TextStyle(color: Colors.black, fontSize: 14),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        width: 100,
-                                        height: 50,
-                                        child: ElevatedButton(
-                                          onPressed: () {},
-                                          child: Text(
-                                            '12:00',
-                                            style: TextStyle(color: Colors.black, fontSize: 14),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        width: 100,
-                                        height: 50,
-                                        child: ElevatedButton(
-                                          onPressed: () {},
-                                          child: Text(
-                                            '12:30',
-                                            style: TextStyle(color: Colors.black, fontSize: 14),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        width: 100,
-                                        height: 50,
-                                        child: ElevatedButton(
-                                          onPressed: () {},
-                                          child: Text(
-                                            '13:00',
-                                            style: TextStyle(color: Colors.black, fontSize: 14),
-                                          ),
-                                        ),
-                                      ),
-                                       Container(
-                                        width: 100,
-                                        height: 50,
-                                        child: ElevatedButton(
-                                          onPressed: () {},
-                                          child: Text(
-                                            '13:30',
-                                            style: TextStyle(color: Colors.black, fontSize: 14),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        width: 100,
-                                        height: 50,
-                                        child: ElevatedButton(
-                                          onPressed: () {},
-                                          child: Text(
-                                            '14:00',
-                                            style: TextStyle(color: Colors.black, fontSize: 14),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        width: 100,
-                                        height: 50,
-                                        child: ElevatedButton(
-                                          onPressed: () {},
-                                          child: Text(
-                                            '14:30',
-                                            style: TextStyle(color: Colors.black, fontSize: 14),
-                                          ),
-                                        ),
-                                      ),
-                                       Container(
-                                        width: 100,
-                                        height: 50,
-                                        child: ElevatedButton(
-                                          onPressed: () {},
-                                          child: Text(
-                                            '15:00',
-                                            style: TextStyle(color: Colors.black, fontSize: 14),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        width: 100,
-                                        height: 50,
-                                        child: ElevatedButton(
-                                          onPressed: () {},
-                                          child: Text(
-                                            '15:30',
-                                            style: TextStyle(color: Colors.black, fontSize: 14),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        width: 100,
-                                        height: 50,
-                                        child: ElevatedButton(
-                                          onPressed: () {},
-                                          child: Text(
-                                            '16:00',
-                                            style: TextStyle(color: Colors.black, fontSize: 14),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        width: 100,
-                                        height: 50,
-                                        child: ElevatedButton(
-                                          onPressed: () {},
-                                          child: Text(
-                                            '16:30',
-                                            style: TextStyle(color: Colors.black, fontSize: 14),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        width: 100,
-                                        height: 50,
-                                        child: ElevatedButton(
-                                          onPressed: () {},
-                                          child: Text(
-                                            '17:00',
-                                            style: TextStyle(color: Colors.black, fontSize: 14),
-                                          ),
-                                        ),
-                                      ),
-                                      // 추가적인 버튼들은 여기에 추가
                                     ],
                                   ),
+                                ),
 
-                                  // for(int i=0;i<16;i++){
-                                  //   buttons.add(
-                                  //     Container(
-                                  //       width: 100,
-                                  //       height: 50,
-                                  //       child: OutlinedButton(
-                                  //         onPressed: () {},
-                                  //         child: Text('${9 + i~/2}:${i%2==0 ? '00' : '30'}', style:TextStyle(color: Colors.black, fontSize: 14),
-                                  //         ),
-                                  //       ),
-                                  //     ),
-                                  //   );
-                                  // }
-
-                                  // Container(
-                                  //   child: Row(
-                                  //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  //     children: buttons,
-                                  //   ),
-                                  // ),
-                                  // Container(
-                                  //   child: Column(
-                                  //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  //     children: [
-                                  //       Container(
-                                  //         width: 100,
-                                  //         height: 50,
-                                  //         child: OutlinedButton(
-                                  //           onPressed: () {},
-                                  //           child: Text('9:00',style:TextStyle(color: Colors.black, fontSize: 14),
-                                  //           ),
-                                  //         ),
-                                  //       ),
-                                  //       Container(
-                                  //         width: 100,
-                                  //         height: 50,
-                                  //         child: OutlinedButton(
-                                  //           onPressed: () {},
-                                  //           child: Text('9:00',style:TextStyle(color: Colors.black, fontSize: 14),
-                                  //           ),
-                                  //         ),
-                                  //       ),
-                                  //       Container(
-                                  //         width: 100,
-                                  //         height: 50,
-                                  //         child: OutlinedButton(
-                                  //           onPressed: () {},
-                                  //           child: Text('9:00',style:TextStyle(color: Colors.black, fontSize: 14),
-                                  //           ),
-                                  //         ),
-                                  //       ),
-                                  //       Container(
-                                  //         width: 100,
-                                  //         height: 50,
-                                  //         child: ElevatedButton(
-                                  //           onPressed: () {},
-                                  //           child: Text('9:00',style:TextStyle(color: Colors.black, fontSize: 14),
-                                  //           ),
-                                  //         ),
-                                  //       ),
-                                       
+                                  SizedBox(height: 40,),
+                                   Container(
+                                    height: 60,
+                                    child:Row(children: [
+                                      SizedBox(height: 10,),
+                                      SizedBox(width: 20,),
+                                      Text('인원',style: TextStyle(fontSize: 19,fontWeight: FontWeight.bold,),),
+                                      SizedBox(width: 230,),
+                                      CounterWidget(),
+                                    ],)                                    
+                                  ),
+                             
+                                  SizedBox(height: 60,),
+                                  Center(
+                                    child: Wrap(children: [
+                                      Container(
+                                        width: 450,
+                                        height: 55,
                                         
-                                  //     ],
-                                  //   ),
-                                  // ),
-
-                                
-                              
+                                        child: OutlinedButton(
+                                          
+                                          onPressed: () {
+                                            showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return AlertDialog(
+                                                content: Column(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: [
+                                                    SizedBox(height: 20,),
+                                                    Text('예약이 완료 되었습니다.',style: TextStyle(fontSize: 15),),
+                                                    SizedBox(height: 8),
+                                                    Text('예약시간까지 배정인증을 해주세요.',style: TextStyle(fontSize: 15)),
+                                                  ],
+                                                ),
+                                                actions: <Widget>[
+                                                  TextButton(
+                                                    child: Text('확인',style: TextStyle(color: Colors.blue),),
+                                                    onPressed: () {
+                                                      Navigator.of(context).pop();
+                                                       Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(builder: (context) => ListIncubatorViewPage()),
+                                                      );
+                                                    },
+                                                  ),
+                                                ],
+                                              );
+                                              },);},
+                                          child: 
+                                          Text(
+                                            '예약하기',
+                                            style: TextStyle(color: Colors.black, fontSize: 16),
+                                          ),
+                                        ),
+                                      ),
+                                    ]),
+                                  ),
+                                  SizedBox(height: 20,),
                               ],
                             ),
                           );
@@ -388,38 +207,66 @@ class ListIncubatorViewPage extends StatelessWidget {
   }
 }
 
-// class TableCalendarScreen extends StatelessWidget {
-//   const TableCalendarScreen({Key? key}) : super(key: key);
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(),
-//       body: TableCalendar(
-//         firstDay: DateTime.utc(2023, 5, 1),
-//         lastDay: DateTime.utc(2023, 5, 7),
-//         focusedDay: DateTime.now(),
-//         locale: 'ko-KR',
-//       ),
-//     );
-//   }
-// }
-// class reservationTime extends StatelessWidget{
-//    const reservationTime({super.key});
-//    List<Widget> buttons = [];
-//     for(int i=9;i<=17;i++){
-//                                    buttons.add(
-//                                     OutlinedButton(
-//                                       onPressed: () {},
-//                                       child: Text('$i:00',style:TextStyle(color: Colors.black, fontSize: 14),
-//                                     ),
-//                                   );
-//                                   buttons.add(
-//                                     OutlinedButton(
-//                                       onPressed: () {},
-//                                       child: Text('$i:30',style:TextStyle(color: Colors.black, fontSize: 14),
-//                                     ),
-//                                   );
-//                                   }
 
-// }
+class CounterWidget extends StatefulWidget {
+  @override
+  _CounterWidgetState createState() => _CounterWidgetState();
+}
+
+class _CounterWidgetState extends State<CounterWidget> {
+  int _counter = 0;
+
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+  }
+
+  void _decrementCounter() {
+    if(_counter==0){
+      setState(() {
+        _counter=0;
+      });
+    }
+      setState(() {
+      _counter--;
+    });
+  
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      
+      children: <Widget>[
+
+        SizedBox(width: 10,),
+       
+         Container(
+          width: 60,
+          height: 40,
+          child: ElevatedButton(
+          onPressed: _decrementCounter,
+          child: Text('-',style: TextStyle(color: Colors.black,fontSize: 26,),),
+        ),
+        ),
+        SizedBox(width: 20),
+        Text(
+          '$_counter',
+          style: TextStyle(fontSize: 20),
+        ),
+        SizedBox(width: 20),
+         Container(
+          width: 60,
+          height: 40,
+          child: ElevatedButton(
+          onPressed: _incrementCounter,
+          child: Text('+',style: TextStyle(color: Colors.black,fontSize:23),),
+        ),
+        ),
+        SizedBox(height: 50,),
+      ],
+    );
+  }
+}
