@@ -42,7 +42,7 @@ class ListClassRoomViewController extends GetxController {
 
   void checkTimer() async {
     while (true) {
-      await Future.delayed(const Duration(minutes: 60), () {
+      await Future.delayed(const Duration(seconds: 60), () {
         now.value = DateTime.now();
       });
     }

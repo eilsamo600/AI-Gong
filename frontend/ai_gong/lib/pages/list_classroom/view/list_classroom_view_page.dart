@@ -64,7 +64,7 @@ class ListClassRoomViewPage extends StatelessWidget {
                               ),
                             ),
                             const Spacer(),
-                            IconButton(onPressed: () => Get.toNamed(SearchViewPage.url), icon: const Icon(Icons.search)),
+                            IconButton(onPressed: () => Get.toNamed(SearchViewPage.url), padding: EdgeInsets.zero, icon: const Icon(Icons.search)),
                             const SizedBox(
                               width: 20,
                             ),
