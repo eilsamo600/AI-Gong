@@ -189,10 +189,27 @@ class MyInfoViewPage extends StatelessWidget {
                                                 fontSize: 12.5,
                                                 color: Color.fromARGB(
                                                     255, 0, 140, 255))),
-                                        SizedBox(width: 2),
-                                        Icon(Icons.chevron_right_sharp,
-                                            color: Color.fromARGB(
-                                                255, 0, 140, 255)),
+                                        //SizedBox(width: 2),
+                                        InkWell(
+                                          onTap: () {
+                                            // 클릭 이벤트
+                                          },
+                                          child: Padding(
+                                            padding: EdgeInsets.all(0.0),
+                                            child: Icon(
+                                                Icons.chevron_right_sharp,
+                                                color: Color.fromARGB(
+                                                    255, 0, 140, 255)),
+                                          ),
+                                        )
+
+                                        // IconButton(
+                                        //     icon: Icon(
+                                        //         Icons.chevron_right_sharp,
+                                        //         color: Color.fromARGB(
+                                        //             255, 0, 140, 255)),
+
+                                        //     onPressed: () {}),
                                       ],
                                     ),
                                     SizedBox(height: 10),
@@ -205,10 +222,22 @@ class MyInfoViewPage extends StatelessWidget {
                                                 fontSize: 12.5,
                                                 color: Color.fromARGB(
                                                     255, 0, 140, 255))),
-                                        SizedBox(width: 2),
-                                        Icon(Icons.chevron_right_sharp,
-                                            color: Color.fromARGB(
-                                                255, 0, 140, 255)),
+                                        // SizedBox(width: 2),
+                                        // Icon(Icons.chevron_right_sharp,
+                                        //     color: Color.fromARGB(
+                                        //         255, 0, 140, 255)),
+                                        InkWell(
+                                          onTap: () {
+                                            // 클릭 이벤트
+                                          },
+                                          child: Padding(
+                                            padding: EdgeInsets.all(0.0),
+                                            child: Icon(
+                                                Icons.chevron_right_sharp,
+                                                color: Color.fromARGB(
+                                                    255, 0, 140, 255)),
+                                          ),
+                                        )
                                       ],
                                     ),
                                   ],
