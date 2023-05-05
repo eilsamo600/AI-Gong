@@ -117,9 +117,10 @@ class LoginViewPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(LoginViewController());
+    Map<String, dynamic> json = {'강의목록': ''};
     return Scaffold(
         body: TimeTable(
-      classRoom: ClassRoom.fromJson({'강의목록': ''}),
+      classRoom: ClassRoom.fromJson(json),
     ));
   }
 }
