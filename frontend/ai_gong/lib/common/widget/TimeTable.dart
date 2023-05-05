@@ -12,9 +12,9 @@ class TimeTable extends StatelessWidget {
   static var kColumnLength = 11;
   static double kFirstColumnHeight = 20;
   static double kBoxSize = 52;
-  static double outwidth = 0.5;
-  static double verticalwidth = 0.3;
-  static double horizontalwidth = 0.3;
+  static double outwidth = 1.0;
+  static double verticalwidth = 0.5;
+  static double horizontalwidth = 0.5;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -56,12 +56,36 @@ class TimeTable extends StatelessWidget {
         child: VerticalDivider(
           color: Colors.grey,
           thickness: verticalwidth,
-          width: 0,
+          width: 0.0,
         ),
       ),
       Expanded(
         flex: 4,
         child: Stack(children: [
+          Column(
+            children: [
+              SizedBox(
+                height: 20,
+                child: Text(
+                  '${week[index]}',
+                  style: const TextStyle(fontSize: 11),
+                ),
+              ),
+              ...List.generate(
+                kColumnLength,
+                (index) {
+                  return Column(children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        border: (removed.contains(index) != false) ? const Border() : Border(top: BorderSide(color: Colors.grey, width: horizontalwidth)),
+                      ),
+                      height: kBoxSize,
+                    )
+                  ]);
+                },
+              ),
+            ],
+          ),
           if (classRoom.lectures!.containsKey((index + 1).toString()))
             ...List.generate(
               classRoom.lectures![(index + 1).toString()].runtimeType == List ? classRoom.lectures![(index + 1).toString()].length : 1,
@@ -71,7 +95,7 @@ class TimeTable extends StatelessWidget {
                   height: kBoxSize * (classRoom.lectures![(index + 1).toString()][idx]['수업시간'] / 60.0),
                   width: 85,
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 2.5, vertical: 1.0),
+                    padding: const EdgeInsets.only(top: 1.0, bottom: 1.0, left: 2.5, right: 7.5),
                     color: Color((Random().nextDouble() * 0xFFFFFF).toInt()).withAlpha(50),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -90,33 +114,6 @@ class TimeTable extends StatelessWidget {
                 );
               },
             ),
-          Column(
-            children: [
-              SizedBox(
-                height: 20,
-                child: Text(
-                  '${week[index]}',
-                  style: const TextStyle(fontSize: 11),
-                ),
-              ),
-              ...List.generate(
-                kColumnLength,
-                (index) {
-                  return Column(children: [
-                    if (removed.contains(index) == false)
-                      Divider(
-                        color: Colors.grey,
-                        thickness: horizontalwidth,
-                        height: 0,
-                      ),
-                    SizedBox(
-                      height: kBoxSize,
-                    )
-                  ]);
-                },
-              ),
-            ],
-          ),
         ]),
       )
     ];
@@ -132,20 +129,19 @@ class TimeTable extends StatelessWidget {
           ...List.generate(
             kColumnLength,
             (index) {
-              return Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
-                const Divider(
-                  color: Colors.grey,
-                  thickness: 0.7,
-                  height: 0,
+              return Container(
+                decoration: BoxDecoration(
+                    border: Border(
+                  top: BorderSide(color: Colors.grey, width: horizontalwidth),
+                )),
+                width: double.infinity,
+                height: kBoxSize,
+                child: Text(
+                  '${index + 9}',
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 11),
                 ),
-                SizedBox(
-                  height: kBoxSize,
-                  child: Text(
-                    '${index + 9}',
-                    style: const TextStyle(fontSize: 11),
-                  ),
-                )
-              ]);
+              );
             },
           ),
         ],
