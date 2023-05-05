@@ -9,8 +9,6 @@ class LoginViewPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(LoginViewController());
-    return const Scaffold(
-      body: Text('로그인 페이지'),
-    );
+    return const Scaffold(body: Text('로그인 페이지'));
   }
 }
