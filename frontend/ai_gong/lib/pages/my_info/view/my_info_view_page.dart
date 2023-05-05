@@ -34,17 +34,17 @@ class MyInfoViewPage extends StatelessWidget {
                       Text(
                         "찜 4개",
                         //textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 23,
-                            fontWeight: FontWeight.w900,
-                            fontFamily: 'LatoBold'),
+                        style: TextStyle(fontSize: 24, fontFamily: 'SuitEB'),
                       ),
                       SizedBox(width: 40),
                       Text(
                         "예약 2건",
+
                         //textAlign: TextAlign.center,
                         style: TextStyle(
-                            fontSize: 23, fontWeight: FontWeight.bold),
+                          fontFamily: 'SuitEB',
+                          fontSize: 24,
+                        ),
                       ),
                     ],
                   ),
@@ -62,7 +62,7 @@ class MyInfoViewPage extends StatelessWidget {
                     "예약현황",
                     style: TextStyle(
                       fontSize: 20,
-                      fontWeight: FontWeight.w900,
+                      fontFamily: 'SuitEB',
                     ),
                   ),
                 ),
@@ -122,7 +122,7 @@ class MyInfoViewPage extends StatelessWidget {
                             Container(
                                 alignment: Alignment.centerRight,
                                 child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  // crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     SizedBox(height: 3),
                                     Text("배정인증 완료",
@@ -141,63 +141,209 @@ class MyInfoViewPage extends StatelessWidget {
                       ),
                       Container(
                           height: 2, color: Color.fromARGB(255, 228, 228, 228)),
+                      Container(
+                        width: 600,
+                        // color: Colors.red,
+                        padding:
+                            EdgeInsets.symmetric(vertical: 25, horizontal: 10),
+                        //margin: EdgeInsets.all(15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment
+                              .spaceBetween, //하나는 왼쪽 정렬, 하나는 오른쪽 정렬하게 만들어줌
+                          children: [
+                            Container(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("소회의실 1",
+                                      style: TextStyle(
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.w900)),
+                                  SizedBox(height: 3),
+                                  Text(
+                                    "AI공학관 404호",
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                  SizedBox(height: 3),
+                                  Text("2023.05.03 16:57",
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          color: Color.fromARGB(
+                                              255, 140, 140, 140))),
+                                ],
+                              ),
+                            ),
+                            Container(
+                                alignment: Alignment.centerRight,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        SizedBox(height: 3),
+                                        Text("배정인증하기",
+                                            style: TextStyle(
+                                                fontSize: 12.5,
+                                                color: Color.fromARGB(
+                                                    255, 0, 140, 255))),
+                                        SizedBox(width: 2),
+                                        Icon(Icons.chevron_right_sharp,
+                                            color: Color.fromARGB(
+                                                255, 0, 140, 255)),
+                                      ],
+                                    ),
+                                    SizedBox(height: 10),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        SizedBox(height: 3),
+                                        Text("취소하기",
+                                            style: TextStyle(
+                                                fontSize: 12.5,
+                                                color: Color.fromARGB(
+                                                    255, 0, 140, 255))),
+                                        SizedBox(width: 2),
+                                        Icon(Icons.chevron_right_sharp,
+                                            color: Color.fromARGB(
+                                                255, 0, 140, 255)),
+                                      ],
+                                    ),
+                                  ],
+                                ))
+                          ],
+                        ),
+                      ),
+                      Container(
+                          height: 2, color: Color.fromARGB(255, 228, 228, 228)),
+                      Container(
+                        width: 600,
+                        // color: Colors.red,
+                        padding:
+                            EdgeInsets.symmetric(vertical: 25, horizontal: 10),
+                        //margin: EdgeInsets.all(15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment
+                              .spaceBetween, //하나는 왼쪽 정렬, 하나는 오른쪽 정렬하게 만들어줌
+                          children: [
+                            Container(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("소회의실 1",
+                                      style: TextStyle(
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.w900)),
+                                  SizedBox(height: 3),
+                                  Text(
+                                    "AI공학관 404호",
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                  SizedBox(height: 3),
+                                  Text("2023.05.03 16:57",
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          color: Color.fromARGB(
+                                              255, 140, 140, 140))),
+                                ],
+                              ),
+                            ),
+                            Container(
+                                alignment: Alignment.centerRight,
+                                child: Row(
+                                  // crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(height: 3),
+                                    Text("취소되었습니다.",
+                                        style: TextStyle(
+                                            fontSize: 12.5,
+                                            color: Color.fromARGB(
+                                                255, 255, 44, 44))),
+                                    SizedBox(width: 3),
+                                    //Icon(Icons.check_circle_outline_rounded),
+                                  ],
+                                ))
+                          ],
+                        ),
+                      ),
+                      Container(
+                          height: 2, color: Color.fromARGB(255, 228, 228, 228)),
+                      Container(
+                        width: 600,
+                        // color: Colors.red,
+                        padding:
+                            EdgeInsets.symmetric(vertical: 25, horizontal: 10),
+                        //margin: EdgeInsets.all(15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("예약 정보가 없습니다.",
+                                style: TextStyle(
+                                    color: Color.fromRGBO(103, 103, 103, 1),
+                                    fontSize: 17)),
+                            TextButton(
+                              style: ButtonStyle(
+                                shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(13.0),
+                                  ),
+                                ),
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Color.fromARGB(255, 0, 140, 255)),
+                                minimumSize:
+                                    MaterialStateProperty.all(Size(90, 40)),
+                              ),
+                              onPressed: () {},
+                              child: Text(
+                                '예약하기',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ],
             ),
-            // ),
-            //Container(height: 2, color: Color.fromARGB(255, 114, 114, 114)),
-            // Expanded(
-            //   child: Column(
-            //     children: [
-            //       Container(
-            //         width: 600,
-            //         color: Color.fromARGB(255, 241, 249, 255),
-            //         child: Text(
-            //           "배정현황",
-            //           style: TextStyle(fontSize: 20),
-            //         ),
-            //       ),
-            //       Container(
-            //         height: 200,
-            //         child: Column(
-            //           mainAxisAlignment: MainAxisAlignment.center,
-            //           children: [
-            //             Text(
-            //               "아직 배정 인증이 되지 않았습니다.",
-            //               style: TextStyle(fontSize: 20),
-            //             ),
-            //             Text(
-            //               "배정 인증이 완료되었습니다.",
-            //               style: TextStyle(fontSize: 20),
-            //             ),
-            //             SizedBox(height: 20),
-            //             TextButton(
-            //               style: ButtonStyle(
-            //                 shape: MaterialStateProperty.all<
-            //                     RoundedRectangleBorder>(
-            //                   RoundedRectangleBorder(
-            //                     borderRadius: BorderRadius.circular(15.0),
-            //                   ),
-            //                 ),
-            //                 backgroundColor: MaterialStateProperty.all<Color>(
-            //                     Color.fromARGB(255, 241, 249, 255)),
-            //                 minimumSize:
-            //                     MaterialStateProperty.all(Size(100, 50)),
-            //               ),
-            //               onPressed: () {},
-            //               child: Text(
-            //                 '배정인증 하기',
-            //                 style: TextStyle(color: Colors.black, fontSize: 15),
-            //               ),
-            //             ),
-            //           ],
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
+            Container(
+              child: Expanded(
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    margin: EdgeInsets.only(bottom: 20.0),
+                    child: TextButton(
+                      style: ButtonStyle(
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                        ),
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.white),
+                        minimumSize: MaterialStateProperty.all(Size(100, 50)),
+                      ),
+                      onPressed: () {},
+                      child: Text(
+                        '로그아웃',
+                        style: TextStyle(color: Colors.black, fontSize: 15),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
