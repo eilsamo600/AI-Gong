@@ -116,7 +116,7 @@ class ClassRoomComponent extends StatelessWidget {
                     height: 20,
                   ),
                   Obx(() => ListClassRoomViewController.instance.classRoom.value.roomid == null
-                      ? const CupertinoActivityIndicator()
+                      ? const Center(child: CupertinoActivityIndicator())
                       : TimeTable(
                           classRoom: ListClassRoomViewController.instance.classRoom.value,
                         ))
