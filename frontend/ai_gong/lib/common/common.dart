@@ -15,7 +15,6 @@ class Common extends GetxService {
   }
 
   String getNowTime(DateTime now) {
-    print(now.hour);
     return '${now.hour > 12 ? '오후' : '오전'} ${now.hour > 12 ? now.hour == 0 ? 12 : now.hour - 12 : now.hour}시 ${now.minute}분';
   }
 

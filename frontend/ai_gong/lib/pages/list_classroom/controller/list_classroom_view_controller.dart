@@ -2,6 +2,7 @@ import 'package:ai_gong/common/service_response.dart';
 import 'package:ai_gong/restAPI/api_service.dart';
 import 'package:ai_gong/restAPI/models/Classroom.dart';
 import 'package:ai_gong/restAPI/response/get_classroom_list_response.dart';
+import 'package:ai_gong/restAPI/response/get_classroom_response.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -25,6 +26,15 @@ class ListClassRoomViewController extends GetxController {
       classRoomList.value = response.value!.classrooms!;
     }
     classRoomList.refresh();
+  }
+
+  Future<void> getClassRoom(int id) async {
+    classRoom.value = ClassRoom();
+    ApiResponse<ClassRoomResponse> response = await ApiService.instance.getClassRoom(id);
+    await Future.delayed(const Duration(milliseconds: 150));
+    if (response.result) {
+      classRoom.value = response.value!.classroom!;
+    }
   }
 
   void selectFilter(int index) {
@@ -51,6 +61,7 @@ class ListClassRoomViewController extends GetxController {
   Rx<ScrollController> scrollcontroller = ScrollController().obs;
   Rx<DateTime> now = DateTime.now().obs;
 
+  Rx<ClassRoom> classRoom = ClassRoom().obs;
   RxList<ClassRoom> classRoomList = RxList<ClassRoom>();
   RxList<bool> onTapList = List.filled(4, false).obs;
   RxList<String> filterList = ['새로고침', '즐겨찾기', '바로', '곧 끝나는'].obs;

@@ -1,6 +1,10 @@
+import 'package:ai_gong/common/widget/TimeTable.dart';
 import 'package:ai_gong/common/widget/panel_component.dart';
+import 'package:ai_gong/pages/list_classroom/controller/list_classroom_view_controller.dart';
 import 'package:ai_gong/restAPI/models/Classroom.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ClassRoomComponent extends StatelessWidget {
   final ClassRoom model;
@@ -10,15 +14,17 @@ class ClassRoomComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+        ListClassRoomViewController.instance.getClassRoom(int.parse(model.roomid!));
         showModalBottomSheet(
             isScrollControlled: true,
             context: context,
             builder: ((context) {
               return PanelComponent(
                   child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    padding: const EdgeInsets.fromLTRB(0, 10, 370, 0),
+                    padding: const EdgeInsets.fromLTRB(20, 15, 0, 0),
                     child: Column(
                       //crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -31,28 +37,20 @@ class ClassRoomComponent extends StatelessWidget {
                   ),
                   const SizedBox(height: 22),
                   Container(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 370, 0),
+                    margin: const EdgeInsets.only(left: 35),
+                    padding: const EdgeInsets.only(bottom: 4),
+                    decoration: const BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(width: 0.5, color: Colors.black),
+                      ),
+                    ),
                     child: const Text(
                       "현재 강의",
                       style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                     ),
                   ),
-                  const SizedBox(height: 2),
-                  Container(
-                    height: 1,
-                    padding: const EdgeInsets.fromLTRB(0, 0, 370, 0),
-                    child: const SizedBox(
-                      width: 60,
-                      height: 1,
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(30, 20, 0, 0),
+                    padding: const EdgeInsets.fromLTRB(40, 20, 0, 0),
                     child: Column(
                       children: [
                         Row(
@@ -114,6 +112,14 @@ class ClassRoomComponent extends StatelessWidget {
                       ],
                     ),
                   ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Obx(() => ListClassRoomViewController.instance.classRoom.value.roomid == null
+                      ? const CupertinoActivityIndicator()
+                      : TimeTable(
+                          classRoom: ListClassRoomViewController.instance.classRoom.value,
+                        ))
                 ],
               ));
             }));
