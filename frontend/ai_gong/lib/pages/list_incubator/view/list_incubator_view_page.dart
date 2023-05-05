@@ -55,10 +55,6 @@ class ListIncubatorViewPage extends StatelessWidget {
                             ),
                           ],
                         ))),
-                SliverPersistentHeader(
-                    pinned: true,
-                    floating: true,
-                    delegate: HeaderDelegate(controller)),
                 Obx(
                   () => SliverList(
                       delegate: SliverChildBuilderDelegate(
@@ -88,44 +84,5 @@ class ListIncubatorViewPage extends StatelessWidget {
             ))
           ],
         ));
-  }
-}
-
-class HeaderDelegate extends SliverPersistentHeaderDelegate {
-  final ListIncubatorViewController controller;
-  HeaderDelegate(this.controller);
-
-  @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return Container(
-      padding: const EdgeInsets.only(top: 10, left: 10),
-      decoration: BoxDecoration(
-          color: Colors.white,
-          border: shrinkOffset > 0
-              ? const Border(bottom: BorderSide(color: Colors.black12))
-              : const Border()),
-      child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          physics: const BouncingScrollPhysics(),
-          itemCount: controller.onTapList.value.length,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5.0),
-              child: Column(),
-            );
-          }),
-    );
-  }
-
-  @override
-  double get maxExtent => 45;
-
-  @override
-  double get minExtent => 45;
-
-  @override
-  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
-    return false;
   }
 }
