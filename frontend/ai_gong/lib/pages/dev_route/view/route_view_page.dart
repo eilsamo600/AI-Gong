@@ -1,6 +1,6 @@
 import 'package:ai_gong/pages/dev_route/controller/route_view_controller.dart';
+import 'package:ai_gong/pages/login/view/login_view_page.dart';
 import 'package:ai_gong/pages/main/view/main_view_page.dart';
-import 'package:ai_gong/pages/my_info/view/my_info_view_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -25,9 +25,9 @@ class RouteViewPage extends StatelessWidget {
                   child: const Text('Main View Page', style: TextStyle(color: Colors.black))),
               ElevatedButton(
                   onPressed: () {
-                    Get.offAllNamed(MyInfoViewPage.url);
+                    Get.offAllNamed(LoginViewPage.url);
                   },
-                  child: const Text('My Info View Page', style: TextStyle(color: Colors.black)))
+                  child: const Text('Login Page', style: TextStyle(color: Colors.black)))
             ],
           ),
         ),

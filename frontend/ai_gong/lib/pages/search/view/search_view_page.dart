@@ -78,43 +78,11 @@ class SearchViewPage extends StatelessWidget {
               child: Obx(
                 () => controller.classRoomList.isEmpty
                     ? Column(
-                        children: [
-                          const SizedBox(
+                        children: const [
+                          SizedBox(
                             height: 80,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Image(
-                                image: AssetImage('assets/images/room.png'),
-                                width: 60,
-                                height: 60,
-                                fit: BoxFit.cover,
-                              ),
-                              SizedBox(
-                                width: 30,
-                              ),
-                              Image(
-                                image: AssetImage('assets/images/professor.png'),
-                                width: 60,
-                                height: 60,
-                                fit: BoxFit.cover,
-                              ),
-                              SizedBox(
-                                width: 30,
-                              ),
-                              Image(
-                                image: AssetImage('assets/images/class.png'),
-                                width: 60,
-                                height: 60,
-                                fit: BoxFit.cover,
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          const Text(
+                          Text(
                             '찾고 싶은 강의실, 교수, 수업을\n검색해 보세요.',
                             textAlign: TextAlign.center,
                             style: TextStyle(

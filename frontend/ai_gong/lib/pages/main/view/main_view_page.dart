@@ -32,7 +32,8 @@ class MainViewPage extends StatelessWidget {
                 children: [
                   Expanded(child: _bottomNavigationButton(index: 0, icon: [Icons.feed_outlined, Icons.feed])),
                   // Expanded(child: _bottomNavigationButton(index: 1, icon: [Icons.search_outlined, LineIcons.search])),
-                  Expanded(child: _bottomNavigationButton(index: 1, icon: [Icons.account_circle_outlined, Icons.account_circle])),
+                  Expanded(child: _bottomNavigationButton(index: 1, icon: [Icons.access_time, Icons.access_time_filled])),
+                  Expanded(child: _bottomNavigationButton(index: 2, icon: [Icons.account_circle_outlined, Icons.account_circle])),
                 ],
               ),
             ),

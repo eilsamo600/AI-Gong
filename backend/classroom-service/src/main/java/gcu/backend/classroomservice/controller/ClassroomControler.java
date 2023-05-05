@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import gcu.backend.classroomservice.model.ClassRoom;
@@ -41,5 +42,15 @@ public class ClassroomControler {
             classRoom.set강의목록(null);
         }
         return new ResponseEntity<List<ClassRoom>>(classRoomList, HttpStatus.OK);
+    }
+
+    @GetMapping("/classroom/{id}")
+    @Operation(summary = "특정 강의실 조회", description = "특정 강의실을 조회합니다.")
+    public ResponseEntity<ClassRoom> getClassRoom(@PathVariable String id) {
+        ClassRoom classRoom = classRoomRepository.findBy호(id);
+        if (classRoom == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<ClassRoom>(classRoom, HttpStatus.OK);
     }
 }

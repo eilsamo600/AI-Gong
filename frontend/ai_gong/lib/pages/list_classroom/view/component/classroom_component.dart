@@ -1,6 +1,10 @@
+import 'package:ai_gong/common/widget/TimeTable.dart';
 import 'package:ai_gong/common/widget/panel_component.dart';
+import 'package:ai_gong/pages/list_classroom/controller/list_classroom_view_controller.dart';
 import 'package:ai_gong/restAPI/models/Classroom.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ClassRoomComponent extends StatelessWidget {
   final ClassRoom model;
@@ -10,51 +14,43 @@ class ClassRoomComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+        ListClassRoomViewController.instance.getClassRoom(int.parse(model.roomid!));
         showModalBottomSheet(
             isScrollControlled: true,
             context: context,
             builder: ((context) {
               return PanelComponent(
                   child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    padding: EdgeInsets.fromLTRB(0, 10, 370, 0),
+                    padding: const EdgeInsets.fromLTRB(20, 15, 0, 0),
                     child: Column(
                       //crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           '${model.roomid ?? '???'}호',
-                          style: const TextStyle(
-                              fontSize: 27, fontWeight: FontWeight.bold),
+                          style: const TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
                         ),
                       ],
                     ),
                   ),
-                  SizedBox(height: 22),
+                  const SizedBox(height: 22),
                   Container(
-                    padding: EdgeInsets.fromLTRB(0, 0, 370, 0),
-                    child: Text(
-                      "현재 강의",
-                      style:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  SizedBox(height: 2),
-                  Container(
-                    height: 1,
-                    padding: EdgeInsets.fromLTRB(0, 0, 370, 0),
-                    child: SizedBox(
-                      width: 60,
-                      height: 1,
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                        ),
+                    margin: const EdgeInsets.only(left: 35),
+                    padding: const EdgeInsets.only(bottom: 4),
+                    decoration: const BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(width: 0.5, color: Colors.black),
                       ),
+                    ),
+                    child: const Text(
+                      "현재 강의",
+                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(30, 20, 0, 0),
+                    padding: const EdgeInsets.fromLTRB(40, 20, 0, 0),
                     child: Column(
                       children: [
                         Row(
@@ -62,27 +58,21 @@ class ClassRoomComponent extends StatelessWidget {
                             model.currentLecture == null
                                 ? const Text(
                                     '다음 수업이 없습니다.',
-                                    style: TextStyle(
-                                        fontSize: 12, color: Colors.black87),
+                                    style: TextStyle(fontSize: 12, color: Colors.black87),
                                   )
                                 : Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         model.currentLecture!['이름'] ?? '???',
-                                        style: const TextStyle(
-                                            fontSize: 12,
-                                            color: Colors.black87),
+                                        style: const TextStyle(fontSize: 12, color: Colors.black87),
                                       ),
                                       const SizedBox(
                                         height: 5,
                                       ),
                                       Text(
                                         '${model.currentLecture!['담당교수'] ?? '???'} 교수',
-                                        style: const TextStyle(
-                                            fontSize: 12,
-                                            color: Colors.black87),
+                                        style: const TextStyle(fontSize: 12, color: Colors.black87),
                                       ),
                                       const SizedBox(
                                         height: 5,
@@ -97,7 +87,7 @@ class ClassRoomComponent extends StatelessWidget {
                                   ),
                             const Spacer(),
                             Container(
-                              padding: EdgeInsets.only(right: 30),
+                              padding: const EdgeInsets.only(right: 30),
                               child: Text(
                                   (model.usableLevel ?? 1) == 1
                                       ? '사용 가능'
@@ -113,8 +103,7 @@ class ClassRoomComponent extends StatelessWidget {
                                         : model.usableLevel == 2
                                             ? Colors.orange
                                             : model.usableLevel == 4
-                                                ? const Color.fromARGB(
-                                                    255, 206, 0, 0)
+                                                ? const Color.fromARGB(255, 206, 0, 0)
                                                 : Colors.red,
                                   )),
                             ),
@@ -122,7 +111,15 @@ class ClassRoomComponent extends StatelessWidget {
                         ),
                       ],
                     ),
-                  )
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Obx(() => ListClassRoomViewController.instance.classRoom.value.roomid == null
+                      ? const CupertinoActivityIndicator()
+                      : TimeTable(
+                          classRoom: ListClassRoomViewController.instance.classRoom.value,
+                        ))
                 ],
               ));
             }));
@@ -155,8 +152,7 @@ class ClassRoomComponent extends StatelessWidget {
               children: [
                 Text(
                   '${model.roomid ?? '???'}호',
-                  style: const TextStyle(
-                      fontSize: 25, fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(
                   height: 5,
@@ -168,16 +164,14 @@ class ClassRoomComponent extends StatelessWidget {
                     children: [
                       Text(
                         model.department ?? '???전공',
-                        style: const TextStyle(
-                            fontSize: 12, color: Colors.black87),
+                        style: const TextStyle(fontSize: 12, color: Colors.black87),
                       ),
                       const SizedBox(
                         height: 7,
                       ),
                       Text(
                         '${model.floor ?? '???'}층, 수용 인원 ${model.capacity ?? '???'}명',
-                        style: const TextStyle(
-                            fontSize: 12, color: Colors.black54),
+                        style: const TextStyle(fontSize: 12, color: Colors.black54),
                       ),
                       const SizedBox(
                         height: 7,
@@ -186,8 +180,7 @@ class ClassRoomComponent extends StatelessWidget {
                         children: [
                           Text(
                             '${model.scale ?? '???'} 강의실 | ',
-                            style: const TextStyle(
-                                fontSize: 12, color: Colors.black54),
+                            style: const TextStyle(fontSize: 12, color: Colors.black54),
                           ),
                           Text(
                               (model.usableLevel ?? 1) == 1
@@ -197,8 +190,7 @@ class ClassRoomComponent extends StatelessWidget {
                                       : model.usableLevel == 4
                                           ? '곧 수업 시작'
                                           : '사용 불가',
-                              style: const TextStyle(
-                                  fontSize: 12, color: Colors.black)),
+                              style: const TextStyle(fontSize: 12, color: Colors.black)),
                         ],
                       ),
                     ],
@@ -219,24 +211,21 @@ class ClassRoomComponent extends StatelessWidget {
                       children: [
                         Text(
                           model.currentLecture!['이름'] ?? '???',
-                          style: const TextStyle(
-                              fontSize: 12, color: Colors.black87),
+                          style: const TextStyle(fontSize: 12, color: Colors.black87),
                         ),
                         const SizedBox(
                           height: 5,
                         ),
                         Text(
                           '${model.currentLecture!['담당교수'] ?? '???'} 교수',
-                          style: const TextStyle(
-                              fontSize: 12, color: Colors.black87),
+                          style: const TextStyle(fontSize: 12, color: Colors.black87),
                         ),
                         const SizedBox(
                           height: 5,
                         ),
                         Text(
                           model.currentLecture!['시간'] ?? '???',
-                          style: const TextStyle(
-                              fontSize: 12, color: Colors.black87),
+                          style: const TextStyle(fontSize: 12, color: Colors.black87),
                         ),
                       ],
                     ),
