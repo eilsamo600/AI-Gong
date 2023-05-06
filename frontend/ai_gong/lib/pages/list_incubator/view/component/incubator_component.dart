@@ -15,8 +15,10 @@ class IncubatorComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> buttons = [];
     final now = DateTime.now().toUtc();
-    final firstTime = DateFormat('d').format(DateTime.utc(now.year, now.month, now.day - (now.weekday - 1)));
-    final lastTime = DateFormat('d').format(DateTime.utc(now.year, now.month, now.day + (7 - now.weekday)));
+    final firstTime = DateFormat('d')
+        .format(DateTime.utc(now.year, now.month, now.day - (now.weekday - 1)));
+    final lastTime = DateFormat('d')
+        .format(DateTime.utc(now.year, now.month, now.day + (7 - now.weekday)));
     final monthText = DateFormat('M월').format(DateTime(now.month, 5));
 
     final controller = Get.put(ListIncubatorViewController());
@@ -56,11 +58,16 @@ class IncubatorComponent extends StatelessWidget {
                             SizedBox(
                               width: 15,
                             ),
-                            Text(monthText, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, letterSpacing: 2.0)),
+                            Text(monthText,
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    letterSpacing: 2.0)),
                           ],
                         )),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 30, vertical: 15),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -69,14 +76,23 @@ class IncubatorComponent extends StatelessWidget {
                               children: [
                                 Text(
                                   weeks[i],
-                                  style: TextStyle(color: i > 4 ? Colors.grey : Colors.black),
+                                  style: TextStyle(
+                                      color:
+                                          i > 4 ? Colors.grey : Colors.black),
                                 ),
                                 SizedBox(
                                   height: 10,
                                 ),
                                 Text(
-                                  DateFormat('d').format(DateTime.utc(now.year, now.month, now.day - (now.weekday - 1) + i)),
-                                  style: TextStyle(color: i > 4 ? Colors.grey : Colors.black, decoration: i > 4 ? TextDecoration.lineThrough : null),
+                                  DateFormat('d').format(DateTime.utc(
+                                      now.year,
+                                      now.month,
+                                      now.day - (now.weekday - 1) + i)),
+                                  style: TextStyle(
+                                      color: i > 4 ? Colors.grey : Colors.black,
+                                      decoration: i > 4
+                                          ? TextDecoration.lineThrough
+                                          : null),
                                 )
                               ],
                             )
@@ -117,7 +133,9 @@ class IncubatorComponent extends StatelessWidget {
                         spacing: 50.0, // 각 버튼 사이의 가로 간격
                         runSpacing: 40.0, // 버튼 사이 세로 간격
                         children: [
-                          for (double i = 9.0, j = 1.0, a = 0; i < 17.0; i += 0.5, j++, a++)
+                          for (double i = 9.0, j = 1.0, a = 0;
+                              i < 17.0;
+                              i += 0.5, j++, a++)
                             InkWell(
                               onTap: () {
                                 controller.selected(a.toInt());
@@ -125,11 +143,15 @@ class IncubatorComponent extends StatelessWidget {
                               child: Obx(
                                 () => Container(
                                   decoration: BoxDecoration(
-                                      color: controller.states.value[a.toInt()] == 0
-                                          ? Colors.white
-                                          : controller.states.value[a.toInt()] == 2
-                                              ? Colors.grey.shade900
-                                              : Colors.grey[300],
+                                      color:
+                                          controller.states.value[a.toInt()] ==
+                                                  0
+                                              ? Colors.white
+                                              : controller.states
+                                                          .value[a.toInt()] ==
+                                                      2
+                                                  ? Colors.grey.shade900
+                                                  : Colors.grey[300],
                                       boxShadow: const [
                                         BoxShadow(
                                           color: Color(0xffDDDDDD),
@@ -208,7 +230,8 @@ class IncubatorComponent extends StatelessWidget {
                                           style: TextStyle(fontSize: 15),
                                         ),
                                         SizedBox(height: 8),
-                                        Text('예약시간까지 배정인증을 해주세요.', style: TextStyle(fontSize: 15)),
+                                        Text('예약시간까지 배정인증을 해주세요.',
+                                            style: TextStyle(fontSize: 15)),
                                       ],
                                     ),
                                     actions: <Widget>[
@@ -221,7 +244,9 @@ class IncubatorComponent extends StatelessWidget {
                                           Navigator.of(context).pop();
                                           Navigator.push(
                                             context,
-                                            MaterialPageRoute(builder: (context) => ListIncubatorViewPage()),
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ListIncubatorViewPage()),
                                           );
                                         },
                                       ),
@@ -232,7 +257,8 @@ class IncubatorComponent extends StatelessWidget {
                             },
                             child: Text(
                               '예약하기',
-                              style: TextStyle(color: Colors.black, fontSize: 16),
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 16),
                             ),
                           ),
                         ),
@@ -275,7 +301,8 @@ class IncubatorComponent extends StatelessWidget {
                 Text(
                   '소회의실 1',
                   //'소회의실 ${model.roomid ?? '???'}',
-                  style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 25, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(
                   height: 5,
@@ -287,7 +314,8 @@ class IncubatorComponent extends StatelessWidget {
                     children: [
                       Text(
                         'AI공학관 ${model.roomid ?? '???'}호',
-                        style: const TextStyle(fontSize: 12, color: Colors.black54),
+                        style: const TextStyle(
+                            fontSize: 12, color: Colors.black54),
                       ),
                       const SizedBox(
                         height: 7,
@@ -317,7 +345,8 @@ class IncubatorComponent extends StatelessWidget {
                         ),
                         Text(
                           model.currentLecture!['시간'] ?? '???',
-                          style: const TextStyle(fontSize: 12, color: Colors.black87),
+                          style: const TextStyle(
+                              fontSize: 12, color: Colors.black87),
                         ),
                       ],
                     ),

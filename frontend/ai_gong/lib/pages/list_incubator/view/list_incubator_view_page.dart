@@ -71,21 +71,49 @@ class ListIncubatorViewPage extends StatelessWidget {
                                       borderRadius:
                                           BorderRadius.circular(10.0)),
                                   //Dialog Main Title
-                                  title: Column(
-                                    children: const <Widget>[
-                                      Text("소회의실 이용안내"),
-                                    ],
+                                  title: Center(
+                                    child: Text("소회의실 이용안내",
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold)),
                                   ),
                                   //
-                                  content: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: const <Widget>[
-                                      Text(
-                                        "\n운영 시간\n공휴일을 제외한 평일(월-금) 09:00-17:00 \n\n장소\n가천대학교 AI공학관 404호, 405호 \n\n소회의실 예약 안내\n예약 가능 인원 : 2-6명\n예약 가능 시간 : 30분 단위로 최대 2시간 예약 가능\n\n이용수칙\n1. 음료를 제외한 음식물 반입을 금지한다.\n2. 타 학우들의 면학환경을 위해 최대한 정숙한다. \n3. 장시간 자리 비움을 금지한다.\n4. 자리 정돈 후 퇴실힌다.\n\n",
-                                      )
-                                    ],
+                                  content: Container(
+                                    child: SingleChildScrollView(
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: const <Widget>[
+                                          Text(
+                                            "\n운영 시간",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Text("공휴일을 제외한 평일(월-금) 09:00-17:00"),
+                                          Text("\n장소",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold)),
+                                          Text("가천대학교 AI공학관 404호, 405호 "),
+                                          Text("\n소회의실 예약 안내",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold)),
+                                          Text("예약 가능 인원 : 2-6명"),
+                                          Text(
+                                              "예약 가능 시간 : 30분 단위, 최대 2시간까지 예약 가능"),
+                                          Text("배정인증은 소회의실 근처 와이파이 연결 여부로 가능"),
+                                          Text(
+                                              "예약시간 10분 후까지 배정인증이 완료되지 않으면 자동으로 예약 취소"),
+                                          Text("\n이용수칙",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold)),
+                                          Text("1. 음료를 제외한 음식물 반입을 금지한다."),
+                                          Text("2. 타 학우들의 면학환경을 위해 최대한 정숙한다."),
+                                          Text("3. 장시간 자리 비움을 금지한다."),
+                                          Text("4. 자리 정돈 후 퇴실힌다.\n"),
+                                        ],
+                                      ),
+                                    ),
                                   ),
                                   actions: <Widget>[
                                     TextButton(
