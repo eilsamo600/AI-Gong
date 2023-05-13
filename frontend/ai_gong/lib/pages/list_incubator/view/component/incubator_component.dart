@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:ai_gong/common/widget/panel_component.dart';
 import 'package:ai_gong/pages/list_incubator/controller/list_incubator_view_controller.dart';
 import 'package:ai_gong/pages/list_incubator/view/list_incubator_view_page.dart';
@@ -14,7 +16,7 @@ class IncubatorComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> buttons = [];
-    final now = DateTime.now().toUtc();
+    final now = DateTime.now().toUtc().add(Duration(days: 2));
     final firstTime = DateFormat('d')
         .format(DateTime.utc(now.year, now.month, now.day - (now.weekday - 1)));
     final lastTime = DateFormat('d')
@@ -25,10 +27,13 @@ class IncubatorComponent extends StatelessWidget {
     const textstyle = TextStyle(fontSize: 20);
     const textstyle2 = TextStyle(fontSize: 25, fontWeight: FontWeight.bold);
     List<String> weeks = ['월', '화', '수', '목', '금', '토', '일'];
+    List<String> numcnt = ['-', '0', '+'];
 
     return InkWell(
       onTap: () {
         controller.statesInit();
+        controller.datesInit();
+
         showModalBottomSheet(
             isScrollControlled: true,
             context: context,
@@ -65,40 +70,113 @@ class IncubatorComponent extends StatelessWidget {
                                     letterSpacing: 2.0)),
                           ],
                         )),
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(
+                    //       horizontal: 30, vertical: 15),
+                    //   child: Row(
+                    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //     children: [
+                    //       for (var i = 0; i < 7; i++)
+                    //         Column(
+                    //           children: [
+                    //             Text(
+                    //               weeks[i],
+                    //               style: TextStyle(
+                    //                   color:
+                    //                       i > 4 ? Colors.grey : Colors.black),
+                    //             ),
+                    //             SizedBox(
+                    //               height: 10,
+                    //             ),
+                    //             Text(
+                    //               DateFormat('d').format(DateTime.utc(
+                    //                   now.year,
+                    //                   now.month,
+                    //                   now.day - (now.weekday - 1) + i)),
+                    //               style: TextStyle(
+                    //                   color: i > 4 ? Colors.grey : Colors.black,
+                    //                   decoration: i > 4
+                    //                       ? TextDecoration.lineThrough
+                    //                       : null),
+                    //             )
+                    //           ],
+                    //         )
+                    //     ],
+                    //   ),
+                    // ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 30, vertical: 15),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          for (var i = 0; i < 7; i++)
-                            Column(
-                              children: [
-                                Text(
-                                  weeks[i],
-                                  style: TextStyle(
-                                      color:
-                                          i > 4 ? Colors.grey : Colors.black),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  DateFormat('d').format(DateTime.utc(
-                                      now.year,
-                                      now.month,
-                                      now.day - (now.weekday - 1) + i)),
-                                  style: TextStyle(
-                                      color: i > 4 ? Colors.grey : Colors.black,
-                                      decoration: i > 4
-                                          ? TextDecoration.lineThrough
-                                          : null),
-                                )
-                              ],
-                            )
-                        ],
-                      ),
-                    ),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 30, vertical: 15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            for (var i = 0, j = int.parse(firstTime);
+                                i < 7;
+                                i++, j++)
+                              InkWell(
+                                onTap: () {
+                                  controller.date(i.toInt(), j.toInt());
+                                },
+                                child: Obx(() => Container(
+                                      width: 50,
+                                      height: 65,
+                                      decoration: BoxDecoration(
+                                        border:
+                                            controller.dates.value[i.toInt()] ==
+                                                    2
+                                                ? Border.all(
+                                                    color: Color(0xff567BE6),
+                                                    width: 2.0,
+                                                  )
+                                                // ) : Border.all(
+                                                //   color: Color(0xff567BE6),
+                                                //   width: 2.0,
+                                                // ),
+                                                : null,
+                                        color:
+                                            controller.dates.value[i.toInt()] ==
+                                                    2
+                                                ? Color(0xffEFF3FF)
+                                                : null,
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          Text(
+                                            weeks[i],
+                                            style: TextStyle(
+                                                color: i > 4
+                                                    ? Colors.grey
+                                                    : Colors.black),
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Text(
+                                            DateFormat('d').format(DateTime.utc(
+                                                now.year,
+                                                now.month,
+                                                now.day -
+                                                    (now.weekday - 1) +
+                                                    i)),
+                                            style: TextStyle(
+                                                color: i > 4
+                                                    ? Colors.grey
+                                                    : Colors.black,
+                                                decoration: i > 4
+                                                    ? TextDecoration.lineThrough
+                                                    : null),
+                                          )
+                                        ],
+                                      ),
+                                    )),
+                              ),
+                          ],
+                        )),
                     SizedBox(
                       height: 20,
                     ),
@@ -150,8 +228,9 @@ class IncubatorComponent extends StatelessWidget {
                                               : controller.states
                                                           .value[a.toInt()] ==
                                                       2
-                                                  ? Colors.grey.shade900
-                                                  : Colors.grey[300],
+                                                  ? Colors.white
+                                                  : //Color(0xffEFF3FF),
+                                                  Colors.white,
                                       boxShadow: const [
                                         BoxShadow(
                                           color: Color(0xffDDDDDD),
@@ -160,7 +239,15 @@ class IncubatorComponent extends StatelessWidget {
                                           offset: Offset(0.0, 0.0),
                                         )
                                       ],
-                                      borderRadius: BorderRadius.circular(2.5)),
+                                      border:
+                                          controller.states.value[a.toInt()] ==
+                                                  1
+                                              ? Border.all(
+                                                  color: Color(0xff567BE6),
+                                                  width: 2.0,
+                                                )
+                                              : null,
+                                      borderRadius: BorderRadius.circular(5)),
                                   width: 110,
                                   height: 55,
                                   child: Center(
@@ -168,7 +255,15 @@ class IncubatorComponent extends StatelessWidget {
                                       '${i.toInt()}:${(i % 1 == 0.5) ? "30" : "00"} ~ ${(i % 1 == 0.5) ? "${i.toInt() + 1}:00" : "${i.toInt()}:30"}',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
-                                        color: Colors.black,
+                                        color: controller
+                                                    .states.value[a.toInt()] ==
+                                                0
+                                            ? Colors.black
+                                            : controller.states
+                                                        .value[a.toInt()] ==
+                                                    2
+                                                ? Color(0xffDEE0E4)
+                                                : Colors.black,
                                         fontSize: 14,
                                       ),
                                     ),
@@ -182,16 +277,18 @@ class IncubatorComponent extends StatelessWidget {
                     SizedBox(
                       height: 40,
                     ),
-                    SizedBox(
-                        height: 60,
+
+                    Padding(
+                        padding: EdgeInsets.fromLTRB(35, 0, 35, 0),
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            SizedBox(
-                              height: 10,
-                            ),
-                            SizedBox(
-                              width: 20,
-                            ),
+                            // SizedBox(
+                            //   height: 10,
+                            // ),
+                            // SizedBox(
+                            //   width: 20,
+                            // ),
                             Text(
                               '인원',
                               style: TextStyle(
@@ -199,10 +296,96 @@ class IncubatorComponent extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(
-                              width: 230,
+                            Row(
+                              children: [
+                                InkWell(
+                                    onTap: () {
+                                      if (controller.num.value > 0)
+                                        controller.numchange(-1);
+                                    },
+                                    child: Container(
+                                      height: 43,
+                                      width: 43,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        boxShadow: const [
+                                          BoxShadow(
+                                            color: Color(0xffDDDDDD),
+                                            blurRadius: 3.0,
+                                            spreadRadius: 0.5,
+                                            offset: Offset(0.0, 0.0),
+                                          )
+                                        ],
+                                        border: Border.all(
+                                          color: Color(0xffDDDDDD),
+                                          width: 2.0,
+                                        ),
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          '-',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 22,
+                                          ),
+                                        ),
+                                      ),
+                                    )),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Obx(
+                                  () => Text(
+                                    controller.num.value.toString(),
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                InkWell(
+                                    onTap: () {
+                                      if (controller.num.value < 7)
+                                        controller.numchange(1);
+                                    },
+                                    child: Container(
+                                      height: 43,
+                                      width: 43,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        boxShadow: const [
+                                          BoxShadow(
+                                            color: Color(0xffDDDDDD),
+                                            blurRadius: 3.0,
+                                            spreadRadius: 0.5,
+                                            offset: Offset(0.0, 0.0),
+                                          )
+                                        ],
+                                        border: Border.all(
+                                          color: Color(0xffDDDDDD),
+                                          width: 2.0,
+                                        ),
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          '+',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 22,
+                                          ),
+                                        ),
+                                      ),
+                                    )),
+                              ],
                             ),
-                            CounterWidget(),
                           ],
                         )),
                     SizedBox(
@@ -241,13 +424,8 @@ class IncubatorComponent extends StatelessWidget {
                                           style: TextStyle(color: Colors.blue),
                                         ),
                                         onPressed: () {
-                                          Navigator.of(context).pop();
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ListIncubatorViewPage()),
-                                          );
+                                          Get.back();
+                                          Get.back();
                                         },
                                       ),
                                     ],
@@ -354,77 +532,6 @@ class IncubatorComponent extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class CounterWidget extends StatefulWidget {
-  @override
-  _CounterWidgetState createState() => _CounterWidgetState();
-}
-
-class _CounterWidgetState extends State<CounterWidget> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  void _decrementCounter() {
-    if (_counter == 0) {
-      setState(() {
-        _counter = 0;
-      });
-    }
-    setState(() {
-      _counter--;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        SizedBox(
-          width: 10,
-        ),
-        SizedBox(
-          width: 60,
-          height: 40,
-          child: ElevatedButton(
-            onPressed: _decrementCounter,
-            child: Text(
-              '-',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 26,
-              ),
-            ),
-          ),
-        ),
-        SizedBox(width: 20),
-        Text(
-          '$_counter',
-          style: TextStyle(fontSize: 20),
-        ),
-        SizedBox(width: 20),
-        SizedBox(
-          width: 60,
-          height: 40,
-          child: ElevatedButton(
-            onPressed: _incrementCounter,
-            child: Text(
-              '+',
-              style: TextStyle(color: Colors.black, fontSize: 23),
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 50,
-        ),
-      ],
     );
   }
 }
