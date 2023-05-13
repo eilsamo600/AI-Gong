@@ -4,9 +4,11 @@ import 'package:ai_gong/restAPI/models/Classroom.dart';
 import 'package:ai_gong/restAPI/response/get_classroom_list_response.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class ListIncubatorViewController extends GetxController {
-  static ListIncubatorViewController get instance => Get.find<ListIncubatorViewController>();
+  static ListIncubatorViewController get instance =>
+      Get.find<ListIncubatorViewController>();
 
   RxList<int> states = List.filled(17, 0).obs;
 
@@ -33,6 +35,7 @@ class ListIncubatorViewController extends GetxController {
         }
       } else {
         // 무언가 눌림
+
         for (int i = start; i < index + 1; i++) {
           states.value[i] = 1;
         }
@@ -108,6 +111,51 @@ class ListIncubatorViewController extends GetxController {
     states.refresh();
   }
 
+  RxList<int> dates = List.filled(7, 0).obs;
+
+  void datesInit() {
+    final now = DateTime.now().toUtc();
+    var todayIndex = now.weekday - 1;
+    if (todayIndex == 5 || todayIndex == 6) {
+      todayIndex = 0;
+    }
+    dates.value = List.filled(7, 0);
+    for (int i = 0; i < 7; i++) {
+      if (i == todayIndex) {
+        dates.value[i] = 2; // 오늘 날짜를 강조함
+      } else if (i == 5 || i == 6) {
+        dates.value[i] = 0; // 주말은 선택 불가능하도록 함
+      } else {
+        dates.value[i] = 1; // 평일은 선택 가능하도록 함
+      }
+    }
+    dates.refresh();
+  }
+
+  void date(int d, int today) {
+    if (d == 5 || d == 6) {
+      //토요일, 일요일은 안눌리게끔
+      dates.value[d] = 0;
+    } else {
+      //평일일 경우
+      dates.value[d] = 2;
+      for (int i = 0; i < 7; i++) {
+        if (i != d && dates.value[i] == 2) {
+          dates.value[i] = 0;
+          statesInit();
+        }
+      }
+    }
+
+    dates.refresh();
+  }
+
+  Rx<int> num = 0.obs;
+
+  void numchange(int n) {
+    num.value += n;
+  }
+
   @override
   void onInit() async {
     super.onInit();
@@ -120,7 +168,8 @@ class ListIncubatorViewController extends GetxController {
   }
 
   Future<void> getClassRoomList() async {
-    ApiResponse<ClassRoomListResponse> response = await ApiService.instance.getClassRoomList();
+    ApiResponse<ClassRoomListResponse> response =
+        await ApiService.instance.getClassRoomList();
     if (response.result) {
       classRoomList.value = response.value!.classrooms!;
     }
