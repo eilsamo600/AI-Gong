@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ListIncubatorViewController extends GetxController {
-  static ListIncubatorViewController get instance => Get.find<ListIncubatorViewController>();
+  static ListIncubatorViewController get instance =>
+      Get.find<ListIncubatorViewController>();
 
   RxList<int> states = List.filled(17, 0).obs;
 
@@ -120,24 +121,12 @@ class ListIncubatorViewController extends GetxController {
   }
 
   Future<void> getClassRoomList() async {
-    ApiResponse<ClassRoomListResponse> response = await ApiService.instance.getClassRoomList();
+    ApiResponse<ClassRoomListResponse> response =
+        await ApiService.instance.getClassRoomList();
     if (response.result) {
       classRoomList.value = response.value!.classrooms!;
     }
     classRoomList.refresh();
-  }
-
-  void selectFilter(int index) {
-    index = index;
-    onTapList.value[index] = !onTapList.value[index];
-    onTapList.refresh();
-  }
-
-  void restFilter() {
-    for (var i = 0; i < onTapList.length; i++) {
-      onTapList[i] = false;
-    }
-    onTapList.refresh();
   }
 
   void checkTimer() async {
@@ -152,6 +141,4 @@ class ListIncubatorViewController extends GetxController {
   Rx<DateTime> now = DateTime.now().obs;
 
   RxList<ClassRoom> classRoomList = RxList<ClassRoom>();
-  RxList<bool> onTapList = List.filled(4, false).obs;
-  RxList<String> filterList = ['새로고침', '즐겨찾기', '바로', '곧 끝나는'].obs;
 }
