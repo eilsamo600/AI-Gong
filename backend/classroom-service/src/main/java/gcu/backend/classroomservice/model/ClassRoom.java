@@ -50,6 +50,8 @@ public class ClassRoom {
         this.규모 = 규모;
         this.강의목록 = 강의목록;
 
+        // 사용가능한지 확인
+        // level 1 : 사용가능, level 2 : 곧 끝남, level 3 : 사용불가능, level 4 : 곧 수업이 시작함
         this.usableLevel = 1;
 
         LocalTime now = LocalTime.now();
@@ -67,6 +69,8 @@ public class ClassRoom {
         if (lectureList == null) {
             return;
         }
+        // DB에서 강의 목록은 시작 시간 순으로 이미 정렬되어 있음
+        // 9시 수업부터 보면서 현재 시간에 맞는 강의가 있는지 확인
         for (Map<String, Object> lectureInfo : lectureList) {
             float start = (((Number) lectureInfo.get("시작시간")).floatValue() + 8) * 60;
             float duration = ((Number) lectureInfo.get("수업시간")).floatValue();
@@ -84,6 +88,7 @@ public class ClassRoom {
                 break;
             }
 
+            // 곧 시작할거같으면~~~
             if (time < start) {
                 this.currentLecture = new HashMap<String, String>();
                 this.currentLecture.put("이름", (String) lectureInfo.get("교과목명"));
@@ -92,7 +97,7 @@ public class ClassRoom {
                         (int) (start + duration) / 60, (int) (start + duration) % 60));
 
                 if ((start - time) < 15) {
-                    this.usableLevel = 2;
+                    this.usableLevel = 4;
                 }
                 break;
             }

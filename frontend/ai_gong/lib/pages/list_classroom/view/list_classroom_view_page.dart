@@ -2,6 +2,7 @@ import 'package:ai_gong/common/common.dart';
 import 'package:ai_gong/pages/list_classroom/controller/list_classroom_view_controller.dart';
 import 'package:ai_gong/pages/list_classroom/view/component/classroom_component.dart';
 import 'package:ai_gong/pages/list_classroom/view/component/filter_component.dart';
+import 'package:ai_gong/pages/search/view/search_view_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -25,38 +26,49 @@ class ListClassRoomViewPage extends StatelessWidget {
                 SliverToBoxAdapter(
                     child: Padding(
                         padding: const EdgeInsets.only(left: 15, top: 25, bottom: 25),
-                        child: Obx(
-                          () => Column(
-                            children: [
-                              Row(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Obx(
+                              () => Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Text('오늘은', style: textstyle),
-                                  const SizedBox(
-                                    width: 7,
-                                  ),
-                                  Text(Common.instance.getNowWeek(controller.now.value), style: textstyle2)
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                children: [
-                                  const Text(
-                                    '현재 시간은',
-                                    style: textstyle,
+                                  Row(
+                                    children: [
+                                      const Text('오늘은', style: textstyle),
+                                      const SizedBox(
+                                        width: 7,
+                                      ),
+                                      Text(Common.instance.getNowWeek(controller.now.value), style: textstyle2)
+                                    ],
                                   ),
                                   const SizedBox(
-                                    width: 10,
+                                    height: 10,
                                   ),
-                                  Text(
-                                    Common.instance.getNowTime(controller.now.value),
-                                    style: textstyle2,
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        '현재 시간은',
+                                        style: textstyle,
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        Common.instance.getNowTime(controller.now.value),
+                                        style: textstyle2,
+                                      )
+                                    ],
                                   )
                                 ],
-                              )
-                            ],
-                          ),
+                              ),
+                            ),
+                            const Spacer(),
+                            IconButton(onPressed: () => Get.toNamed(SearchViewPage.url), padding: EdgeInsets.zero, icon: const Icon(Icons.search)),
+                            const SizedBox(
+                              width: 20,
+                            ),
+                          ],
                         ))),
                 SliverPersistentHeader(pinned: true, floating: true, delegate: HeaderDelegate(controller)),
                 Obx(
