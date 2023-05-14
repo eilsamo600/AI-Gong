@@ -27,7 +27,6 @@ class IncubatorComponent extends StatelessWidget {
     const textstyle = TextStyle(fontSize: 20);
     const textstyle2 = TextStyle(fontSize: 25, fontWeight: FontWeight.bold);
     List<String> weeks = ['월', '화', '수', '목', '금', '토', '일'];
-    List<String> numcnt = ['-', '0', '+'];
 
     return InkWell(
       onTap: () {

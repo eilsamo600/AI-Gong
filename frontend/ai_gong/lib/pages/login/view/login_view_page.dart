@@ -1,6 +1,9 @@
 import 'package:ai_gong/pages/login/controller/login_view_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:ai_gong/common/widget/panel_component.dart';
 import 'package:get/get.dart';
+
+import '../../../common/common.dart';
 
 class LoginViewPage extends StatelessWidget {
   const LoginViewPage({super.key});
@@ -9,6 +12,66 @@ class LoginViewPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(LoginViewController());
-    return const Scaffold(body: Text('로그인 페이지'));
+    return Material(
+      child: Center(
+          child: Column(children: <Widget>[
+        TextButton(
+            child: Text('로그인'),
+            style: TextButton.styleFrom(
+                fixedSize: const Size(400, 45),
+                foregroundColor: Colors.black,
+                backgroundColor: Color.fromARGB(70, 200, 200, 200),
+                textStyle:
+                    const TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
+            onPressed: () {
+              showModalBottomSheet(
+                  isScrollControlled: true,
+                  context: context,
+                  builder: ((context) {
+                    return PanelComponent(
+                      child: Center(
+                          child: Column(children: <Widget>[
+                        const SizedBox(
+                          height: 100,
+                        ),
+                        const Text('간단하게 로그인 하고',
+                            style:
+                                TextStyle(fontSize: 22, color: Colors.black)),
+                        const Text('메타버스 인큐베이터 예약하기',
+                            style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black)),
+                        const SizedBox(
+                          height: 150,
+                        ),
+                        const Text('애공은 가천 계정으로만 로그인 할 수 있어요!',
+                            style:
+                                TextStyle(fontSize: 15, color: Colors.black)),
+                        const Text('ex)abcdefg.gachon.ac.kr',
+                            style:
+                                TextStyle(fontSize: 15, color: Colors.black)),
+                        const SizedBox(
+                          height: 100,
+                        ),
+                        TextButton(
+                            child: Text('구글 계정으로 로그인'),
+                            style: TextButton.styleFrom(
+                                fixedSize: const Size(400, 45),
+                                foregroundColor: Colors.black,
+                                backgroundColor:
+                                    Color.fromARGB(70, 200, 200, 200),
+                                textStyle: const TextStyle(
+                                    fontSize: 17, fontWeight: FontWeight.bold)),
+                            onPressed: () {}),
+                        const SizedBox(
+                          height: 100,
+                        ),
+                      ])),
+                    );
+                  }));
+            }),
+      ])),
+    );
   }
 }
