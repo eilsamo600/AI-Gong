@@ -143,6 +143,7 @@ class ListIncubatorViewController extends GetxController {
         if (i != d && dates.value[i] == 2) {
           dates.value[i] = 0;
           statesInit();
+          numInit();
         }
       }
     }
@@ -152,8 +153,14 @@ class ListIncubatorViewController extends GetxController {
 
   Rx<int> num = 0.obs;
 
+  void numInit() {
+    num.value = 0;
+    num.refresh();
+  }
+
   void numchange(int n) {
     num.value += n;
+    num.refresh();
   }
 
   @override

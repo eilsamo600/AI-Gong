@@ -32,7 +32,7 @@ class IncubatorComponent extends StatelessWidget {
       onTap: () {
         controller.statesInit();
         controller.datesInit();
-
+        controller.numInit();
         showModalBottomSheet(
             isScrollControlled: true,
             context: context,
