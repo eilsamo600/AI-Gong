@@ -1,5 +1,7 @@
 package gcu.backend.classroomservice.controller;
 
+import org.springframework.boot.SpringApplication;
+
 import java.util.ArrayList;
 import java.util.List;
 

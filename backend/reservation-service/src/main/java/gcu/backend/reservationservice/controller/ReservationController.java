@@ -43,4 +43,14 @@ public class ReservationController {
         List<Reservation> reservations = reservationRepository.findAll();
         return new ResponseEntity<List<Reservation>>(reservations, HttpStatus.OK);
     }
+
+    @DeleteMapping("/reservation/{id}")
+    @Operation(summary = "특정 예약정보 삭제", description = "특정 예약정보를 삭제합니다.")
+    public ResponseEntity<Reservation> deleteReservation(@PathVariable String id) {
+        Reservation reservation = reservationRepository.findByEmail(id);
+        if (reservation == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Reservation>(reservation, HttpStatus.OK);
+    }
 }

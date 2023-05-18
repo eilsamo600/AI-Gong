@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 class ListIncubatorViewPage extends StatelessWidget {
   const ListIncubatorViewPage({super.key});
 
+  static const String url = '/incubator';
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(ListIncubatorViewController());

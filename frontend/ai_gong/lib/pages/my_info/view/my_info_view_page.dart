@@ -1,8 +1,11 @@
 import 'package:ai_gong/common/common.dart';
+import 'package:ai_gong/pages/list_incubator/view/list_incubator_view_page.dart';
 import 'package:ai_gong/pages/my_info/controller/my_info_view_controller.dart';
 import 'package:ai_gong/pages/my_info/view/component/myInfo_component.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../../routes.dart';
 
 class MyInfoViewPage extends StatelessWidget {
   const MyInfoViewPage({super.key});
@@ -27,6 +30,7 @@ class MyInfoViewPage extends StatelessWidget {
     //   roomnum: 3,
     //   usableLevel: 2,
     // ));
+
     return SizedBox(
       width: Common.getWidth,
       child: SingleChildScrollView(
@@ -58,7 +62,9 @@ class MyInfoViewPage extends StatelessWidget {
                           const Text(
                             "홍길동님의 활동",
                             //textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 18, color: Color.fromRGBO(103, 103, 103, 1)),
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Color.fromRGBO(103, 103, 103, 1)),
                           ),
                           const SizedBox(height: 12),
                           Row(
@@ -66,7 +72,8 @@ class MyInfoViewPage extends StatelessWidget {
                               const Text(
                                 "찜 4개",
                                 //textAlign: TextAlign.center,
-                                style: TextStyle(fontSize: 24, fontFamily: 'SuitEB'),
+                                style: TextStyle(
+                                    fontSize: 24, fontFamily: 'SuitEB'),
                               ),
                               const SizedBox(width: 40),
                               Text(
@@ -89,7 +96,7 @@ class MyInfoViewPage extends StatelessWidget {
 
             //Expanded(
             Padding(
-                padding: const EdgeInsets.only(left: 15, bottom: 25),
+                padding: const EdgeInsets.only(left: 15),
                 child: Column(children: [
                   Container(
                     height: 30,
@@ -117,36 +124,42 @@ class MyInfoViewPage extends StatelessWidget {
                     ),
                   ),
                 ])),
-
-            Obx(
-              () => Column(children: [
-                for (int index = 0; index < controller.classRoomList.length; index++)
-                  Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                      child: Column(
-                        children: [
-                          if (index == 0) const SizedBox(height: 20),
-                          MyInfoComponent(
-                              //myreservationlist로 바꾸기
-                              model: controller.classRoomList.value[index]),
-                          const Padding(
-                            padding: EdgeInsets.only(bottom: 10, top: 15),
-                            child: Divider(
-                              height: 1,
-                              thickness: 1,
-                            ),
-                          )
-                        ],
-                      ))
-              ]),
-            ),
+            if (controller.classRoomList.value != Null)
+              Obx(
+                () => Column(children: [
+                  for (int index = 0;
+                      index < controller.classRoomList.length;
+                      index++)
+                    Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        child: Column(
+                          children: [
+                            if (index == 0) const SizedBox(height: 20),
+                            MyInfoComponent(
+                                //myreservationlist로 바꾸기
+                                model: controller.classRoomList.value[index]),
+                            const Padding(
+                              padding: EdgeInsets.only(bottom: 10, top: 15),
+                              child: Divider(
+                                height: 1,
+                                thickness: 1,
+                              ),
+                            )
+                          ],
+                        ))
+                ]),
+              ),
+            // if (controller.classRoomList.value == Null)
             Container(
               padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 25),
               //margin: EdgeInsets.all(15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text("예약 정보가 없습니다.", style: TextStyle(color: Color.fromRGBO(103, 103, 103, 1), fontSize: 17)),
+                  const Text("예약 정보가 없습니다.",
+                      style: TextStyle(
+                          color: Color.fromRGBO(103, 103, 103, 1),
+                          fontSize: 17)),
                   TextButton(
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -154,49 +167,59 @@ class MyInfoViewPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(13.0),
                         ),
                       ),
-                      backgroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(255, 0, 140, 255)),
-                      minimumSize: MaterialStateProperty.all(const Size(90, 40)),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          const Color.fromARGB(255, 0, 140, 255)),
+                      minimumSize:
+                          MaterialStateProperty.all(const Size(90, 40)),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.toNamed(ListIncubatorViewPage.url);
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (context) =>
+                      //             const ListIncubatorViewPage()));
+                    },
+                    // {
+                    //   getPages:CustomRouter.routes;
+                    // },
                     child: const Text(
                       '예약하기',
-                      style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w400),
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w400),
                     ),
                   ),
                 ],
               ),
             ),
-            // SliverToBoxAdapter(
-            //   child: Container(
-            //     child: Expanded(
-            //       child: Align(
-            //         alignment: Alignment.bottomCenter,
-            //         child: Container(
-            //           margin: EdgeInsets.only(bottom: 20.0),
-            //           child: TextButton(
-            //             style: ButtonStyle(
-            //               shape: MaterialStateProperty.all<
-            //                   RoundedRectangleBorder>(
-            //                 RoundedRectangleBorder(
-            //                   borderRadius: BorderRadius.circular(15.0),
-            //                 ),
-            //               ),
-            //               backgroundColor: MaterialStateProperty.all<Color>(
-            //                   Colors.white),
-            //               minimumSize:
-            //                   MaterialStateProperty.all(Size(100, 50)),
-            //             ),
-            //             onPressed: () {},
-            //             child: Text(
-            //               '로그아웃',
-            //               style:
-            //                   TextStyle(color: Colors.black, fontSize: 15),
-            //             ),
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //   ),
+            Container(
+              // child: Expanded(
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  margin: EdgeInsets.only(bottom: 20.0),
+                  child: TextButton(
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                      ),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.white),
+                      minimumSize: MaterialStateProperty.all(Size(100, 50)),
+                    ),
+                    onPressed: () {},
+                    child: Text(
+                      '로그아웃',
+                      style: TextStyle(color: Colors.black, fontSize: 15),
+                    ),
+                  ),
+                ),
+              ),
+            ),
             // ),
 
             // Container(
