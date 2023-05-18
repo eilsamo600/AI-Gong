@@ -30,3 +30,5 @@ spring:
             database: ai-gong
     application:
         name: auth-service
+    main:
+        allow-bean-definition-overriding: true
