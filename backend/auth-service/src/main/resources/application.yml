@@ -5,7 +5,7 @@ spring:
         active: local
 
 server:
-  port: 8083
+  port: 8003
   
 eureka:
     instance:
@@ -30,5 +30,3 @@ spring:
             database: ai-gong
     application:
         name: auth-service
-    main:
-        allow-bean-definition-overriding: true
