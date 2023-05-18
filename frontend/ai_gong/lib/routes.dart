@@ -14,6 +14,6 @@ class CustomRouter {
     GetPage(name: MainViewPage.url, page: () => const MainViewPage()),
     GetPage(name: MyInfoViewPage.url, page: () => const MyInfoViewPage()),
     GetPage(name: SearchViewPage.url, page: () => const SearchViewPage()),
-    GetPage(name: LoginViewPage.url, page: () => const LoginViewPage())
+    GetPage(name: LoginViewPage.url, page: () => const LoginViewPage()),
   ];
 }

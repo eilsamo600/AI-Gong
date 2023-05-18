@@ -155,7 +155,7 @@ class ListIncubatorViewPage extends StatelessWidget {
                           children: [
                             if (index == 0) const SizedBox(height: 20),
                             IncubatorComponent(
-                                model: controller.classRoomList.value[index]),
+                                model: controller.incubatorList.value[index]),
                             const Padding(
                               padding: EdgeInsets.only(bottom: 10, top: 15),
                               child: Divider(
@@ -167,7 +167,7 @@ class ListIncubatorViewPage extends StatelessWidget {
                         ),
                       );
                     }),
-                    childCount: controller.classRoomList.length,
+                    childCount: controller.incubatorList.length,
                   )),
                 )
               ],

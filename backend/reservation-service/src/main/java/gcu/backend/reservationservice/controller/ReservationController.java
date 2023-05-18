@@ -14,8 +14,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.core.Response;
+import gcu.backend.reservationservice.model.Incubator;
 import gcu.backend.reservationservice.model.Reservation;
 import gcu.backend.reservationservice.repository.ReservationRepository;
+import gcu.backend.reservationservice.repository.IncubatorRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +30,9 @@ public class ReservationController {
 
     @Autowired
     private ReservationRepository reservationRepository;
+
+    @Autowired
+    private IncubatorRepository incubatorRepository;
 
     @PostMapping("/reservation")
     @Operation(summary = "예약 내역 보내기", description = "예약 내역 보내요~.")
@@ -43,6 +48,13 @@ public class ReservationController {
     public ResponseEntity<List<Reservation>> getReservations() {
         List<Reservation> reservations = reservationRepository.findAll();
         return new ResponseEntity<List<Reservation>>(reservations, HttpStatus.OK);
+    }
+
+    @GetMapping("/incubator/incubators")
+    @Operation(summary = "모든 소회의실 정보 조회", description = "소회의실 정보입니다.")
+    public ResponseEntity<List<Incubator>> getIncubators() {
+        List<Incubator> incubators = incubatorRepository.findAll();
+        return new ResponseEntity<List<Incubator>>(incubators, HttpStatus.OK);
     }
 
     @DeleteMapping("/reservation/{id}")
