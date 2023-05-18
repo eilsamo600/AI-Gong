@@ -20,6 +20,7 @@ import gcu.backend.reservationservice.repository.ReservationRepository;
 import gcu.backend.reservationservice.repository.IncubatorRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.http.HttpStatus;
 
@@ -36,7 +37,7 @@ public class ReservationController {
     @PostMapping("/reservation")
     @Operation(summary = "예약 내역 보내기", description = "예약 내역 보내요~.")
     public ResponseEntity<Reservation> postReservation(@Valid @RequestBody Reservation reservation) {
-        System.out.print("userInfo = {}" + reservation.toString());
+        System.out.print(reservation.toString());
         Reservation savedReservation = reservationRepository.save(reservation);
         return ResponseEntity.ok(savedReservation);
 
@@ -55,4 +56,15 @@ public class ReservationController {
         List<Incubator> incubators = incubatorRepository.findAll();
         return new ResponseEntity<List<Incubator>>(incubators, HttpStatus.OK);
     }
+
+    @DeleteMapping("/reservation/{id}")
+    @Operation(summary = "특정 예약정보 삭제", description = "특정 예약정보를 삭제합니다.")
+    public ResponseEntity<Reservation> deleteReservation(@PathVariable Long id) {
+        reservationRepository.deleteById(id);
+        // if (reservation == null) {
+        // return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        // }
+        return new ResponseEntity<Reservation>(HttpStatus.OK);
+    }
+
 }

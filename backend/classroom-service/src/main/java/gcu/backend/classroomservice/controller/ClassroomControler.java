@@ -28,12 +28,6 @@ public class ClassroomControler {
         return ResponseEntity.ok("hello Gachon University!");
     }
 
-    // @GetMapping("/test2")
-    // @Operation(summary = "뚝딱 만듬 !!!!!", description = "멋진 api")
-    // public ResponseEntity<String> show2() {
-    // return ResponseEntity.ok("안녕하세요 ㅋㅋ");
-    // }
-
     @GetMapping("/classrooms")
     @Operation(summary = "모든 강의실 목록 조회", description = "모든 강의실 목록을 조회합니다.")
     public ResponseEntity<List<ClassRoom>> getClassRoomList() {
