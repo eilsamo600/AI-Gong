@@ -11,7 +11,8 @@ class MyInfoViewController extends GetxController {
   static MyInfoViewController get instance => Get.find<MyInfoViewController>();
 
   Future<void> getClassRoomList() async {
-    ApiResponse<ClassRoomListResponse> response = await ApiService.instance.getClassRoomList();
+    ApiResponse<ClassRoomListResponse> response =
+        await ApiService.instance.getClassRoomList();
     if (response.result) {
       classRoomList.value = response.value!.classrooms!;
     }
@@ -20,7 +21,8 @@ class MyInfoViewController extends GetxController {
 
   Future<void> getClassRoom(int id) async {
     classRoom.value = ClassRoom();
-    ApiResponse<ClassRoomResponse> response = await ApiService.instance.getClassRoom(id);
+    ApiResponse<ClassRoomResponse> response =
+        await ApiService.instance.getClassRoom(id);
     await Future.delayed(const Duration(milliseconds: 150));
     if (response.result) {
       classRoom.value = response.value!.classroom!;

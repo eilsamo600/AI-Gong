@@ -8,7 +8,8 @@ class SearchViewController extends GetxController {
   RxList<ClassRoom> classRoomList = RxList<ClassRoom>();
 
   Future<void> getClassRoomList() async {
-    ApiResponse<ClassRoomListResponse> response = await ApiService.instance.getClassRoomList();
+    ApiResponse<ClassRoomListResponse> response =
+        await ApiService.instance.getClassRoomList();
     if (response.result) {
       classRoomList.value = response.value!.classrooms!;
     }

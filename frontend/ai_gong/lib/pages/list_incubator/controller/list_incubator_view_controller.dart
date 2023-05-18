@@ -1,8 +1,9 @@
 import 'package:ai_gong/common/service_response.dart';
 import 'package:ai_gong/restAPI/api_service.dart';
-import 'package:ai_gong/restAPI/models/Classroom.dart';
+import 'package:ai_gong/restAPI/models/Incubator.dart';
+import 'package:ai_gong/restAPI/response/get_incubator_list_response.dart';
+import 'package:ai_gong/restAPI/response/get_incubator_response.dart';
 import 'package:ai_gong/restAPI/models/Reservation.dart';
-import 'package:ai_gong/restAPI/response/get_classroom_list_response.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -246,7 +247,7 @@ class ListIncubatorViewController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    await getClassRoomList();
+    await getIncubatorList();
     now.value = DateTime.now();
     await Future.delayed(Duration(seconds: 60 - now.value.second), () {
       now.value = DateTime.now();
@@ -254,13 +255,23 @@ class ListIncubatorViewController extends GetxController {
     checkTimer();
   }
 
-  Future<void> getClassRoomList() async {
-    ApiResponse<ClassRoomListResponse> response =
-        await ApiService.instance.getClassRoomList();
+  Future<void> getIncubatorList() async {
+    ApiResponse<IncubatorListResponse> response =
+        await ApiService.instance.getIncubatorList();
     if (response.result) {
-      classRoomList.value = response.value!.classrooms!;
+      incubatorList.value = response.value!.incubators!;
     }
-    classRoomList.refresh();
+    incubatorList.refresh();
+  }
+
+  Future<void> getIncubator(int id) async {
+    incubator.value = Incubator();
+    ApiResponse<IncubatorResponse> response =
+        await ApiService.instance.getIncubator(id);
+    await Future.delayed(const Duration(milliseconds: 150));
+    if (response.result) {
+      incubator.value = response.value!.incubator!;
+    }
   }
 
   void checkTimer() async {
@@ -273,6 +284,6 @@ class ListIncubatorViewController extends GetxController {
 
   Rx<ScrollController> scrollcontroller = ScrollController().obs;
   Rx<DateTime> now = DateTime.now().obs;
-
-  RxList<ClassRoom> classRoomList = RxList<ClassRoom>();
+  Rx<Incubator> incubator = Incubator().obs;
+  RxList<Incubator> incubatorList = RxList<Incubator>();
 }

@@ -37,9 +37,7 @@ class ClassRoomComponent extends StatelessWidget {
                               fontSize: 27, fontWeight: FontWeight.bold),
                         ),
                         InkWell(
-                            onTap: () {
-                              // controller.checkbookmark();
-                            },
+                            onTap: () {},
                             child: Obx(() => IconButton(
                                   icon: Icon(
                                     Icons.bookmark_border,
