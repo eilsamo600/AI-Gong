@@ -4,6 +4,7 @@ import 'package:ai_gong/pages/dev_route/controller/route_view_controller.dart';
 import 'package:ai_gong/pages/login/view/login_view_page.dart';
 import 'package:ai_gong/pages/main/view/main_view_page.dart';
 import 'package:ai_gong/restAPI/api_service.dart';
+import 'package:ai_gong/restAPI/models/Reservation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart' hide Response;
@@ -26,7 +27,8 @@ class RouteViewPage extends StatelessWidget {
                   onPressed: () {
                     Get.offAllNamed(MainViewPage.url);
                   },
-                  child: const Text('Main View Page', style: TextStyle(color: Colors.black))),
+                  child: const Text('Main View Page',
+                      style: TextStyle(color: Colors.black))),
               ElevatedButton(
                   onPressed: () {
                     Get.offAllNamed(LoginViewPage.url);
@@ -56,6 +58,15 @@ class RouteViewPage extends StatelessWidget {
                     print(data);
                   },
                   child: const Text('storage 확인'))
+              ElevatedButton(
+                  onPressed: () async {
+                    var data = Reservation.fromJson({
+                      'emai': '123',
+                      //~~~
+                    });
+                    await ApiService.instance.postReservation(data);
+                  },
+                  child: Text('ddddd'))
             ],
           ),
         ),

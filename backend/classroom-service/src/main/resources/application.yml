@@ -12,7 +12,7 @@ spring:
 
 eureka:
   instance:
-    ip-address: 43.201.81.76
+    ip-address: 127.0.0.1
     preferIpAddress: true
     lease-renewal-interval-in-seconds: 30
   client:
