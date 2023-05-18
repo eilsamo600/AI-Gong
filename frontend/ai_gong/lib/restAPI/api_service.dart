@@ -6,13 +6,27 @@ import 'package:ai_gong/common/service_response.dart';
 import 'package:ai_gong/restAPI/response/get_classroom_list_response.dart';
 import 'package:ai_gong/restAPI/response/get_classroom_response.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class ApiService extends GetxService {
   static ApiService get instance => Get.find<ApiService>();
 
-  Dio dio = Dio(BaseOptions(baseUrl: Common.baseUrl, headers: {"Flutter-Rest-Api": "true", "Authorization": "Bearer 1231231231233"}));
+  Dio dio = Dio(BaseOptions(baseUrl: Common.baseUrl, headers: {"Flutter-Rest-Api": "true", "Authorization": "Bearer 0000"}));
+
+  void reflectAuth() async {
+    var storage = const FlutterSecureStorage();
+    dio.options.headers["Authorization"] = "Bearer ${await storage.read(key: "access_token") ?? "0000"}";
+  }
+
+  void setAuth({required String access, required String refresh}) async {
+    var storage = const FlutterSecureStorage();
+    storage.write(key: 'access_token', value: access);
+    storage.write(key: 'refresh_token', value: refresh);
+    dio.options.headers["Authorization"] = "Bearer $access";
+  }
+
   Options dioOptions = Options();
   Future<ApiService> init() async {
     Common.logger.d('$runtimeType init!');
