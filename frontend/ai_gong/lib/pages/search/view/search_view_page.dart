@@ -8,8 +8,10 @@ import 'package:get/get.dart';
 class SearchViewPage extends StatelessWidget {
   const SearchViewPage({super.key});
 
-  static TextStyle get _hintStyle => const TextStyle(color: Colors.black54, fontSize: 15);
-  static TextStyle get _textStyle => const TextStyle(color: Colors.black, fontSize: 15);
+  static TextStyle get _hintStyle =>
+      const TextStyle(color: Colors.black54, fontSize: 15);
+  static TextStyle get _textStyle =>
+      const TextStyle(color: Colors.black, fontSize: 15);
   static const String url = '/search';
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,10 @@ class SearchViewPage extends StatelessWidget {
               centerTitle: true,
               title: const Text(
                 '검색',
-                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20),
               ),
               leading: InkWell(
                 onTap: () {
@@ -42,7 +47,9 @@ class SearchViewPage extends StatelessWidget {
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 20),
               decoration: BoxDecoration(
-                border: Border(bottom: BorderSide(width: 1.0, color: Colors.black.withOpacity(0.1))),
+                border: Border(
+                    bottom: BorderSide(
+                        width: 1.0, color: Colors.black.withOpacity(0.1))),
               ),
               padding: const EdgeInsets.only(bottom: 5),
               child: Theme(
@@ -67,7 +74,8 @@ class SearchViewPage extends StatelessWidget {
                     size: 20,
                   ),
                   style: const TextStyle(color: Colors.black, fontSize: 15),
-                  placeholderStyle: const TextStyle(color: Colors.black54, fontSize: 15),
+                  placeholderStyle:
+                      const TextStyle(color: Colors.black54, fontSize: 15),
                   placeholder: '찾고 싶은 강의실을 검색해보세요.',
                 ),
               ),
@@ -99,7 +107,9 @@ class SearchViewPage extends StatelessWidget {
                             child: Column(
                               children: [
                                 if (index == 0) const SizedBox(height: 20),
-                                ClassRoomComponent(model: controller.classRoomList.value[index]),
+                                ClassRoomComponent(
+                                    model:
+                                        controller.classRoomList.value[index]),
                                 const Padding(
                                   padding: EdgeInsets.only(bottom: 10, top: 15),
                                   child: Divider(
