@@ -1,6 +1,7 @@
 import 'package:ai_gong/common/service_response.dart';
 import 'package:ai_gong/restAPI/api_service.dart';
 import 'package:ai_gong/restAPI/models/Classroom.dart';
+import 'package:ai_gong/restAPI/models/Reservation.dart';
 import 'package:ai_gong/restAPI/response/get_classroom_list_response.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,6 +12,86 @@ class ListIncubatorViewController extends GetxController {
       Get.find<ListIncubatorViewController>();
 
   RxList<int> states = List.filled(17, 0).obs;
+  final today = DateTime.now().toUtc();
+  void postReservation(BuildContext context) async {
+    int val = dates.value.indexOf(1);
+    String day = DateFormat('d').format(DateTime.utc(
+        today.year, today.month, today.day - (today.weekday - 1) + val));
+    var data = Reservation.fromJson({
+      'email': 'thwjd082@gachon.ac.kr',
+      'number': '1',
+      'time': (states.value as List).cast<int>(),
+      'date': (today.year + today.month + today.day).toString(),
+      'people': (num.value as int)
+    });
+
+    ApiResponse response = await ApiService.instance.postReservation(data);
+
+    if (response.result == true) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: const [
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  '예약이 완료 되었습니다.',
+                  style: TextStyle(fontSize: 15),
+                ),
+                SizedBox(height: 8),
+                Text('예약시간까지 배정인증을 해주세요.', style: TextStyle(fontSize: 15)),
+              ],
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text(
+                  '확인',
+                  style: TextStyle(color: Colors.blue),
+                ),
+                onPressed: () {
+                  Get.back();
+                  Get.back();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else if (response.result == false) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: const [
+                SizedBox(
+                  height: 20,
+                ),
+                Text('예약실패'),
+              ],
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text(
+                  '확인',
+                  style: TextStyle(color: Colors.blue),
+                ),
+                onPressed: () {
+                  Get.back();
+                  Get.back();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
 
   void statesInit() {
     states.value = List.filled(16, 0);
@@ -114,8 +195,7 @@ class ListIncubatorViewController extends GetxController {
   RxList<int> dates = List.filled(7, 0).obs;
 
   void datesInit() {
-    final now = DateTime.now().toUtc();
-    var todayIndex = now.weekday - 1;
+    var todayIndex = today.weekday - 1;
     if (todayIndex == 5 || todayIndex == 6) {
       todayIndex = 0;
     }

@@ -3,9 +3,10 @@ import 'dart:convert';
 import 'package:ai_gong/common/common.dart';
 import 'package:ai_gong/common/dio_extension.dart';
 import 'package:ai_gong/common/service_response.dart';
+import 'package:ai_gong/restAPI/models/Reservation.dart';
 import 'package:ai_gong/restAPI/response/get_classroom_list_response.dart';
 import 'package:ai_gong/restAPI/response/get_classroom_response.dart';
-import 'package:ai_gong/restAPI/response/post_reservation.dart';
+
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
@@ -78,16 +79,15 @@ class ApiService extends GetxService {
     }
   }
 
-  Future<ApiResponse<Reservationresponse>> postReservation() async {
+  Future<ApiResponse> postReservation(Reservation data) async {
     try {
       var response = await dio.post(
         '/reservation',
-        data: jsonEncode({}),
+        data: jsonEncode(data.toJson()),
       );
-      return ApiResponse<Reservationresponse>(result: response.isSuccessful);
+      return ApiResponse(result: true);
     } catch (e) {
-      return ApiResponse<Reservationresponse>(
-          result: false, errorMsg: "오류가 발생했습니다.");
+      return ApiResponse(result: false, errorMsg: "오류가 발생했습니다.");
     }
   }
 }
