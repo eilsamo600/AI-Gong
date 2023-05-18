@@ -12,16 +12,19 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.List;
+import java.util.ArrayList;
 
 @Data
-@AllArgsConstructor
 @Document(collection = "reservation")
 public class Reservation {
     @Id
-    private ObjectId _id;
+    private Object _id;
 
     private String email;
     private String number;
-    private Integer time = 0;
+    private List<Integer> time;
     private String date;
+    private int people;
+
 }

@@ -12,8 +12,10 @@ class ClassRoomComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(ListClassRoomViewController());
     return InkWell(
       onTap: () {
+        controller.bookmarkInit();
         ListClassRoomViewController.instance
             .getClassRoom(int.parse(model.roomid!));
         showModalBottomSheet(
@@ -34,6 +36,19 @@ class ClassRoomComponent extends StatelessWidget {
                           style: const TextStyle(
                               fontSize: 27, fontWeight: FontWeight.bold),
                         ),
+                        InkWell(
+                            onTap: () {},
+                            child: Obx(() => IconButton(
+                                  icon: Icon(
+                                    Icons.bookmark_border,
+                                    color: controller.bookmark.value == 1
+                                        ? Colors.blue
+                                        : Colors.black,
+                                  ),
+                                  onPressed: () {
+                                    controller.checkbookmark();
+                                  },
+                                ))),
                       ],
                     ),
                   ),

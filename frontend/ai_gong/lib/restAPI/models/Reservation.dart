@@ -1,16 +1,18 @@
 class Reservation {
   String? email;
   String? number;
-  int? time;
+  List? time;
   String? date;
+  int? people;
 
-  Reservation({this.email, this.number, this.time, this.date});
+  Reservation({this.email, this.number, this.time, this.date, this.people});
 
   Reservation.fromJson(Map<String, dynamic> json) {
     email = json['email'];
     number = json['number'];
-    time = json['number'];
+    time = json['time'];
     date = json['date'];
+    people = json['people'];
   }
 
   Map<String, dynamic> toJson() {
@@ -19,6 +21,7 @@ class Reservation {
     data['number'] = number;
     data['time'] = time;
     data['date'] = date;
+    data['people'] = people;
     return data;
   }
 }

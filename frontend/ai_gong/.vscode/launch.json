@@ -7,7 +7,12 @@
         {
             "name": "ai_gong",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "flutterMode": "debug",
+            "args": [
+                "--web-port",
+                "8081"
+            ]
         },
         {
             "name": "ai_gong (profile mode)",

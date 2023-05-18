@@ -3,14 +3,14 @@ import 'dart:html';
 import 'package:ai_gong/common/widget/panel_component.dart';
 import 'package:ai_gong/pages/list_incubator/controller/list_incubator_view_controller.dart';
 import 'package:ai_gong/pages/list_incubator/view/list_incubator_view_page.dart';
-import 'package:ai_gong/restAPI/models/Classroom.dart';
+import 'package:ai_gong/restAPI/models/Incubator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 // ignore_for_file: prefer_const_constructors
 
 class IncubatorComponent extends StatelessWidget {
-  final ClassRoom model;
+  final Incubator model;
   const IncubatorComponent({super.key, required this.model});
 
   @override
@@ -103,6 +103,7 @@ class IncubatorComponent extends StatelessWidget {
                     //     ],
                     //   ),
                     // ),
+
                     Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 30, vertical: 15),
@@ -397,40 +398,7 @@ class IncubatorComponent extends StatelessWidget {
                           height: 55,
                           child: OutlinedButton(
                             onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    content: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: const [
-                                        SizedBox(
-                                          height: 20,
-                                        ),
-                                        Text(
-                                          '예약이 완료 되었습니다.',
-                                          style: TextStyle(fontSize: 15),
-                                        ),
-                                        SizedBox(height: 8),
-                                        Text('예약시간까지 배정인증을 해주세요.',
-                                            style: TextStyle(fontSize: 15)),
-                                      ],
-                                    ),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        child: Text(
-                                          '확인',
-                                          style: TextStyle(color: Colors.blue),
-                                        ),
-                                        onPressed: () {
-                                          Get.back();
-                                          Get.back();
-                                        },
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
+                              controller.postReservation(context);
                             },
                             child: Text(
                               '예약하기',
@@ -476,8 +444,7 @@ class IncubatorComponent extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '소회의실 1',
-                  //'소회의실 ${model.roomid ?? '???'}',
+                  '소회의실 ${model.roomnum ?? '???'}',
                   style: const TextStyle(
                       fontSize: 25, fontWeight: FontWeight.bold),
                 ),
@@ -490,7 +457,7 @@ class IncubatorComponent extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'AI공학관 ${model.roomid ?? '???'}호',
+                        'AI공학관 ${model.classnum ?? '???'}호',
                         style: const TextStyle(
                             fontSize: 12, color: Colors.black54),
                       ),
@@ -505,7 +472,7 @@ class IncubatorComponent extends StatelessWidget {
             const Spacer(),
             Padding(
               padding: const EdgeInsets.only(top: 12.0),
-              child: model.currentLecture == null
+              child: model.usableLevel == null
                   ? const Text(
                       '다음 예약이 없습니다.',
                       style: TextStyle(fontSize: 12, color: Colors.black87),
@@ -521,7 +488,7 @@ class IncubatorComponent extends StatelessWidget {
                           height: 5,
                         ),
                         Text(
-                          model.currentLecture!['시간'] ?? '???',
+                          'AI공학관 ${model.classnum ?? '???'}호',
                           style: const TextStyle(
                               fontSize: 12, color: Colors.black87),
                         ),
