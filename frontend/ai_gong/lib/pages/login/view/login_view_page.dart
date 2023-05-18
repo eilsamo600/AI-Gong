@@ -2,7 +2,6 @@ import 'package:ai_gong/pages/login/controller/login_view_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:ai_gong/common/widget/panel_component.dart';
 import 'package:get/get.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
 
 import '../../../common/common.dart';
 
@@ -61,10 +60,9 @@ class LoginViewPage extends StatelessWidget {
                         const SizedBox(
                           height: 100,
                         ),
-                        SignInButton(
-                          Buttons.Google,
-                          text: "   구글 계정으로 로그인",
+                        ElevatedButton(
                           onPressed: () {},
+                          child: Text("   구글 계정으로 로그인"),
                         ),
                         const SizedBox(
                           height: 100,

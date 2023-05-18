@@ -42,7 +42,8 @@ import java.util.Enumeration;
 @Slf4j
 public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 
-    private static final String NO_CHECK_URL = "/login"; // "/login"으로 들어오는 요청은 Filter 작동 X
+    // private static final String NO_CHECK_URL = "/login"; // "/login"으로 들어오는 요청은
+    // Filter 작동 X
 
     private final JwtService jwtService;
     private final UserRepository userRepository;
@@ -52,10 +53,10 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         log.info(request.getRequestURI(), request.getMethod());
-        if (request.getRequestURI().equals(NO_CHECK_URL)) {
-            filterChain.doFilter(request, response); // "/login" 요청이 들어오면, 다음 필터 호출
-            return; // return으로 이후 현재 필터 진행 막기 (안해주면 아래로 내려가서 계속 필터 진행시킴)
-        }
+        // if (request.getRequestURI().equals(NO_CHECK_URL)) {
+        // filterChain.doFilter(request, response); // "/login" 요청이 들어오면, 다음 필터 호출
+        // return; // return으로 이후 현재 필터 진행 막기 (안해주면 아래로 내려가서 계속 필터 진행시킴)
+        // }
 
         // 사용자 요청 헤더에서 RefreshToken 추출
         // -> RefreshToken이 없거나 유효하지 않다면(DB에 저장된 RefreshToken과 다르다면) null을 반환

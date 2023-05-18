@@ -65,9 +65,9 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         response.addHeader(jwtService.getAccessHeader(), "Bearer " + accessToken);
         response.addHeader(jwtService.getRefreshHeader(), "Bearer " + refreshToken);
 
-        String port = "8081";
+        String port = "80";
         response.sendRedirect(
-                "http://localhost:" + port + "/static.html?access_token=" + accessToken + "&refresh_token="
+                "http://ai-gong.com:" + port + "/static.html?access_token=" + accessToken + "&refresh_token="
                         + refreshToken);
         jwtService.sendAccessAndRefreshToken(response, accessToken, refreshToken);
         jwtService.updateRefreshToken(oAuth2User.getEmail(), refreshToken);
