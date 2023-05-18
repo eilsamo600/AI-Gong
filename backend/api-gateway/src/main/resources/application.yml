@@ -34,6 +34,12 @@ spring:
           uri: lb://RESERVATION-SERVICE
           filters:
           - RewritePath=/v3/api-docs/reservation, /v3/api-docs
+        - id: auth-service 
+          predicates: 
+            - Path=/auth/**  
+          uri: lb://AUTH-SERVICE 
+          filters:
+          - RewritePath=/auth/(?<segment>.*), /$\{segment}
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE
       globalcors:
