@@ -27,14 +27,12 @@ class RouteViewPage extends StatelessWidget {
                   onPressed: () {
                     Get.offAllNamed(MainViewPage.url);
                   },
-                  child: const Text('Main View Page',
-                      style: TextStyle(color: Colors.black))),
+                  child: const Text('Main View Page', style: TextStyle(color: Colors.black))),
               ElevatedButton(
                   onPressed: () {
                     Get.offAllNamed(LoginViewPage.url);
                   },
-                  child: const Text('Login Page',
-                      style: TextStyle(color: Colors.black))),
+                  child: const Text('Login Page', style: TextStyle(color: Colors.black))),
               ElevatedButton(
                   onPressed: () async {
                     html.WindowBase? popupWin;
@@ -44,23 +42,22 @@ class RouteViewPage extends StatelessWidget {
                       }
                       var uri = Uri.dataFromString(event.data.toString());
                       Map<String, String> params = uri.queryParameters;
-                      ApiService.instance.setAuth(
-                          refresh: params['refresh_token'] ?? "",
-                          access: params['access_token'] ?? "");
+                      ApiService.instance.setAuth(refresh: params['refresh_token'] ?? "", access: params['access_token'] ?? "");
                     });
 
                     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-                      html.WindowBase popupWin = html.window.open(
-                          'http://localhost:8080/oauth2/authorization/google',
-                          'name',
-                          'width=600,height=400');
+                      html.WindowBase popupWin = html.window.open('http://localhost:8080/oauth2/authorization/google', 'name', 'width=600,height=400');
                     });
                   },
-                  child: const Text('Login',
-                      style: TextStyle(color: Colors.black))),
+                  child: const Text('Login', style: TextStyle(color: Colors.black))),
               ElevatedButton(
                   onPressed: () async {
                     var storage = const FlutterSecureStorage();
+                    ApiService.instance.setAuth(
+                        access:
+                            'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImV4cCI6MTY4NDQyMTAyMSwiZW1haWwiOiJqa2c3MTcwQGdhY2hvbi5hYy5rciJ9.Rh9O1p4DfpoawJd_lMWS9_IHxSVh4MsUJ-wJZdW3qPIVncMl8YcPwo87por8NKm9LYJtmrIsExYCltksEdpg0Q',
+                        refresh:
+                            'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJSZWZyZXNoVG9rZW4iLCJleHAiOjE2ODU2MjcwMjF9.3B9cGlZxTZ4iaGaHn4WRYGYIkDBJNdnmL-cgkEGan8f4mMhZEIHM_xxks4qrnZ6tu8MbgQ5HQjjU6oGhHmcjkQ');
                     var data = await storage.readAll();
                     print(data);
                   },
@@ -73,7 +70,7 @@ class RouteViewPage extends StatelessWidget {
                     });
                     await ApiService.instance.postReservation(data);
                   },
-                  child: Text('ddddd'))
+                  child: const Text('ddddd'))
             ],
           ),
         ),

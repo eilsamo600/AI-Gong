@@ -5,8 +5,6 @@ import 'package:ai_gong/pages/my_info/view/component/myInfo_component.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../routes.dart';
-
 class MyInfoViewPage extends StatelessWidget {
   const MyInfoViewPage({super.key});
 
@@ -62,9 +60,7 @@ class MyInfoViewPage extends StatelessWidget {
                           const Text(
                             "홍길동님의 활동",
                             //textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: Color.fromRGBO(103, 103, 103, 1)),
+                            style: TextStyle(fontSize: 18, color: Color.fromRGBO(103, 103, 103, 1)),
                           ),
                           const SizedBox(height: 12),
                           Row(
@@ -72,8 +68,7 @@ class MyInfoViewPage extends StatelessWidget {
                               const Text(
                                 "찜 4개",
                                 //textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontSize: 24, fontFamily: 'SuitEB'),
+                                style: TextStyle(fontSize: 24, fontFamily: 'SuitEB'),
                               ),
                               const SizedBox(width: 40),
                               Text(
@@ -127,9 +122,7 @@ class MyInfoViewPage extends StatelessWidget {
             if (controller.classRoomList.value != Null)
               Obx(
                 () => Column(children: [
-                  for (int index = 0;
-                      index < controller.classRoomList.length;
-                      index++)
+                  for (int index = 0; index < controller.classRoomList.length; index++)
                     Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 5),
                         child: Column(
@@ -156,10 +149,7 @@ class MyInfoViewPage extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text("예약 정보가 없습니다.",
-                      style: TextStyle(
-                          color: Color.fromRGBO(103, 103, 103, 1),
-                          fontSize: 17)),
+                  const Text("예약 정보가 없습니다.", style: TextStyle(color: Color.fromRGBO(103, 103, 103, 1), fontSize: 17)),
                   TextButton(
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -167,10 +157,8 @@ class MyInfoViewPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(13.0),
                         ),
                       ),
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          const Color.fromARGB(255, 0, 140, 255)),
-                      minimumSize:
-                          MaterialStateProperty.all(const Size(90, 40)),
+                      backgroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(255, 0, 140, 255)),
+                      minimumSize: MaterialStateProperty.all(const Size(90, 40)),
                     ),
                     onPressed: () {
                       Get.toNamed(ListIncubatorViewPage.url);
@@ -185,10 +173,7 @@ class MyInfoViewPage extends StatelessWidget {
                     // },
                     child: const Text(
                       '예약하기',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w400),
+                      style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w400),
                     ),
                   ),
                 ],
@@ -199,7 +184,7 @@ class MyInfoViewPage extends StatelessWidget {
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
-                  margin: EdgeInsets.only(bottom: 20.0),
+                  margin: const EdgeInsets.only(bottom: 20.0),
                   child: TextButton(
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -207,12 +192,13 @@ class MyInfoViewPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(15.0),
                         ),
                       ),
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
-                      minimumSize: MaterialStateProperty.all(Size(100, 50)),
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                      minimumSize: MaterialStateProperty.all(const Size(100, 50)),
                     ),
-                    onPressed: () {},
-                    child: Text(
+                    onPressed: () {
+                      Common.showSnackBar(messageText: 'dddd');
+                    },
+                    child: const Text(
                       '로그아웃',
                       style: TextStyle(color: Colors.black, fontSize: 15),
                     ),
