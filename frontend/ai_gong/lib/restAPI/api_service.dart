@@ -5,6 +5,8 @@ import 'package:ai_gong/common/dio_extension.dart';
 import 'package:ai_gong/common/service_response.dart';
 import 'package:ai_gong/restAPI/response/get_classroom_list_response.dart';
 import 'package:ai_gong/restAPI/response/get_classroom_response.dart';
+import 'package:ai_gong/restAPI/response/get_incubator_list_response.dart';
+import 'package:ai_gong/restAPI/response/get_incubator_response.dart';
 import 'package:ai_gong/restAPI/response/post_reservation.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
@@ -74,6 +76,58 @@ class ApiService extends GetxService {
       }
     } catch (e) {
       return ApiResponse<ClassRoomResponse>(
+          result: false, errorMsg: "오류가 발생했습니다.");
+    }
+  }
+
+  Future<ApiResponse<IncubatorListResponse>> getIncubatorList() async {
+    try {
+      var response = await dio.get(
+        '/incubator/incubators',
+        data: jsonEncode({}),
+      );
+      IncubatorListResponse getIncubatorListResponse =
+          IncubatorListResponse.fromJson(response.data);
+      return ApiResponse<IncubatorListResponse>(
+          result: response.isSuccessful, value: getIncubatorListResponse);
+    } on DioError catch (e) {
+      Common.logger.d(e);
+      try {
+        return ApiResponse<IncubatorListResponse>(
+            result: false,
+            errorMsg: e.response?.data['message'] ?? "오류가 발생했습니다.");
+      } catch (e) {
+        return ApiResponse<IncubatorListResponse>(
+            result: false, errorMsg: "오류가 발생했습니다.");
+      }
+    } catch (e) {
+      return ApiResponse<IncubatorListResponse>(
+          result: false, errorMsg: "오류가 발생했습니다.");
+    }
+  }
+
+  Future<ApiResponse<IncubatorResponse>> getIncubator(int id) async {
+    try {
+      var response = await dio.get(
+        '/incubator/incubator/$id',
+        data: jsonEncode({}),
+      );
+      IncubatorResponse getIncubatorResponse =
+          IncubatorResponse.fromJson(response.data);
+      return ApiResponse<IncubatorResponse>(
+          result: response.isSuccessful, value: getIncubatorResponse);
+    } on DioError catch (e) {
+      Common.logger.d(e);
+      try {
+        return ApiResponse<IncubatorResponse>(
+            result: false,
+            errorMsg: e.response?.data['message'] ?? "오류가 발생했습니다.");
+      } catch (e) {
+        return ApiResponse<IncubatorResponse>(
+            result: false, errorMsg: "오류가 발생했습니다.");
+      }
+    } catch (e) {
+      return ApiResponse<IncubatorResponse>(
           result: false, errorMsg: "오류가 발생했습니다.");
     }
   }
