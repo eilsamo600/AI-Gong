@@ -1,4 +1,4 @@
-import 'package:ai_gong/Service/UserService.dart';
+import 'package:ai_gong/Service/user_service.dart';
 import 'package:ai_gong/common/common.dart';
 import 'package:ai_gong/pages/list_incubator/view/list_incubator_view_page.dart';
 import 'package:ai_gong/pages/my_info/controller/my_info_view_controller.dart';

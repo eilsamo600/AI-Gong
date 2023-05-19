@@ -1,4 +1,4 @@
-import 'package:ai_gong/Service/UserService.dart';
+import 'package:ai_gong/Service/user_service.dart';
 import 'package:ai_gong/common/widget/panel_component.dart';
 import 'package:ai_gong/pages/main/controller/main_view_controller.dart';
 import 'package:flutter/material.dart';
