@@ -52,6 +52,18 @@ spring:
           uri: lb://AUTH-SERVICE
           filters:
           - RewritePath=/v3/api-docs/auth, /v3/api-docs
+        - id: like-service 
+          predicates: 
+            - Path=/like/**  
+          uri: lb://LIKE-SERVICE 
+          filters:
+          - RewritePath=/like/(?<segment>.*), /$\{segment}
+        - id: like-swagger
+          predicates:
+            - Path=/v3/api-docs/like
+          uri: lb://LIKE-SERVICE
+          filters:
+          - RewritePath=/v3/api-docs/like, /v3/api-docs
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE
       globalcors:

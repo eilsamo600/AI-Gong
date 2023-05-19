@@ -1,10 +1,10 @@
-package gcu.backend.reservationservice;
+package gcu.backend.likeservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ReservationServiceApplicationTests {
+class LikeServiceApplicationTests {
 
 	@Test
 	void contextLoads() {

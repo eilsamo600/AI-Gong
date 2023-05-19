@@ -1,6 +1,7 @@
 package gcu.backend.likeservice.controller;
 
 import java.util.List;
+import org.springframework.boot.SpringApplication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,10 +15,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.core.Response;
-import gcu.backend.likeservice.model.Incubator;
 import gcu.backend.likeservice.model.Like;
 import gcu.backend.likeservice.repository.LikeRepository;
-import gcu.backend.likeservice.repository.IncubatorRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;

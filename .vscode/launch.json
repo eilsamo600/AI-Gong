@@ -6,6 +6,12 @@
     "configurations": [
         {
             "type": "java",
+            "name": "LikeServiceApplication",
+            "request": "launch",
+            "mainClass": "gcu.backend.likeservice.LikeServiceApplication"
+        },
+        {
+            "type": "java",
             "name": "EurekaServerApplication",
             "request": "launch",
             "mainClass": "gcu.backend.eureka_server.EurekaServerApplication",
