@@ -1,0 +1,42 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "EurekaServerApplication",
+            "request": "launch",
+            "mainClass": "gcu.backend.eureka_server.EurekaServerApplication",
+            "projectName": ""
+        },
+        {
+            "type": "java",
+            "name": "ApiGatewayApplication",
+            "request": "launch",
+            "mainClass": "gcu.backend.apigateway.ApiGatewayApplication",
+            "projectName": ""
+        },
+        {
+            "type": "java",
+            "name": "ClassroomServiceApplication",
+            "request": "launch",
+            "mainClass": "gcu.backend.classroomservice.ClassroomServiceApplication",
+            "projectName": ""
+        },
+        {
+            "type": "java",
+            "name": "ReservationServiceApplication",
+            "request": "launch",
+            "mainClass": "gcu.backend.reservationservice.ReservationServiceApplication",
+            "projectName": ""
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        }
+    ]
+}

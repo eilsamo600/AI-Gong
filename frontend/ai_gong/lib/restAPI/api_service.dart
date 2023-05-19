@@ -6,6 +6,8 @@ import 'package:ai_gong/common/service_response.dart';
 import 'package:ai_gong/restAPI/models/Reservation.dart';
 import 'package:ai_gong/restAPI/response/get_classroom_list_response.dart';
 import 'package:ai_gong/restAPI/response/get_classroom_response.dart';
+import 'package:ai_gong/restAPI/response/get_reservation_list_response.dart';
+import 'package:ai_gong/restAPI/response/post_reservation.dart';
 import 'package:ai_gong/restAPI/response/get_incubator_list_response.dart';
 import 'package:ai_gong/restAPI/response/get_incubator_response.dart';
 
@@ -117,6 +119,32 @@ class ApiService extends GetxService {
       }
     } catch (e) {
       return ApiResponse<IncubatorListResponse>(
+          result: false, errorMsg: "오류가 발생했습니다.");
+    }
+  }
+
+  Future<ApiResponse<ReservationListResponse>> getReservationList() async {
+    try {
+      var response = await dio.get(
+        '/reservation/{id}',
+        data: jsonEncode({}),
+      );
+      ReservationListResponse getReservationListResponse =
+          ReservationListResponse.fromJson(response.data);
+      return ApiResponse<ReservationListResponse>(
+          result: response.isSuccessful, value: getReservationListResponse);
+    } on DioError catch (e) {
+      Common.logger.d(e);
+      try {
+        return ApiResponse<ReservationListResponse>(
+            result: false,
+            errorMsg: e.response?.data['message'] ?? "오류가 발생했습니다.");
+      } catch (e) {
+        return ApiResponse<ReservationListResponse>(
+            result: false, errorMsg: "오류가 발생했습니다.");
+      }
+    } catch (e) {
+      return ApiResponse<ReservationListResponse>(
           result: false, errorMsg: "오류가 발생했습니다.");
     }
   }

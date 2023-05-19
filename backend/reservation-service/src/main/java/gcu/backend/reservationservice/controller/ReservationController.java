@@ -59,21 +59,16 @@ public class ReservationController {
         return new ResponseEntity<List<Reservation>>(reservations, HttpStatus.OK);
     }
 
-    @GetMapping("/incubator/incubators")
-    @Operation(summary = "모든 소회의실 정보 조회", description = "소회의실 정보입니다.")
-    public ResponseEntity<List<Incubator>> getIncubators() {
-        List<Incubator> incubators = incubatorRepository.findAll();
-        return new ResponseEntity<List<Incubator>>(incubators, HttpStatus.OK);
-    }
-
     @DeleteMapping("/reservation/{id}")
     @Operation(summary = "특정 예약정보 삭제", description = "특정 예약정보를 삭제합니다.")
-    public ResponseEntity<Reservation> deleteReservation(@PathVariable Long id) {
-        reservationRepository.deleteById(id);
-        // if (reservation == null) {
-        // return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        // }
-        return new ResponseEntity<Reservation>(HttpStatus.OK);
-    }
+    public ResponseEntity<Reservation> deleteReservation(@PathVariable String id) {
+        Reservation reservation = reservationRepository.findByEmail(id);
 
+        if (reservation == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        reservationRepository.delete(reservation);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }
