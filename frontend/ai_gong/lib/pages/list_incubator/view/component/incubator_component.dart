@@ -33,6 +33,7 @@ class IncubatorComponent extends StatelessWidget {
         controller.statesInit();
         controller.datesInit();
         controller.numInit();
+        controller.roomnumInit();
         showModalBottomSheet(
             isScrollControlled: true,
             context: context,
@@ -45,11 +46,12 @@ class IncubatorComponent extends StatelessWidget {
                       height: 30,
                     ),
                     Container(
-                      child: Row(children: const [
+                      child: Row(children: [
                         SizedBox(
                           width: 15,
                         ),
-                        Text('소회의실 1', style: textstyle2),
+                        Text('소회의실 ${model.roomnum ?? '???'}호',
+                            style: textstyle2),
                       ]),
                     ),
                     SizedBox(
@@ -398,6 +400,7 @@ class IncubatorComponent extends StatelessWidget {
                           height: 55,
                           child: OutlinedButton(
                             onPressed: () {
+                              controller.roomnumchange(model.roomnum!.toInt());
                               controller.postReservation(context);
                             },
                             child: Text(
