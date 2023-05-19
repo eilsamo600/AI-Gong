@@ -65,4 +65,14 @@ public class ReservationController {
         List<Incubator> incubators = incubatorRepository.findAll();
         return new ResponseEntity<List<Incubator>>(incubators, HttpStatus.OK);
     }
+
+    @GetMapping("/reservation/reservation/{date}")
+    @Operation(summary = "예약 정보 조회", description = "예약정보입니다")
+    public ResponseEntity<Reservation> getavailable(@PathVariable String number, String date) {
+        Reservation reservation = reservationRepository.findByEmailAndDate(number, date);
+        if (reservation == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Reservation>(reservation, HttpStatus.OK);
+    }
 }
