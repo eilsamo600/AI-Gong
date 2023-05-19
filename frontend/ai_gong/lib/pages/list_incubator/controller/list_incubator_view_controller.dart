@@ -1,6 +1,7 @@
 import 'package:ai_gong/common/service_response.dart';
 import 'package:ai_gong/restAPI/api_service.dart';
 import 'package:ai_gong/restAPI/models/Incubator.dart';
+import 'package:ai_gong/restAPI/response/get_available_reservation.dart';
 import 'package:ai_gong/restAPI/response/get_incubator_list_response.dart';
 import 'package:ai_gong/restAPI/response/get_incubator_response.dart';
 import 'package:ai_gong/restAPI/models/Reservation.dart';
@@ -16,18 +17,21 @@ class ListIncubatorViewController extends GetxController {
   final today = DateTime.now().toUtc();
 
   void postReservation(BuildContext context) async {
-    int val = dates.value.indexOf(1);
-    int timeval = states.value.indexOf(1);
+    int val = dates.value.indexOf(2);
+    List<int> timeval = [];
+
+    for (int i = 0; i < states.value.length; i++) {
+      if (states.value[i] == 1) {
+        timeval.add(i);
+      }
+    }
     String day = DateFormat('d').format(DateTime.utc(
         today.year, today.month, today.day - (today.weekday - 1) + val));
     var data = Reservation.fromJson({
       'email': 'thwjd082@gachon.ac.kr',
       'number': roomnum.value.toString(),
-      'time': (states.value as List).cast<int>(),
-      'date': (today.year.toString() +
-              today.month.toString() +
-              today.day.toString())
-          .toString(),
+      'time': (timeval as List).cast<int>(),
+      'date': (today.year.toString() + today.month.toString() + day),
       'people': (num.value as int),
       'state': 0
     });
@@ -311,6 +315,16 @@ class ListIncubatorViewController extends GetxController {
     }
   }
 
+  Future<void> getAvailableReservation(String date, String number) async {
+    reservation.value = Reservation();
+    ApiResponse<AvailableReservationResponse> response =
+        await ApiService.instance.getAvailableReservation(date, number);
+    await Future.delayed(const Duration(milliseconds: 150));
+    if (response.result) {
+      reservation.value = response.value!.reservation!;
+    }
+  }
+
   void checkTimer() async {
     while (true) {
       await Future.delayed(const Duration(minutes: 60), () {
@@ -323,4 +337,5 @@ class ListIncubatorViewController extends GetxController {
   Rx<DateTime> now = DateTime.now().obs;
   Rx<Incubator> incubator = Incubator().obs;
   RxList<Incubator> incubatorList = RxList<Incubator>();
+  Rx<Reservation> reservation = Reservation().obs;
 }
