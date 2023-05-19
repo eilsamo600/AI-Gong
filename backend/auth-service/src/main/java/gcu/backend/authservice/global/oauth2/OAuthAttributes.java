@@ -18,7 +18,6 @@ import gcu.backend.authservice.global.oauth2.userinfo.OAuth2UserInfo;
  * 소셜별로 데이터를 받는 데이터를 분기 처리하는 DTO 클래스
  */
 @Getter
-@Slf4j
 public class OAuthAttributes {
 
     private String nameAttributeKey; // OAuth2 로그인 진행 시 키가 되는 필드 값, PK와 같은 의미

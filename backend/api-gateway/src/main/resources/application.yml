@@ -62,6 +62,12 @@ spring:
           uri: lb://AUTH-SERVICE 
           filters:
           - RewritePath=/auth/(?<segment>.*), /$\{segment}
+        - id: auth-swagger
+          predicates:
+            - Path=/v3/api-docs/auth
+          uri: lb://AUTH-SERVICE
+          filters:
+          - RewritePath=/v3/api-docs/auth, /v3/api-docs
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE
       globalcors:

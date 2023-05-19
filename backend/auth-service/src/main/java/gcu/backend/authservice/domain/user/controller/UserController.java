@@ -1,17 +1,39 @@
 package gcu.backend.authservice.domain.user.controller;
 
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
+import gcu.backend.authservice.domain.user.User;
+import gcu.backend.authservice.domain.user.repository.UserRepository;
+import gcu.backend.authservice.global.jwt.service.JwtService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
+@Tag(name = "User", description = "인증&유저 API")
 public class UserController {
+    private final JwtService jwtService;
+    private final UserRepository userRepository;
 
-    @GetMapping("/jwt-test")
-    public String jwtTest() {
-        return "jwtTest 요청 성공";
+    @GetMapping("/info")
+    @Operation(summary = "Get User Info", description = "Access 토큰을 이용해서 유저 정보를 가져옵니다.")
+    public ResponseEntity<User> getInfo(@RequestHeader("Authorization") String token) {
+        Optional<String> email = jwtService.extractEmail(token);
+        if (!email.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        Optional<User> user = userRepository.findByEmail(email.get());
+        if (!user.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(user.get());
     }
 
     @GetMapping("/test")

@@ -33,8 +33,7 @@ class IncubatorComponent extends StatelessWidget {
         controller.statesInit();
         controller.datesInit();
         controller.numInit();
-
-        final dynamic reservationnum = model.roomnum;
+        controller.roomnumInit();
         showModalBottomSheet(
             isScrollControlled: true,
             context: context,
@@ -401,6 +400,7 @@ class IncubatorComponent extends StatelessWidget {
                           height: 55,
                           child: OutlinedButton(
                             onPressed: () {
+                              controller.roomnumchange(model.roomnum!.toInt());
                               controller.postReservation(context);
                             },
                             child: Text(

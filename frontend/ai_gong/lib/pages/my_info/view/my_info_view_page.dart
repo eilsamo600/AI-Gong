@@ -1,3 +1,4 @@
+import 'package:ai_gong/Service/UserService.dart';
 import 'package:ai_gong/common/common.dart';
 import 'package:ai_gong/pages/list_incubator/view/list_incubator_view_page.dart';
 import 'package:ai_gong/pages/my_info/controller/my_info_view_controller.dart';
@@ -196,7 +197,7 @@ class MyInfoViewPage extends StatelessWidget {
                       minimumSize: MaterialStateProperty.all(const Size(100, 50)),
                     ),
                     onPressed: () {
-                      Common.showSnackBar(messageText: 'dddd');
+                      UserService.instance.logout();
                     },
                     child: const Text(
                       '로그아웃',

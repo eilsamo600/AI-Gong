@@ -22,11 +22,12 @@ class ListIncubatorViewController extends GetxController {
         today.year, today.month, today.day - (today.weekday - 1) + val));
     var data = Reservation.fromJson({
       'email': 'thwjd082@gachon.ac.kr',
-      'number': "1",
-      'time': (timeval as List).cast<int>(),
-      'date': (today.year.toString()) +
-          (today.month.toString()) +
-          (today.day.toString()),
+      'number': roomnum.value.toString(),
+      'time': (states.value as List).cast<int>(),
+      'date': (today.year.toString() +
+              today.month.toString() +
+              today.day.toString())
+          .toString(),
       'people': (num.value as int)
     });
 
@@ -237,10 +238,21 @@ class ListIncubatorViewController extends GetxController {
   }
 
   Rx<int> num = 0.obs;
+  Rx<int> roomnum = 0.obs;
 
   void numInit() {
     num.value = 0;
     num.refresh();
+  }
+
+  void roomnumInit() {
+    roomnum.value = 0;
+    roomnum.refresh();
+  }
+
+  void roomnumchange(int n) {
+    roomnum.value += n;
+    roomnum.refresh();
   }
 
   void numchange(int n) {
