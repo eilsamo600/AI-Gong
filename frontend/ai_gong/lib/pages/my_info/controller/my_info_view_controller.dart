@@ -36,12 +36,12 @@ class MyInfoViewController extends GetxController {
   void onInit() async {
     super.onInit();
     // await getClassRoomList();
-    await getMyReservationList();
+    // await getMyReservationList(email);
   }
 
-  Future<void> getMyReservationList() async {
+  Future<void> getMyReservationList(String email) async {
     ApiResponse<ReservationListResponse> response =
-        await ApiService.instance.getReservationList();
+        await ApiService.instance.getReservationList(email);
     if (response.result) {
       myReservationList.value = response.value!.reservations!;
     }

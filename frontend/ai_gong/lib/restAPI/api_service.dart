@@ -108,10 +108,11 @@ class ApiService extends GetxService {
     }
   }
 
-  Future<ApiResponse<ReservationListResponse>> getReservationList() async {
+  Future<ApiResponse<ReservationListResponse>> getReservationList(
+      String email) async {
     try {
       var response = await dio.get(
-        '/reservation/{id}',
+        '/reservation/$email',
         data: jsonEncode({}),
       );
       ReservationListResponse getReservationListResponse =

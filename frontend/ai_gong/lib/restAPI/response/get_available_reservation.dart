@@ -1,11 +1,16 @@
 import 'package:ai_gong/restAPI/models/Reservation.dart';
 
 class AvailableReservationResponse {
-  Reservation? reservation;
+  List<Reservation>? reservation;
 
   AvailableReservationResponse({this.reservation});
 
-  AvailableReservationResponse.fromJson(Map<String, dynamic> json) {
-    reservation = Reservation.fromJson(json);
+  AvailableReservationResponse.fromJson(List<dynamic> jsonList) {
+    if (jsonList.isNotEmpty) {
+      reservation = <Reservation>[];
+      for (var v in jsonList) {
+        reservation!.add(Reservation.fromJson(v));
+      }
+    }
   }
 }

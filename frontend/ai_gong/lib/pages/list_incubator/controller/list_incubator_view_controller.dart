@@ -316,13 +316,13 @@ class ListIncubatorViewController extends GetxController {
   }
 
   Future<void> getAvailableReservation(String date, String number) async {
-    reservation.value = Reservation();
     ApiResponse<AvailableReservationResponse> response =
         await ApiService.instance.getAvailableReservation(date, number);
     await Future.delayed(const Duration(milliseconds: 150));
     if (response.result) {
-      reservation.value = response.value!.reservation!;
+      reservations.value = response.value!.reservation!;
     }
+    reservation.refresh();
   }
 
   void checkTimer() async {
@@ -338,4 +338,5 @@ class ListIncubatorViewController extends GetxController {
   Rx<Incubator> incubator = Incubator().obs;
   RxList<Incubator> incubatorList = RxList<Incubator>();
   Rx<Reservation> reservation = Reservation().obs;
+  RxList<Reservation> reservations = RxList<Reservation>();
 }

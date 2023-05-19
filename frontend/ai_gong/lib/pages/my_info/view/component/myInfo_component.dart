@@ -1,5 +1,7 @@
 import 'package:ai_gong/restAPI/models/Classroom.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:ai_gong/pages/my_info/controller/my_info_view_controller.dart';
 
 import '../../../../restAPI/models/Reservation.dart';
 
@@ -9,6 +11,11 @@ class MyInfoComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(MyInfoViewController());
+    // String? nullemail = model.email;
+    // String nonnullemail = nullemail!;
+
+    // final dynamic number = controller.getMyReservationList(nonnullemail);
     return Container(
       child: Column(
         children: [
@@ -22,7 +29,8 @@ class MyInfoComponent extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("소회의실 ${model.number ?? '???'}",
+                      Text(
+                          "소회의실 ${controller.myReservationList.value ?? '???'}",
                           style: TextStyle(
                               fontSize: 17, fontWeight: FontWeight.w900)),
                       const SizedBox(height: 3),
