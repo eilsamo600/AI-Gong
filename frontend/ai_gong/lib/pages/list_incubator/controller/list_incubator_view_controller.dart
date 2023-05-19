@@ -14,16 +14,22 @@ class ListIncubatorViewController extends GetxController {
 
   RxList<int> states = List.filled(17, 0).obs;
   final today = DateTime.now().toUtc();
+
   void postReservation(BuildContext context) async {
     int val = dates.value.indexOf(1);
+    int timeval = states.value.indexOf(1);
     String day = DateFormat('d').format(DateTime.utc(
         today.year, today.month, today.day - (today.weekday - 1) + val));
     var data = Reservation.fromJson({
       'email': 'thwjd082@gachon.ac.kr',
-      'number': '1',
+      'number': roomnum.value.toString(),
       'time': (states.value as List).cast<int>(),
-      'date': (today.year + today.month + today.day).toString(),
-      'people': (num.value as int)
+      'date': (today.year.toString() +
+              today.month.toString() +
+              today.day.toString())
+          .toString(),
+      'people': (num.value as int),
+      'state': 0
     });
 
     ApiResponse response = await ApiService.instance.postReservation(data);
@@ -233,10 +239,21 @@ class ListIncubatorViewController extends GetxController {
   }
 
   Rx<int> num = 0.obs;
+  Rx<int> roomnum = 0.obs;
 
   void numInit() {
     num.value = 0;
     num.refresh();
+  }
+
+  void roomnumInit() {
+    roomnum.value = 0;
+    roomnum.refresh();
+  }
+
+  void roomnumchange(int n) {
+    roomnum.value += n;
+    roomnum.refresh();
   }
 
   void numchange(int n) {

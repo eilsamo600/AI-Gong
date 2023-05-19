@@ -14,22 +14,28 @@ import gcu.backend.authservice.global.jwt.service.JwtService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequiredArgsConstructor
 @Tag(name = "User", description = "인증&유저 API")
+@Slf4j
 public class UserController {
     private final JwtService jwtService;
     private final UserRepository userRepository;
 
     @GetMapping("/info")
     @Operation(summary = "Get User Info", description = "Access 토큰을 이용해서 유저 정보를 가져옵니다.")
-    public ResponseEntity<User> getInfo(@RequestHeader("Authorization") String token) {
-        Optional<String> email = jwtService.extractEmail(token);
+    public ResponseEntity<User> getInfo(@RequestHeader("Authorization") String value) {
+
+        Optional<String> email = jwtService.extractAccessTokenInString(value)
+                .map(token -> jwtService.extractAccessTokenInString(token)).orElse(null);
+        log.info("email: " + email);
         if (!email.isPresent()) {
             return ResponseEntity.notFound().build();
         }
         Optional<User> user = userRepository.findByEmail(email.get());
+        log.info("user: " + user);
         if (!user.isPresent()) {
             return ResponseEntity.notFound().build();
         }
