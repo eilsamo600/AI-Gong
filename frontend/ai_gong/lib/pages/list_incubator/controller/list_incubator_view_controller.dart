@@ -28,7 +28,8 @@ class ListIncubatorViewController extends GetxController {
               today.month.toString() +
               today.day.toString())
           .toString(),
-      'people': (num.value as int)
+      'people': (num.value as int),
+      'state': 0
     });
 
     ApiResponse response = await ApiService.instance.postReservation(data);
