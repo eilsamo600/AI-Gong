@@ -1,3 +1,4 @@
+import 'package:ai_gong/Service/userservice.dart';
 import 'package:ai_gong/common/common.dart';
 import 'package:ai_gong/pages/dev_route/view/route_view_page.dart';
 import 'package:ai_gong/restAPI/api_service.dart';
@@ -19,8 +20,7 @@ void main() async {
           primary: Colors.white,
           secondary: Colors.black,
         ),
-        appBarTheme:
-            const AppBarTheme(iconTheme: IconThemeData(color: Colors.black))),
+        appBarTheme: const AppBarTheme(iconTheme: IconThemeData(color: Colors.black))),
     getPages: CustomRouter.routes,
     themeMode: ThemeMode.light,
   ));
@@ -29,4 +29,5 @@ void main() async {
 Future<void> initServices() async {
   await Get.putAsync(() => Common().init());
   await Get.putAsync(() => ApiService().init());
+  await Get.putAsync(() => UserService().init());
 }

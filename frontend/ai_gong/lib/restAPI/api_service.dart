@@ -7,18 +7,36 @@ import 'package:ai_gong/restAPI/models/Like.dart';
 import 'package:ai_gong/restAPI/models/Reservation.dart';
 import 'package:ai_gong/restAPI/response/get_classroom_list_response.dart';
 import 'package:ai_gong/restAPI/response/get_classroom_response.dart';
+import 'package:ai_gong/restAPI/response/get_reservation_list_response.dart';
+import 'package:ai_gong/restAPI/response/post_reservation.dart';
+import 'package:ai_gong/restAPI/response/get_incubator_list_response.dart';
+import 'package:ai_gong/restAPI/response/get_incubator_response.dart';
 
 import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class ApiService extends GetxService {
   static ApiService get instance => Get.find<ApiService>();
 
-  Dio dio = Dio(BaseOptions(baseUrl: Common.baseUrl, headers: {
-    "Flutter-Rest-Api": "true",
-    "Authorization": "Bearer 1231231231233"
-  }));
+  Dio dio = Dio(BaseOptions(
+      baseUrl: Common.baseUrl,
+      headers: {"Flutter-Rest-Api": "true", "Authorization": "Bearer 0000"}));
+
+  void reflectAuth() async {
+    var storage = const FlutterSecureStorage();
+    dio.options.headers["Authorization"] =
+        "Bearer ${await storage.read(key: "access_token") ?? "0000"}";
+  }
+
+  void setAuth({required String access, required String refresh}) async {
+    var storage = const FlutterSecureStorage();
+    storage.write(key: 'access_token', value: access);
+    storage.write(key: 'refresh_token', value: refresh);
+    dio.options.headers["Authorization"] = "Bearer $access";
+  }
+
   Options dioOptions = Options();
   Future<ApiService> init() async {
     Common.logger.d('$runtimeType init!');
@@ -76,6 +94,84 @@ class ApiService extends GetxService {
       }
     } catch (e) {
       return ApiResponse<ClassRoomResponse>(
+          result: false, errorMsg: "오류가 발생했습니다.");
+    }
+  }
+
+  Future<ApiResponse<IncubatorListResponse>> getIncubatorList() async {
+    try {
+      var response = await dio.get(
+        '/incubator/incubators',
+        data: jsonEncode({}),
+      );
+      IncubatorListResponse getIncubatorListResponse =
+          IncubatorListResponse.fromJson(response.data);
+      return ApiResponse<IncubatorListResponse>(
+          result: response.isSuccessful, value: getIncubatorListResponse);
+    } on DioError catch (e) {
+      Common.logger.d(e);
+      try {
+        return ApiResponse<IncubatorListResponse>(
+            result: false,
+            errorMsg: e.response?.data['message'] ?? "오류가 발생했습니다.");
+      } catch (e) {
+        return ApiResponse<IncubatorListResponse>(
+            result: false, errorMsg: "오류가 발생했습니다.");
+      }
+    } catch (e) {
+      return ApiResponse<IncubatorListResponse>(
+          result: false, errorMsg: "오류가 발생했습니다.");
+    }
+  }
+
+  Future<ApiResponse<ReservationListResponse>> getReservationList() async {
+    try {
+      var response = await dio.get(
+        '/reservation/{id}',
+        data: jsonEncode({}),
+      );
+      ReservationListResponse getReservationListResponse =
+          ReservationListResponse.fromJson(response.data);
+      return ApiResponse<ReservationListResponse>(
+          result: response.isSuccessful, value: getReservationListResponse);
+    } on DioError catch (e) {
+      Common.logger.d(e);
+      try {
+        return ApiResponse<ReservationListResponse>(
+            result: false,
+            errorMsg: e.response?.data['message'] ?? "오류가 발생했습니다.");
+      } catch (e) {
+        return ApiResponse<ReservationListResponse>(
+            result: false, errorMsg: "오류가 발생했습니다.");
+      }
+    } catch (e) {
+      return ApiResponse<ReservationListResponse>(
+          result: false, errorMsg: "오류가 발생했습니다.");
+    }
+  }
+
+  Future<ApiResponse<IncubatorResponse>> getIncubator(int id) async {
+    try {
+      var response = await dio.get(
+        '/incubator/incubator/$id',
+        data: jsonEncode({}),
+      );
+      IncubatorResponse getIncubatorResponse =
+          IncubatorResponse.fromJson(response.data);
+      return ApiResponse<IncubatorResponse>(
+          result: response.isSuccessful, value: getIncubatorResponse);
+    } on DioError catch (e) {
+      Common.logger.d(e);
+      try {
+        return ApiResponse<IncubatorResponse>(
+            result: false,
+            errorMsg: e.response?.data['message'] ?? "오류가 발생했습니다.");
+      } catch (e) {
+        return ApiResponse<IncubatorResponse>(
+            result: false, errorMsg: "오류가 발생했습니다.");
+      }
+    } catch (e) {
+      return ApiResponse<IncubatorResponse>(
           result: false, errorMsg: "오류가 발생했습니다.");
     }
   }

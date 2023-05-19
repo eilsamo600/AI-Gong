@@ -14,8 +14,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.core.Response;
+import gcu.backend.reservationservice.model.Incubator;
 import gcu.backend.reservationservice.model.Reservation;
 import gcu.backend.reservationservice.repository.ReservationRepository;
+import gcu.backend.reservationservice.repository.IncubatorRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -29,11 +31,23 @@ public class ReservationController {
     @Autowired
     private ReservationRepository reservationRepository;
 
+    @Autowired
+    private IncubatorRepository incubatorRepository;
+
     @PostMapping("/reservation")
     @Operation(summary = "예약 내역 보내기", description = "예약 내역 보내요~.")
     public ResponseEntity<Reservation> postReservation(@Valid @RequestBody Reservation reservation) {
         System.out.print(reservation.toString());
         Reservation savedReservation = reservationRepository.save(reservation);
+        return ResponseEntity.ok(savedReservation);
+
+    }
+
+    @PostMapping("/incubator/post")
+    @Operation(summary = "예약 내역 보내기", description = "예약 내역 보내요~.")
+    public ResponseEntity<Incubator> postIncubator(@Valid @RequestBody Incubator incubator) {
+        System.out.print(incubator.toString());
+        Incubator savedReservation = incubatorRepository.save(incubator);
         return ResponseEntity.ok(savedReservation);
 
     }
@@ -47,12 +61,14 @@ public class ReservationController {
 
     @DeleteMapping("/reservation/{id}")
     @Operation(summary = "특정 예약정보 삭제", description = "특정 예약정보를 삭제합니다.")
-    public ResponseEntity<Reservation> deleteReservation(@PathVariable Long id) {
-        reservationRepository.deleteById(id);
-        // if (reservation == null) {
-        // return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        // }
-        return new ResponseEntity<Reservation>(HttpStatus.OK);
-    }
+    public ResponseEntity<Reservation> deleteReservation(@PathVariable String id) {
+        Reservation reservation = reservationRepository.findByEmail(id);
 
+        if (reservation == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        reservationRepository.delete(reservation);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }
