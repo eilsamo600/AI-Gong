@@ -66,10 +66,25 @@ class Common extends GetxService {
               const SizedBox(
                 height: 100,
               ),
-              ElevatedButton(
-                onPressed: () {},
-                child: const Text("   구글 계정으로 로그인"),
-              ),
+              ButtonTheme(
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.white,
+                      ),
+                      onPressed: () {},
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset('assets/images/google.png', width: 20),
+                            SizedBox(width: 15),
+                            Text('가천 계정으로 로그인하기',
+                                style: TextStyle(
+                                    fontSize: 15, color: Colors.black)),
+                          ],
+                        ),
+                      ))),
               const SizedBox(
                 height: 100,
               ),
