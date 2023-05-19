@@ -176,7 +176,7 @@ class ApiService extends GetxService {
       String date, String number) async {
     try {
       var response = await dio.get(
-        '/reservation/reservation/$date',
+        '/reservation/reservation/$number',
         data: jsonEncode({}),
       );
       AvailableReservationResponse getReservationResponse =
