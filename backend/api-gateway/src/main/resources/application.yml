@@ -39,7 +39,7 @@ spring:
             - Path=/v3/api-docs/reservation
           uri: lb://RESERVATION-SERVICE
           filters:
-          - RewritePath=/v3/api-docs/reservation, /v3/api-docs 
+          - RewritePath=/v3/api-docs/reservation, /v3/api-docs
         - id: auth-service 
           predicates: 
             - Path=/auth/**  
