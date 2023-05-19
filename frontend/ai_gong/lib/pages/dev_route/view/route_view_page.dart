@@ -1,7 +1,6 @@
 import 'dart:html' as html;
 
 import 'package:ai_gong/pages/dev_route/controller/route_view_controller.dart';
-import 'package:ai_gong/pages/login/view/login_view_page.dart';
 import 'package:ai_gong/pages/main/view/main_view_page.dart';
 import 'package:ai_gong/restAPI/api_service.dart';
 import 'package:ai_gong/restAPI/models/Reservation.dart';
@@ -31,7 +30,7 @@ class RouteViewPage extends StatelessWidget {
                       style: TextStyle(color: Colors.black))),
               ElevatedButton(
                   onPressed: () {
-                    Get.offAllNamed(LoginViewPage.url);
+                    //Get.offAllNamed(LoginViewPage.url);
                   },
                   child: const Text('Login Page',
                       style: TextStyle(color: Colors.black))),
