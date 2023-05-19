@@ -10,16 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.v3.oas.annotations.Operation;
 // import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.web.bind.annotation.RequestBody;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import jakarta.ws.rs.core.Response;
 import gcu.backend.reservationservice.model.Incubator;
 import gcu.backend.reservationservice.model.Reservation;
 import gcu.backend.reservationservice.repository.ReservationRepository;
 import gcu.backend.reservationservice.repository.IncubatorRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.http.HttpStatus;
@@ -61,5 +57,12 @@ public class ReservationController {
         reservationRepository.delete(reservation);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/incubators")
+    @Operation(summary = "인큐베이터 목록 조회", description = "인큐베이터 정보입니다.")
+    public ResponseEntity<List<Incubator>> getIncubators() {
+        List<Incubator> incubators = incubatorRepository.findAll();
+        return new ResponseEntity<List<Incubator>>(incubators, HttpStatus.OK);
     }
 }

@@ -28,7 +28,7 @@ class ClassRoomComponent extends StatelessWidget {
                 children: [
                   Container(
                     padding: const EdgeInsets.fromLTRB(20, 15, 0, 0),
-                    child: Column(
+                    child: Row(
                       //crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
@@ -36,19 +36,32 @@ class ClassRoomComponent extends StatelessWidget {
                           style: const TextStyle(
                               fontSize: 27, fontWeight: FontWeight.bold),
                         ),
-                        InkWell(
-                            onTap: () {},
-                            child: Obx(() => IconButton(
-                                  icon: Icon(
-                                    Icons.bookmark_border,
-                                    color: controller.bookmark.value == 1
-                                        ? Colors.blue
-                                        : Colors.black,
-                                  ),
-                                  onPressed: () {
-                                    controller.checkbookmark();
-                                  },
-                                ))),
+                        Spacer(),
+                        Container(
+                            padding: const EdgeInsets.fromLTRB(20, 0, 15, 0),
+                            child: InkWell(
+                                onTap: () {
+                                  // controller.checkbookmark();
+                                },
+                                child: Obx(() => controller.bookmark.value == 1
+                                    ? IconButton(
+                                        icon: Icon(Icons.bookmark),
+                                        color: Colors.blue,
+                                        iconSize: 27,
+                                        onPressed: () {
+                                          controller.checkbookmark();
+                                          controller.postLike(
+                                              '${model.roomid ?? '???'}');
+                                        })
+                                    : IconButton(
+                                        icon: Icon(Icons.bookmark_border),
+                                        iconSize: 27,
+                                        onPressed: () {
+                                          controller.checkbookmark();
+                                          controller.deleteLike(
+                                              '${model.roomid ?? '???'}');
+                                        },
+                                      )))),
                       ],
                     ),
                   ),

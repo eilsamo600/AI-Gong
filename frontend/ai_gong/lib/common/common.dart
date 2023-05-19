@@ -9,7 +9,7 @@ class Common extends GetxService {
   static Common get instance => Get.find<Common>();
   static const bool isDev = true;
   static Logger logger = Logger(filter: MyFilter());
-  static const String baseUrl = "http://ai-gong.com:8000/";
+  static const String baseUrl = "http://127.0.0.1:8000/";
 
   static double get getWidth => GetPlatform.isMobile ? Get.width : 500;
 
@@ -58,14 +58,27 @@ class Common extends GetxService {
               const SizedBox(
                 height: 100,
               ),
-              ElevatedButton(
-                onPressed: () async {
-                  bool x = await UserService.instance.login();
-                  Navigator.pop(context);
-                  if (x) MainViewController.instance.selectTab(2);
-                },
-                child: const Text("   구글 계정으로 로그인"),
-              ),
+              ButtonTheme(
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                      ),
+                      onPressed: () async {
+                        bool x = await UserService.instance.login();
+                        Navigator.pop(context);
+                        if (x) MainViewController.instance.selectTab(2);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset('assets/images/google.png', width: 20),
+                            const SizedBox(width: 15),
+                            const Text('가천 계정으로 로그인하기', style: TextStyle(fontSize: 15, color: Colors.black)),
+                          ],
+                        ),
+                      ))),
               const SizedBox(
                 height: 100,
               ),

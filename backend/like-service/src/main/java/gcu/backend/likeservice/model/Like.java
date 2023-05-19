@@ -1,4 +1,4 @@
-package gcu.backend.reservationservice.model;
+package gcu.backend.likeservice.model;
 
 import lombok.Data;
 import lombok.Getter;
@@ -11,18 +11,17 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
+import java.util.ArrayList;
 
 @Data
-@Document(collection = "reservation")
-public class Reservation {
+@Document(collection = "like")
+public class Like {
     @Id
     private Object _id;
 
     private String email;
-    private String number;
-    private List<Integer> time;
-    private String date;
-    private int people;
+    private String 호;
 
 }

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:ai_gong/common/common.dart';
 import 'package:ai_gong/common/dio_extension.dart';
 import 'package:ai_gong/common/service_response.dart';
+import 'package:ai_gong/restAPI/models/Like.dart';
 import 'package:ai_gong/restAPI/models/Reservation.dart';
 import 'package:ai_gong/restAPI/response/get_classroom_list_response.dart';
 import 'package:ai_gong/restAPI/response/get_classroom_response.dart';
@@ -131,6 +132,18 @@ class ApiService extends GetxService {
     try {
       var response = await dio.post(
         '/reservation',
+        data: jsonEncode(data.toJson()),
+      );
+      return ApiResponse(result: true);
+    } catch (e) {
+      return ApiResponse(result: false, errorMsg: "오류가 발생했습니다.");
+    }
+  }
+
+  Future<ApiResponse> postLike(Like data) async {
+    try {
+      var response = await dio.post(
+        '/like',
         data: jsonEncode(data.toJson()),
       );
       return ApiResponse(result: true);
