@@ -27,12 +27,14 @@ class RouteViewPage extends StatelessWidget {
                   onPressed: () {
                     Get.offAllNamed(MainViewPage.url);
                   },
-                  child: const Text('Main View Page', style: TextStyle(color: Colors.black))),
+                  child: const Text('Main View Page',
+                      style: TextStyle(color: Colors.black))),
               ElevatedButton(
                   onPressed: () {
                     Get.offAllNamed(LoginViewPage.url);
                   },
-                  child: const Text('Login Page', style: TextStyle(color: Colors.black))),
+                  child: const Text('Login Page',
+                      style: TextStyle(color: Colors.black))),
               ElevatedButton(
                   onPressed: () async {
                     html.WindowBase? popupWin;
@@ -42,14 +44,20 @@ class RouteViewPage extends StatelessWidget {
                       }
                       var uri = Uri.dataFromString(event.data.toString());
                       Map<String, String> params = uri.queryParameters;
-                      ApiService.instance.setAuth(refresh: params['refresh_token'] ?? "", access: params['access_token'] ?? "");
+                      ApiService.instance.setAuth(
+                          refresh: params['refresh_token'] ?? "",
+                          access: params['access_token'] ?? "");
                     });
 
                     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-                      html.WindowBase popupWin = html.window.open('http://localhost:8080/oauth2/authorization/google', 'name', 'width=600,height=400');
+                      html.WindowBase popupWin = html.window.open(
+                          'http://localhost:8080/oauth2/authorization/google',
+                          'name',
+                          'width=600,height=400');
                     });
                   },
-                  child: const Text('Login', style: TextStyle(color: Colors.black))),
+                  child: const Text('Login',
+                      style: TextStyle(color: Colors.black))),
               ElevatedButton(
                   onPressed: () async {
                     var storage = const FlutterSecureStorage();
