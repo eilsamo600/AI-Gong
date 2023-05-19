@@ -1,5 +1,7 @@
 package gcu.backend.authservice.swagger;
 
+import java.util.Arrays;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -17,11 +19,12 @@ public class OpenApiConfig {
     public OpenAPI openAPI() {
         Info info = new Info().title("유저 인증 API Document").version("v1").description("유저 인증 API 명세서입니다.");
 
-        SecurityScheme basicAuth = new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("basic");
-        SecurityRequirement securityItem = new SecurityRequirement().addList("basicAuth");
+        SecurityScheme basicAuth = new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("bearer")
+                .bearerFormat("JWT").in(SecurityScheme.In.HEADER).name("Authorization");
+        SecurityRequirement securityItem = new SecurityRequirement().addList("bearerAuth");
 
-        return new OpenAPI().components(new Components().addSecuritySchemes("basicAuth", basicAuth))
-                .addSecurityItem(securityItem).info(info);
+        return new OpenAPI().components(new Components().addSecuritySchemes("bearerAuth", basicAuth))
+                .security(Arrays.asList(securityItem)).info(info);
     }
 
     @Bean
