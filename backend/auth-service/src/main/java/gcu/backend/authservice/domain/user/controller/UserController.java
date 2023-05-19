@@ -24,8 +24,10 @@ public class UserController {
 
     @GetMapping("/info")
     @Operation(summary = "Get User Info", description = "Access 토큰을 이용해서 유저 정보를 가져옵니다.")
-    public ResponseEntity<User> getInfo(@RequestHeader("Authorization") String token) {
-        Optional<String> email = jwtService.extractEmail(token);
+    public ResponseEntity<User> getInfo(@RequestHeader("Authorization") String value) {
+
+        Optional<String> email = jwtService.extractAccessTokenInString(value)
+                .map(token -> jwtService.extractAccessTokenInString(token)).orElse(null);
         if (!email.isPresent()) {
             return ResponseEntity.notFound().build();
         }
