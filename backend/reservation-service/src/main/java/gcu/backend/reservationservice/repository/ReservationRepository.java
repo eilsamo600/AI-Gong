@@ -9,4 +9,8 @@ public interface ReservationRepository extends MongoRepository<Reservation, Long
 
     @Query("{'email':?0}")
     Reservation findByEmail(String email);
+
+    @Query("{'number': ?0, 'date': ?1}")
+    Reservation findByEmailAndDate(String number, String date);
+
 }
