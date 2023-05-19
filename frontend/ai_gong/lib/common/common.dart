@@ -1,4 +1,6 @@
+import 'package:ai_gong/Service/UserService.dart';
 import 'package:ai_gong/common/widget/panel_component.dart';
+import 'package:ai_gong/pages/main/controller/main_view_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -12,7 +14,10 @@ class Common extends GetxService {
   static double get getWidth => GetPlatform.isMobile ? Get.width : 500;
 
   static SnackbarController showSnackBar(
-      {required String messageText, Color textColor = Colors.white, Color backgroundColor = Colors.black45, dynamic position = SnackPosition.TOP}) {
+      {required String messageText,
+      Color textColor = Colors.white,
+      Color backgroundColor = const Color.fromARGB(255, 45, 45, 45),
+      dynamic position = SnackPosition.TOP}) {
     return Get.rawSnackbar(
       borderRadius: 0,
       snackPosition: position,
@@ -26,10 +31,10 @@ class Common extends GetxService {
     );
   }
 
-  static void loginPanel({required BuildContext context}) async {
+  static void loginPanel() async {
     showModalBottomSheet(
         isScrollControlled: true,
-        context: context,
+        context: Get.context!,
         builder: ((context) {
           return PanelComponent(
             child: Center(
@@ -54,7 +59,11 @@ class Common extends GetxService {
                 height: 100,
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  bool x = await UserService.instance.login();
+                  Navigator.pop(context);
+                  if (x) MainViewController.instance.selectTab(2);
+                },
                 child: const Text("   구글 계정으로 로그인"),
               ),
               const SizedBox(
