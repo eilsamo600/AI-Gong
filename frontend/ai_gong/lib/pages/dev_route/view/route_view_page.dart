@@ -1,7 +1,7 @@
 import 'dart:html' as html;
 
 import 'package:ai_gong/pages/dev_route/controller/route_view_controller.dart';
-import 'package:ai_gong/pages/login/view/login_view_page.dart';
+// import 'package:ai_gong/pages/login/view/login_view_page.dart';
 import 'package:ai_gong/pages/main/view/main_view_page.dart';
 import 'package:ai_gong/restAPI/api_service.dart';
 import 'package:ai_gong/restAPI/models/Reservation.dart';
@@ -27,13 +27,14 @@ class RouteViewPage extends StatelessWidget {
                   onPressed: () {
                     Get.offAllNamed(MainViewPage.url);
                   },
-                  child: const Text('Main View Page', style: TextStyle(color: Colors.black))),
-              ElevatedButton(
-                  onPressed: () {
-                    Get.offAllNamed(LoginViewPage.url);
-                  },
-                  child: const Text('Login Page',
+                  child: const Text('Main View Page',
                       style: TextStyle(color: Colors.black))),
+              // ElevatedButton(
+              //     onPressed: () {
+              //       Get.offAllNamed(LoginViewPage.url);
+              //     },
+              //     child: const Text('Login Page',
+              //         style: TextStyle(color: Colors.black))),
               ElevatedButton(
                   onPressed: () async {
                     html.WindowBase? popupWin;

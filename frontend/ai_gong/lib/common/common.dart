@@ -7,20 +7,26 @@ class Common extends GetxService {
   static Common get instance => Get.find<Common>();
   static const bool isDev = true;
   static Logger logger = Logger(filter: MyFilter());
-  static const String baseUrl = "http://ai-gong.com:8000/";
+  static const String baseUrl = "http://127.0.0.1:8000/";
 
   static double get getWidth => GetPlatform.isMobile ? Get.width : 500;
 
   static SnackbarController showSnackBar(
-      {required String messageText, Color textColor = Colors.white, Color backgroundColor = Colors.black45, dynamic position = SnackPosition.TOP}) {
+      {required String messageText,
+      Color textColor = Colors.white,
+      Color backgroundColor = Colors.black45,
+      dynamic position = SnackPosition.TOP}) {
     return Get.rawSnackbar(
       borderRadius: 0,
       snackPosition: position,
-      margin: position == SnackPosition.BOTTOM ? const EdgeInsets.only(top: 16, left: 16, right: 16) : const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+      margin: position == SnackPosition.BOTTOM
+          ? const EdgeInsets.only(top: 16, left: 16, right: 16)
+          : const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
       messageText: Text(
         messageText,
-        style: TextStyle(color: textColor, fontSize: 16, fontWeight: FontWeight.normal),
+        style: TextStyle(
+            color: textColor, fontSize: 16, fontWeight: FontWeight.normal),
       ),
       backgroundColor: backgroundColor,
     );
@@ -37,19 +43,26 @@ class Common extends GetxService {
               const SizedBox(
                 height: 100,
               ),
-              const Text('간단하게 로그인 하고', style: TextStyle(fontSize: 24, color: Colors.black)),
+              const Text('간단하게 로그인 하고',
+                  style: TextStyle(fontSize: 24, color: Colors.black)),
               const SizedBox(
                 height: 5,
               ),
-              const Text('메타버스 인큐베이터 예약하기', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black)),
+              const Text('메타버스 인큐베이터 예약하기',
+                  style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black)),
               const SizedBox(
                 height: 150,
               ),
-              const Text('애공은 가천 계정으로만 로그인 할 수 있어요!', style: TextStyle(fontSize: 15, color: Colors.black)),
+              const Text('애공은 가천 계정으로만 로그인 할 수 있어요!',
+                  style: TextStyle(fontSize: 15, color: Colors.black)),
               const SizedBox(
                 height: 5,
               ),
-              const Text('ex) abcdefg.gachon.ac.kr', style: TextStyle(fontSize: 15, color: Colors.black)),
+              const Text('ex) abcdefg.gachon.ac.kr',
+                  style: TextStyle(fontSize: 15, color: Colors.black)),
               const SizedBox(
                 height: 100,
               ),
