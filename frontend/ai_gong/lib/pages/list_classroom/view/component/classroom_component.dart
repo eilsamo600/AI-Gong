@@ -50,16 +50,12 @@ class ClassRoomComponent extends StatelessWidget {
                                         iconSize: 27,
                                         onPressed: () {
                                           controller.checkbookmark();
-                                          controller.postLike(
-                                              '${model.roomid ?? '???'}');
                                         })
                                     : IconButton(
                                         icon: Icon(Icons.bookmark_border),
                                         iconSize: 27,
                                         onPressed: () {
                                           controller.checkbookmark();
-                                          controller.deleteLike(
-                                              '${model.roomid ?? '???'}');
                                         },
                                       )))),
                       ],

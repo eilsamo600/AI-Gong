@@ -19,9 +19,12 @@ import java.util.ArrayList;
 @Document(collection = "like")
 public class Like {
     @Id
-    private Object _id;
+    private ObjectId _id;
 
     private String email;
-    private String 호;
+    private String number;
+    private List<Integer> time;
+    private String date;
+    private int people;
 
 }

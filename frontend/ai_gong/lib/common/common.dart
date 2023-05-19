@@ -9,7 +9,7 @@ class Common extends GetxService {
   static Common get instance => Get.find<Common>();
   static const bool isDev = true;
   static Logger logger = Logger(filter: MyFilter());
-  static const String baseUrl = "http://127.0.0.1:8000/";
+  static const String baseUrl = "http://ai-gong.com:8000/";
 
   static double get getWidth => GetPlatform.isMobile ? Get.width : 500;
 
