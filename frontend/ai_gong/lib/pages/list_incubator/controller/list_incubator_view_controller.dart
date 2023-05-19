@@ -14,15 +14,19 @@ class ListIncubatorViewController extends GetxController {
 
   RxList<int> states = List.filled(17, 0).obs;
   final today = DateTime.now().toUtc();
+
   void postReservation(BuildContext context) async {
     int val = dates.value.indexOf(1);
+    int timeval = states.value.indexOf(1);
     String day = DateFormat('d').format(DateTime.utc(
         today.year, today.month, today.day - (today.weekday - 1) + val));
     var data = Reservation.fromJson({
       'email': 'thwjd082@gachon.ac.kr',
-      'number': '1',
-      'time': (states.value as List).cast<int>(),
-      'date': (today.year + today.month + today.day).toString(),
+      'number': "1",
+      'time': (timeval as List).cast<int>(),
+      'date': (today.year.toString()) +
+          (today.month.toString()) +
+          (today.day.toString()),
       'people': (num.value as int)
     });
 

@@ -43,15 +43,6 @@ public class ReservationController {
 
     }
 
-    @PostMapping("/incubator/post")
-    @Operation(summary = "예약 내역 보내기", description = "예약 내역 보내요~.")
-    public ResponseEntity<Incubator> postIncubator(@Valid @RequestBody Incubator incubator) {
-        System.out.print(incubator.toString());
-        Incubator savedReservation = incubatorRepository.save(incubator);
-        return ResponseEntity.ok(savedReservation);
-
-    }
-
     @GetMapping("/reservations")
     @Operation(summary = "모든 예약 테이블 조회", description = "예약 테이블 정보입니다.")
     public ResponseEntity<List<Reservation>> getReservations() {
