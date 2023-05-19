@@ -28,6 +28,12 @@ spring:
           uri: lb://RESERVATION-SERVICE 
           filters:
           - RewritePath=/reservation/(?<segment>.*), /$\{segment}
+        - id: incubator-service 
+          predicates: 
+            - Path=/incubator/**  
+          uri: lb://RESERVATION-SERVICE 
+          filters:
+          - RewritePath=/incubator/(?<segment>.*), /$\{segment}
         - id: reservation-swagger
           predicates:
             - Path=/v3/api-docs/reservation
