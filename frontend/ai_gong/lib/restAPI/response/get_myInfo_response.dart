@@ -1,9 +1,8 @@
-import 'package:ai_gong/restAPI/models/MyInfo.dart';
+import '../models/User.dart';
 
 class MyInfoResponse {
-  MyInfo? myInfo;
-
-  MyInfoResponse({this.myInfo});
+  User? user;
+  MyInfoResponse({this.user});
 
   MyInfoResponse.fromJson(Map<String, dynamic> json) {
     // myInfo = MyInfo.fromJson(json);

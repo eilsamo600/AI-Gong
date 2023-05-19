@@ -39,11 +39,21 @@ public class ReservationController {
 
     }
 
-    @GetMapping("/reservations")
-    @Operation(summary = "모든 예약 테이블 조회", description = "예약 테이블 정보입니다.")
-    public ResponseEntity<List<Reservation>> getReservations() {
-        List<Reservation> reservations = reservationRepository.findAll();
+    @GetMapping("/reservation/{email}")
+    @Operation(summary = "사용자 예약 테이블 조회", description = "예약 테이블 정보입니다.")
+    public ResponseEntity<List<Reservation>> getReservations(@PathVariable String email) {
+        List<Reservation> reservations = reservationRepository.findByEmailList(email);
         return new ResponseEntity<List<Reservation>>(reservations, HttpStatus.OK);
+    }
+
+    @GetMapping("/reservation/reservation/{number}")
+    @Operation(summary = "예약 정보 조회", description = "예약정보입니다")
+    public ResponseEntity<List<Reservation>> getavailable(@PathVariable String number, String date) {
+        List<Reservation> reservation = reservationRepository.findByEmailAndDate(number, date);
+        if (reservation == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<List<Reservation>>(reservation, HttpStatus.OK);
     }
 
     @DeleteMapping("/reservation/{id}")
@@ -65,4 +75,5 @@ public class ReservationController {
         List<Incubator> incubators = incubatorRepository.findAll();
         return new ResponseEntity<List<Incubator>>(incubators, HttpStatus.OK);
     }
+
 }
