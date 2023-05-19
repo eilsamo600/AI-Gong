@@ -10,7 +10,7 @@ import java.util.List;
 @Document(collection = "reservation")
 public class Reservation {
     @Id
-    private Object _id;
+    private ObjectId _id;
 
     private String email;
     private String number;
