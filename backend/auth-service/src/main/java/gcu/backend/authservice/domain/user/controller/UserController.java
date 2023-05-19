@@ -14,10 +14,12 @@ import gcu.backend.authservice.global.jwt.service.JwtService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequiredArgsConstructor
 @Tag(name = "User", description = "인증&유저 API")
+@Slf4j
 public class UserController {
     private final JwtService jwtService;
     private final UserRepository userRepository;
@@ -28,10 +30,12 @@ public class UserController {
 
         Optional<String> email = jwtService.extractAccessTokenInString(value)
                 .map(token -> jwtService.extractAccessTokenInString(token)).orElse(null);
+        log.info("email: " + email);
         if (!email.isPresent()) {
             return ResponseEntity.notFound().build();
         }
         Optional<User> user = userRepository.findByEmail(email.get());
+        log.info("user: " + user);
         if (!user.isPresent()) {
             return ResponseEntity.notFound().build();
         }
