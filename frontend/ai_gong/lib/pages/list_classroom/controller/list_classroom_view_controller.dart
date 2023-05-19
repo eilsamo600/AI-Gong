@@ -1,6 +1,7 @@
 import 'package:ai_gong/common/service_response.dart';
 import 'package:ai_gong/restAPI/api_service.dart';
 import 'package:ai_gong/restAPI/models/Classroom.dart';
+import 'package:ai_gong/restAPI/models/Like.dart';
 import 'package:ai_gong/restAPI/response/get_classroom_list_response.dart';
 import 'package:ai_gong/restAPI/response/get_classroom_response.dart';
 import 'package:flutter/material.dart';
@@ -73,6 +74,14 @@ class ListClassRoomViewController extends GetxController {
   void bookmarkInit() {
     bookmark.value = 0;
   }
+
+  void postLike(String className) async {
+    var data = Like.fromJson(
+        {'email': 'thwjd082@gachon.ac.kr', 'className': className});
+    ApiResponse response = await ApiService.instance.postLike(data);
+  }
+
+  void deleteLike(String className) async {}
 
   Rx<ScrollController> scrollcontroller = ScrollController().obs;
   Rx<DateTime> now = DateTime.now().obs;
