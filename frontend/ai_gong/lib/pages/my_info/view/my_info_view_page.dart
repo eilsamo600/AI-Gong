@@ -14,22 +14,6 @@ class MyInfoViewPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(MyInfoViewController());
 
-    // controller.myReservationList.add(Incubator(
-    //   roomid: '404',
-    //   roomnum: 1,
-    //   usableLevel: 0,
-    // ));
-    // controller.myReservationList.add(Incubator(
-    //   roomid: '405',
-    //   roomnum: 2,
-    //   usableLevel: 1,
-    // ));
-    // controller.myReservationList.add(Incubator(
-    //   roomid: '404',
-    //   roomnum: 3,
-    //   usableLevel: 2,
-    // ));
-
     return SizedBox(
       width: Common.getWidth,
       child: SingleChildScrollView(
@@ -41,19 +25,6 @@ class MyInfoViewPage extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // return Scaffold(
-                    //     body: Scrollbar(
-                    //         isAlwaysShown: true,
-                    //         child: SingleChildScrollView(
-                    //             physics: AlwaysScrollableScrollPhysics(),
-                    //             child: Column(children: [
-                    // Align(
-                    //     alignment: Alignment.center,
-                    //     child: Container(
-                    //       width: Common.getWidth,
-                    //       margin: EdgeInsets.all(25),
-                    //       child: Column(
-                    //         children: [
                     Obx(
                       () => Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,17 +32,19 @@ class MyInfoViewPage extends StatelessWidget {
                           const Text(
                             "홍길동님의 활동",
                             //textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 18, color: Color.fromRGBO(103, 103, 103, 1)),
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Color.fromRGBO(103, 103, 103, 1)),
                           ),
                           const SizedBox(height: 12),
                           Row(
                             children: [
-                              const Text(
-                                "찜 4개",
-                                //textAlign: TextAlign.center,
-                                style: TextStyle(fontSize: 24, fontFamily: 'SuitEB'),
-                              ),
-                              const SizedBox(width: 40),
+                              // const Text(
+                              //   "찜 4개",
+                              //   //textAlign: TextAlign.center,
+                              //   style: TextStyle(fontSize: 24, fontFamily: 'SuitEB'),
+                              // ),
+                              // const SizedBox(width: 40),
                               Text(
                                 "예약 ${controller.classRoomList.length}건",
 
@@ -123,7 +96,9 @@ class MyInfoViewPage extends StatelessWidget {
             if (controller.classRoomList.value != Null)
               Obx(
                 () => Column(children: [
-                  for (int index = 0; index < controller.classRoomList.length; index++)
+                  for (int index = 0;
+                      index < controller.classRoomList.length;
+                      index++)
                     Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 5),
                         child: Column(
@@ -150,7 +125,10 @@ class MyInfoViewPage extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text("예약 정보가 없습니다.", style: TextStyle(color: Color.fromRGBO(103, 103, 103, 1), fontSize: 17)),
+                  const Text("예약 정보가 없습니다.",
+                      style: TextStyle(
+                          color: Color.fromRGBO(103, 103, 103, 1),
+                          fontSize: 17)),
                   TextButton(
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -158,8 +136,10 @@ class MyInfoViewPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(13.0),
                         ),
                       ),
-                      backgroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(255, 0, 140, 255)),
-                      minimumSize: MaterialStateProperty.all(const Size(90, 40)),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          const Color.fromARGB(255, 0, 140, 255)),
+                      minimumSize:
+                          MaterialStateProperty.all(const Size(90, 40)),
                     ),
                     onPressed: () {
                       Get.toNamed(ListIncubatorViewPage.url);
@@ -174,7 +154,10 @@ class MyInfoViewPage extends StatelessWidget {
                     // },
                     child: const Text(
                       '예약하기',
-                      style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w400),
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w400),
                     ),
                   ),
                 ],
@@ -193,8 +176,10 @@ class MyInfoViewPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(15.0),
                         ),
                       ),
-                      backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                      minimumSize: MaterialStateProperty.all(const Size(100, 50)),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.white),
+                      minimumSize:
+                          MaterialStateProperty.all(const Size(100, 50)),
                     ),
                     onPressed: () {
                       UserService.instance.logout();
