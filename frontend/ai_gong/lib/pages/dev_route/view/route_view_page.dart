@@ -29,6 +29,12 @@ class RouteViewPage extends StatelessWidget {
                   },
                   child: const Text('Main View Page',
                       style: TextStyle(color: Colors.black))),
+              ElevatedButton(
+                  onPressed: () {
+                    //Get.offAllNamed(LoginViewPage.url);
+                  },
+                  child: const Text('Login Page',
+                      style: TextStyle(color: Colors.black))),
               // ElevatedButton(
               //     onPressed: () {
               //       Get.offAllNamed(LoginViewPage.url);

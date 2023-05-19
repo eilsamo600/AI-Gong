@@ -71,4 +71,11 @@ public class ReservationController {
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping("/incubators")
+    @Operation(summary = "인큐베이터 목록 조회", description = "인큐베이터 정보입니다.")
+    public ResponseEntity<List<Incubator>> getIncubators() {
+        List<Incubator> incubators = incubatorRepository.findAll();
+        return new ResponseEntity<List<Incubator>>(incubators, HttpStatus.OK);
+    }
 }
