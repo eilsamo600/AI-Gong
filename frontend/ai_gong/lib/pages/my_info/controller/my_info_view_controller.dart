@@ -13,29 +13,30 @@ import '../../../restAPI/response/post_reservation.dart';
 class MyInfoViewController extends GetxController {
   static MyInfoViewController get instance => Get.find<MyInfoViewController>();
 
-  Future<void> getClassRoomList() async {
-    ApiResponse<ClassRoomListResponse> response =
-        await ApiService.instance.getClassRoomList();
-    if (response.result) {
-      classRoomList.value = response.value!.classrooms!;
-    }
-    classRoomList.refresh();
-  }
+  // Future<void> getClassRoomList() async {
+  //   ApiResponse<ClassRoomListResponse> response =
+  //       await ApiService.instance.getClassRoomList();
+  //   if (response.result) {
+  //     classRoomList.value = response.value!.classrooms!;
+  //   }
+  //   classRoomList.refresh();
+  // }
 
-  Future<void> getClassRoom(int id) async {
-    classRoom.value = ClassRoom();
-    ApiResponse<ClassRoomResponse> response =
-        await ApiService.instance.getClassRoom(id);
-    await Future.delayed(const Duration(milliseconds: 150));
-    if (response.result) {
-      classRoom.value = response.value!.classroom!;
-    }
-  }
+  // Future<void> getClassRoom(int id) async {
+  //   classRoom.value = ClassRoom();
+  //   ApiResponse<ClassRoomResponse> response =
+  //       await ApiService.instance.getClassRoom(id);
+  //   await Future.delayed(const Duration(milliseconds: 150));
+  //   if (response.result) {
+  //     classRoom.value = response.value!.classroom!;
+  //   }
+  // }
 
   @override
   void onInit() async {
     super.onInit();
-    await getClassRoomList();
+    // await getClassRoomList();
+    await getMyReservationList();
   }
 
   Future<void> getMyReservationList() async {
@@ -57,8 +58,8 @@ class MyInfoViewController extends GetxController {
 
   // }
 
-  Rx<ClassRoom> classRoom = ClassRoom().obs;
-  RxList<ClassRoom> classRoomList = RxList<ClassRoom>();
+  // Rx<ClassRoom> classRoom = ClassRoom().obs;
+  // RxList<ClassRoom> classRoomList = RxList<ClassRoom>();
 
   // Rx<MyInfo> myInfo=MyInfo().obs;
   // RxList<MyInfo> myInfoList = RxList<MyInfo>();

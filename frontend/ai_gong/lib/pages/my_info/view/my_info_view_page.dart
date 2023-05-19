@@ -46,9 +46,9 @@ class MyInfoViewPage extends StatelessWidget {
                               // ),
                               // const SizedBox(width: 40),
                               Text(
-                                "예약 ${controller.classRoomList.length}건",
+                                "예약 ${controller.myReservationList.length}건",
 
-                                //textAlign: TextAlign.center,
+                                //textAlign: TsextAlign.center,
                                 style: const TextStyle(
                                   fontFamily: 'SuitEB',
                                   fontSize: 24,
@@ -93,11 +93,11 @@ class MyInfoViewPage extends StatelessWidget {
                     ),
                   ),
                 ])),
-            if (controller.classRoomList.value != Null)
+            if (controller.myReservationList.value != Null)
               Obx(
                 () => Column(children: [
                   for (int index = 0;
-                      index < controller.classRoomList.length;
+                      index < controller.myReservationList.length;
                       index++)
                     Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -105,8 +105,8 @@ class MyInfoViewPage extends StatelessWidget {
                           children: [
                             if (index == 0) const SizedBox(height: 20),
                             MyInfoComponent(
-                                //myreservationlist로 바꾸기
-                                model: controller.classRoomList.value[index]),
+                                model:
+                                    controller.myReservationList.value[index]),
                             const Padding(
                               padding: EdgeInsets.only(bottom: 10, top: 15),
                               child: Divider(
