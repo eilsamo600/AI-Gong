@@ -38,12 +38,10 @@ class UserService extends GetxService {
         }));
         Response response = await dio.get('/auth/info');
         print('refresh Token을 통한 새 Token 발급');
-        print(response.statusCode);
-        print(response.statusMessage);
-        print(response.headers);
+
         await setAuth(access: response.headers.value('authorization') ?? '', refresh: response.headers.value('authorization-refresh') ?? '');
+        loadUserInfo();
       } catch (e) {
-        print(e);
         print('refresh Token 만료');
         await setAuth(access: "", refresh: "");
       }
