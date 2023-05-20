@@ -6,8 +6,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import gcu.backend.authservice.domain.user.Role;
-import gcu.backend.authservice.domain.user.User;
 import gcu.backend.authservice.domain.user.repository.UserRepository;
 import gcu.backend.authservice.global.jwt.service.JwtService;
 import gcu.backend.authservice.global.oauth2.CustomOAuth2User;
@@ -17,7 +15,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.util.Enumeration;
 
 @Slf4j
 @Component("oauth2LoginSuccessHandler")
@@ -26,7 +23,6 @@ import java.util.Enumeration;
 public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 
     private final JwtService jwtService;
-    private final UserRepository userRepository;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
