@@ -39,6 +39,7 @@ public class UserController {
         if (!user.isPresent()) {
             return ResponseEntity.notFound().build();
         }
+        user.get().setRefreshToken(null);
         return ResponseEntity.ok(user.get());
     }
 
