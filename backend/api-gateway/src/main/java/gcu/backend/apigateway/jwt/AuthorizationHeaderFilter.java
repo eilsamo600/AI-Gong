@@ -21,9 +21,7 @@ import reactor.core.publisher.Mono;
 @Slf4j
 @Component
 public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<AuthorizationHeaderFilter.Config> {
-    @Autowired
     private final JwtService jwtService;
-    @Autowired
     private final UserRepository userRepository;
 
     public AuthorizationHeaderFilter(JwtService jwtService, UserRepository userRepository) {
