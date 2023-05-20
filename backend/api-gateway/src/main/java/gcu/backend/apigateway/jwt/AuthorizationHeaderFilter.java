@@ -28,6 +28,7 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
         this.jwtService = jwtService;
         this.userRepository = userRepository;
     }
+
     @Override
     public GatewayFilter apply(AuthorizationHeaderFilter.Config config) {
         return (exchange, chain) -> {
@@ -75,7 +76,10 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
         log.info(err);
         return response.setComplete();
     }
+
     public static class Config {
 
     }
 }
+
+    

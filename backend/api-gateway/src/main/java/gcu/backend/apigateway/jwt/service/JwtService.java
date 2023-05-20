@@ -81,10 +81,10 @@ public class JwtService {
     /**
      * AccessToken 헤더에 실어서 보내기
      */
-    public void sendAccessToken(HttpServletResponse response, String accessToken) {
-        response.setStatus(HttpServletResponse.SC_OK);
+    public void sendAccessToken(ServerHttpResponse response, String accessToken) {
+        response.setStatusCode(HttpStatus.OK);
 
-        response.setHeader(accessHeader, accessToken);
+        setAccessTokenHeader(response, accessToken);
         log.info("재발급된 Access Token : {}", accessToken);
     }
 
@@ -105,6 +105,9 @@ public class JwtService {
      * 헤더를 가져온 후 "Bearer"를 삭제(""로 replace)
      */
     public Optional<String> extractRefreshToken(ServerHttpRequest request) {
+        if (request.getHeaders().containsKey(refreshHeader))
+            return Optional.ofNullable(null);
+
         return Optional.ofNullable(request.getHeaders().get(refreshHeader).get(0))
                 .filter(refreshToken -> refreshToken.startsWith(BEARER))
                 .map(refreshToken -> refreshToken.replace(BEARER, ""));
@@ -116,6 +119,8 @@ public class JwtService {
      * 헤더를 가져온 후 "Bearer"를 삭제(""로 replace)
      */
     public Optional<String> extractAccessToken(ServerHttpRequest request) {
+        if (request.getHeaders().containsKey(refreshHeader))
+            return Optional.ofNullable(null);
         return Optional.ofNullable(request.getHeaders().get(accessHeader).get(0))
                 .filter(refreshToken -> refreshToken.startsWith(BEARER))
                 .map(refreshToken -> refreshToken.replace(BEARER, ""));
