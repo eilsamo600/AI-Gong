@@ -36,6 +36,7 @@ spring:
           uri: lb://CLASSROOM-SERVICE
           filters:
           - RewritePath=/v3/api-docs/classroom, /v3/api-docs
+          - AuthorizationHeaderFilter 
         - id: reservation-service 
           predicates: 
             - Path=/reservation/**  
