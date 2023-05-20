@@ -93,7 +93,6 @@ public class SecurityConfig {
                 configuration.addAllowedHeader("*");
                 configuration.addAllowedMethod("*");
                 configuration.addAllowedOrigin("*");
-                configuration.setAllowCredentials(true);
                 configuration.addExposedHeader(jwtService.getRefreshHeader());
                 configuration.addExposedHeader(jwtService.getAccessHeader());
                 // you can configure many allowed CORS headers
