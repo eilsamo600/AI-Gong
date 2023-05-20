@@ -70,13 +70,14 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
         // RefreshToken까지 보낸 것이므로 리프레시 토큰이 DB의 리프레시 토큰과 일치하는지 판단 후,
         // 일치한다면 AccessToken을 재발급해준다.
         if (refreshToken != null) {
+            log.info("refreshtoken", refreshToken);
             User user = userRepository.findByRefreshToken(refreshToken)
                     .orElse(null);
 
             if (user == null) {
                 return;
             }
-
+            log.info("user refreshtoken", user.getRefreshToken());
             jwtService.sendAccessAndRefreshToken(response, jwtService.createAccessToken(user.getEmail()),
                     reIssueRefreshToken(user));
 
