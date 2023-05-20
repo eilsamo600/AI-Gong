@@ -81,6 +81,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
                     reIssueRefreshToken(user));
 
             saveAuthentication(user, request, response);
+            response.setStatus(HttpServletResponse.SC_OK);
             filterChain.doFilter(request, response);
         }
 
