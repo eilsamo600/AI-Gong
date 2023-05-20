@@ -236,6 +236,8 @@ class ListIncubatorViewController extends GetxController {
         dates.value[i] = 2; // 오늘 날짜를 강조함
       } else if (i == 5 || i == 6) {
         dates.value[i] = 0; // 주말은 선택 불가능하도록 함
+      } else if (i < todayIndex) {
+        dates.value[i] = 0; //지난 날짜는 선택 불가능하도록 함
       } else {
         dates.value[i] = 1; // 평일은 선택 가능하도록 함
       }
@@ -252,7 +254,7 @@ class ListIncubatorViewController extends GetxController {
       dates.value[d] = 2;
       for (int i = 0; i < 7; i++) {
         if (i != d && dates.value[i] == 2) {
-          dates.value[i] = 0;
+          dates.value[i] = 1;
           statesInit();
           numInit();
         }
