@@ -139,7 +139,7 @@ class ClassRoomComponent extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  Obx(() => ListClassRoomViewController.instance.classRoom.value == null
+                  Obx(() => ListClassRoomViewController.instance.lectures.value == -1
                       ? const Center(child: CupertinoActivityIndicator())
                       : TimeTable(
                           classRoom: ListClassRoomViewController.instance.classRoom.value!,

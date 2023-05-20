@@ -70,27 +70,34 @@ class UserService extends GetxService {
   }
 
   Future<bool> login() async {
-    html.WindowBase? popupWin;
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      popupWin = html.window.open('http://ai-gong.com:8003/oauth2/authorization/google', 'name', 'width=600,height=400');
-    });
-    final stream = html.window.onMessage.timeout(const Duration(minutes: 3), onTimeout: (sink) {
-      sink.add(MessageEvent('timeout'));
-    });
+    try {
+      html.WindowBase? popupWin;
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        popupWin = html.window.open('http://ai-gong.com:8003/oauth2/authorization/google', 'name', 'width=600,height=400');
+      });
+      final stream = html.window.onMessage.timeout(const Duration(minutes: 3), onTimeout: (sink) {
+        sink.add(MessageEvent('timeout'));
+      });
 
-    await for (var event in stream) {
-      if (popupWin != null) {
-        popupWin!.close();
+      await for (var event in stream) {
+        if (event.type == 'timeout') {
+          Common.showSnackBar(messageText: '로그인이 시간내에 완료되지 않았습니다.');
+          if (popupWin != null) {
+            popupWin!.close();
+          }
+          return false;
+        }
+        var uri = Uri.dataFromString(event.data.toString());
+        Map<String, String> params = uri.queryParameters;
+        await setAuth(refresh: params['refresh_token'] ?? "", access: params['access_token'] ?? "");
+        Common.showSnackBar(messageText: '로그인이 완료되었습니다.');
+        if (popupWin != null) {
+          popupWin!.close();
+        }
+        return true;
       }
-      if (event.type == 'timeout') {
-        Common.showSnackBar(messageText: '로그인이 시간내에 완료되지 않았습니다.');
-        return false;
-      }
-      var uri = Uri.dataFromString(event.data.toString());
-      Map<String, String> params = uri.queryParameters;
-      await setAuth(refresh: params['refresh_token'] ?? "", access: params['access_token'] ?? "");
-      Common.showSnackBar(messageText: '로그인이 완료되었습니다.');
-      return true;
+    } on Exception {
+      Common.showSnackBar(messageText: '로그인을 실패하였습니다.');
     }
     return false;
   }

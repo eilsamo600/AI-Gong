@@ -29,10 +29,19 @@ class ListClassRoomViewController extends GetxController {
   }
 
   Future<void> getClassRoom(int id) async {
-    classRoom.value = ClassRoom();
+    lectures.value = -1;
     ApiResponse<ClassRoomResponse> response = await ApiService.instance.getClassRoom(id);
+    await Future.delayed(const Duration(milliseconds: 250));
     if (response.result) {
       classRoom.value = response.value!.classroom!;
+      classRoom.refresh();
+      response.value!.classroom!.lectures!.forEach((key, value) {
+        classRoom.value.lectures![key] = value;
+        classRoom.refresh();
+        lectures.value++;
+      });
+    } else {
+      lectures.value = 0;
     }
   }
 
@@ -73,7 +82,8 @@ class ListClassRoomViewController extends GetxController {
   Rx<ScrollController> scrollcontroller = ScrollController().obs;
   Rx<DateTime> now = DateTime.now().obs;
 
-  Rxn<ClassRoom> classRoom = Rxn<ClassRoom>();
+  Rx<ClassRoom> classRoom = ClassRoom().obs;
+  Rx<int> lectures = (-1).obs;
   RxList<ClassRoom> classRoomList = RxList<ClassRoom>();
   RxList<bool> onTapList = List.filled(4, false).obs;
   RxList<String> filterList = ['새로고침', '즐겨찾기', '바로', '곧 끝나는'].obs;
