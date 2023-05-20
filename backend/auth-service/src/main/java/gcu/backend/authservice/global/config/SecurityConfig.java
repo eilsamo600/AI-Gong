@@ -14,8 +14,8 @@ import org.springframework.security.web.context.DelegatingSecurityContextReposit
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.context.RequestAttributeSecurityContextRepository;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.reactive.CorsConfigurationSource;
-import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import gcu.backend.authservice.domain.user.repository.UserRepository;
 import gcu.backend.authservice.global.jwt.filter.JwtAuthenticationProcessingFilter;
@@ -46,7 +46,7 @@ public class SecurityConfig {
                                 .csrf().disable() // csrf 보안 사용 X
                                 .headers().frameOptions().disable()
                                 .and()
-                                .cors()
+                                .cors().configurationSource(corsConfigurationSource())
                                 .and()
                                 .securityContext((securityContext) -> {
                                         securityContext.securityContextRepository(
@@ -88,7 +88,7 @@ public class SecurityConfig {
         }
 
         @Bean
-        CorsConfigurationSource corsConfigurationSource() {
+        public CorsConfigurationSource corsConfigurationSource() {
                 CorsConfiguration configuration = new CorsConfiguration();
                 configuration.addExposedHeader(jwtService.getRefreshHeader());
                 configuration.addExposedHeader(jwtService.getAccessHeader());
