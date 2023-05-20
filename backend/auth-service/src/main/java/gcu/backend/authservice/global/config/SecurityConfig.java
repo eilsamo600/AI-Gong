@@ -13,6 +13,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.context.DelegatingSecurityContextRepository;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.context.RequestAttributeSecurityContextRepository;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.reactive.CorsConfigurationSource;
+import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
 import gcu.backend.authservice.domain.user.repository.UserRepository;
 import gcu.backend.authservice.global.jwt.filter.JwtAuthenticationProcessingFilter;
@@ -42,6 +45,8 @@ public class SecurityConfig {
                 http
                                 .csrf().disable() // csrf 보안 사용 X
                                 .headers().frameOptions().disable()
+                                .and()
+                                .cors()
                                 .and()
                                 .securityContext((securityContext) -> {
                                         securityContext.securityContextRepository(
@@ -80,6 +85,18 @@ public class SecurityConfig {
                 http.addFilterBefore(jwtAuthenticationProcessingFilter(), UsernamePasswordAuthenticationFilter.class);
 
                 return http.build();
+        }
+
+        @Bean
+        CorsConfigurationSource corsConfigurationSource() {
+                CorsConfiguration configuration = new CorsConfiguration();
+                configuration.addExposedHeader(jwtService.getRefreshHeader());
+                configuration.addExposedHeader(jwtService.getAccessHeader());
+                // you can configure many allowed CORS headers
+
+                UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+                source.registerCorsConfiguration("/**", configuration);
+                return source;
         }
 
         @Bean

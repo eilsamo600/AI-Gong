@@ -31,20 +31,27 @@ class UserService extends GetxService {
       user.value = response.value.user;
     } else {
       print('정보 가져오기 실패');
-      Dio dio = Dio(BaseOptions(
-          baseUrl: Common.baseUrl,
-          headers: {"Flutter-Rest-Api": "true", "Authorization-refresh": "Bearer ${await storage.read(key: "refresh_token") ?? "0000"}"}));
       try {
+        Dio dio = Dio(BaseOptions(
+          baseUrl: Common.baseUrl,
+          headers: {
+            "Flutter-Rest-Api": "true",
+            "authorization-refresh": "Bearer ${await storage.read(key: "refresh_token") ?? "0000"}",
+            "Access-Control-Allow-Headers": "*"
+          },
+        ));
         Response response = await dio.get('/auth/info');
         print('refresh Token을 통한 새 Token 발급');
-        await setAuth(access: response.data['authorization'], refresh: response.data['authorization-refresh']);
+        print(response.statusCode);
+        print(response.statusMessage);
+        print(response.headers);
+        await setAuth(access: response.headers.value('authorization') ?? '', refresh: response.headers.value('authorization-refresh') ?? '');
       } catch (e) {
         print(e);
         print('refresh Token 만료');
         await setAuth(access: "", refresh: "");
       }
     }
-
     var x = await storage.readAll();
     print(x);
   }
