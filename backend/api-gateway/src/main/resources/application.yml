@@ -3,12 +3,9 @@ server:
 spring:
   profiles:
     group:
-      "local" : "local, jwt"
+      "local" : "jwt"
     active: local
   
-  config:
-    activate:
-      on-profile: "local"
   data:
     mongodb:
       host: localhost
@@ -30,13 +27,13 @@ spring:
           #   # 콤마(,)를 기준으로 왼쪽 url을 오른쪽 url로 재정의한다.
           #   # 콤마 기준 오른쪽 부분은 ${변수명}으로 url 가져오고 앞에 / 붙여준거라고 보면 된다.
           - RewritePath=/classroom/(?<segment>.*), /$\{segment}
+          - AuthorizationHeaderFilter 
         - id: classroom-swagger
           predicates:
             - Path=/v3/api-docs/classroom
           uri: lb://CLASSROOM-SERVICE
           filters:
           - RewritePath=/v3/api-docs/classroom, /v3/api-docs
-          - AuthorizationHeaderFilter 
         - id: reservation-service 
           predicates: 
             - Path=/reservation/**  

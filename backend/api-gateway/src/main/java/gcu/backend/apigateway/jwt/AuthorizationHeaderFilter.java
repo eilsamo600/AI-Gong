@@ -19,11 +19,15 @@ import reactor.core.publisher.Mono;
 
 @Slf4j
 @Component
-@RequiredArgsConstructor
 public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<AuthorizationHeaderFilter.Config> {
     private final JwtService jwtService;
     private final UserRepository userRepository;
 
+    public AuthorizationHeaderFilter(JwtService jwtService, UserRepository userRepository) {
+        super(Config.class);
+        this.jwtService = jwtService;
+        this.userRepository = userRepository;
+    }
     @Override
     public GatewayFilter apply(AuthorizationHeaderFilter.Config config) {
         return (exchange, chain) -> {
@@ -68,10 +72,10 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
         ServerHttpResponse response = exchange.getResponse();
         response.setStatusCode(httpStatus);
         response.getHeaders().add(HttpHeaders.CONTENT_TYPE, "application/json");
-        log.error(err);
+        log.info(err);
         return response.setComplete();
     }
-
     public static class Config {
+
     }
 }
