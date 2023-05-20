@@ -47,7 +47,7 @@ class UserService extends GetxService {
   Future<bool> login() async {
     html.WindowBase? popupWin;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      popupWin = html.window.open('http://localhost:8080/oauth2/authorization/google', 'name', 'width=600,height=400');
+      popupWin = html.window.open('http://ai-gong.com:8080/oauth2/authorization/google', 'name', 'width=600,height=400');
     });
     final stream = html.window.onMessage.timeout(const Duration(minutes: 3), onTimeout: (sink) {
       sink.add(MessageEvent('timeout'));
