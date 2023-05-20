@@ -19,6 +19,7 @@ import gcu.backend.authservice.global.oauth2.service.CustomOAuth2UserService;
 @EnableWebSecurity()
 @RequiredArgsConstructor
 public class SecurityConfig {
+
         private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
         private final OAuth2LoginFailureHandler oAuth2LoginFailureHandler;
         private final CustomOAuth2UserService customOAuth2UserService;
@@ -29,12 +30,19 @@ public class SecurityConfig {
                                 .csrf().disable() // csrf 보안 사용 X
                                 .headers().frameOptions().disable()
                                 .and()
+                                // == URL별 권한 관리 옵션 ==//
+                                .authorizeHttpRequests((authz) -> authz.
+                                // 아이콘, css, js 관련
+                                // 기본 페이지, css, image, js 하위 폴더에 있는 자료들은 모두 접근 가능, h2-console에 접근 가능
+                                                requestMatchers("/info")
+                                                .permitAll()
+                                                .anyRequest().authenticated() // 위의 경로 이외에는 모두 인증된 사용자만 접근 가능)
+                                )
                                 // == 소셜 로그인 설정 ==//
                                 .oauth2Login()
                                 .successHandler(oAuth2LoginSuccessHandler) // 동의하고 계속하기를 눌렀을 때 Handler 설정
                                 .failureHandler(oAuth2LoginFailureHandler) // 소셜 로그인 실패 시 핸들러 설정
                                 .userInfoEndpoint().userService(customOAuth2UserService);
-
                 return http.build();
         }
 }
