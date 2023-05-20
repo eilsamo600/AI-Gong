@@ -38,6 +38,7 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
             String refreshToken = jwtService.extractRefreshToken(request)
                     .filter(jwtService::isTokenValid)
                     .orElse(null);
+            log.info(refreshToken);
 
             if (refreshToken != null) {
                 User user = userRepository.findByRefreshToken(refreshToken)
@@ -81,5 +82,3 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
 
     }
 }
-
-    
