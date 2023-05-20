@@ -29,7 +29,7 @@ public class UserController {
     public ResponseEntity<User> getInfo(@RequestHeader("Authorization") String value) {
 
         Optional<String> email = jwtService.extractAccessTokenInString(value)
-                .map(token -> jwtService.extractAccessTokenInString(token)).orElse(null);
+                .map(token -> jwtService.extractEmail(token)).orElse(null);
         log.info("email: " + email);
         if (!email.isPresent()) {
             return ResponseEntity.notFound().build();
