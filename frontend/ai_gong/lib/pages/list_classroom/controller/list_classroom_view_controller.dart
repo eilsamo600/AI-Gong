@@ -7,8 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ListClassRoomViewController extends GetxController {
-  static ListClassRoomViewController get instance =>
-      Get.find<ListClassRoomViewController>();
+  static ListClassRoomViewController get instance => Get.find<ListClassRoomViewController>();
 
   @override
   void onInit() async {
@@ -22,8 +21,7 @@ class ListClassRoomViewController extends GetxController {
   }
 
   Future<void> getClassRoomList() async {
-    ApiResponse<ClassRoomListResponse> response =
-        await ApiService.instance.getClassRoomList();
+    ApiResponse<ClassRoomListResponse> response = await ApiService.instance.getClassRoomList();
     if (response.result) {
       classRoomList.value = response.value!.classrooms!;
     }
@@ -32,9 +30,7 @@ class ListClassRoomViewController extends GetxController {
 
   Future<void> getClassRoom(int id) async {
     classRoom.value = ClassRoom();
-    ApiResponse<ClassRoomResponse> response =
-        await ApiService.instance.getClassRoom(id);
-    await Future.delayed(const Duration(milliseconds: 150));
+    ApiResponse<ClassRoomResponse> response = await ApiService.instance.getClassRoom(id);
     if (response.result) {
       classRoom.value = response.value!.classroom!;
     }
@@ -77,7 +73,7 @@ class ListClassRoomViewController extends GetxController {
   Rx<ScrollController> scrollcontroller = ScrollController().obs;
   Rx<DateTime> now = DateTime.now().obs;
 
-  Rx<ClassRoom> classRoom = ClassRoom().obs;
+  Rxn<ClassRoom> classRoom = Rxn<ClassRoom>();
   RxList<ClassRoom> classRoomList = RxList<ClassRoom>();
   RxList<bool> onTapList = List.filled(4, false).obs;
   RxList<String> filterList = ['새로고침', '즐겨찾기', '바로', '곧 끝나는'].obs;

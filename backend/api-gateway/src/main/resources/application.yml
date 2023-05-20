@@ -77,7 +77,7 @@ spring:
           filters:
           - RewritePath=/v3/api-docs/like, /v3/api-docs
       default-filters:
-        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials Access-Control-Request-Headers Access-Control-Request-Method, RETAIN_UNIQUE
       globalcors:
         corsConfigurations:
           '[/**]':
