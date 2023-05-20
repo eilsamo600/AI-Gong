@@ -21,7 +21,6 @@ import reactor.core.publisher.Mono;
 @Component
 @RequiredArgsConstructor
 public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<AuthorizationHeaderFilter.Config> {
-    private final Environment environment;
     private final JwtService jwtService;
     private final UserRepository userRepository;
 
@@ -36,32 +35,24 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
                     .orElse(null);
 
             if (refreshToken != null) {
-                String reIssuedRefreshToken = "";
-                userRepository.findByRefreshToken(refreshToken)
-                        .ifPresent(user -> {
-                            reIssuedRefreshToken = reIssueRefreshToken(user);
-                            jwtService.sendAccessAndRefreshToken(response,
-                                    jwtService.createAccessToken(user.getEmail()),
-                                    reIssuedRefreshToken);
+                User user = userRepository.findByRefreshToken(refreshToken)
+                        .orElse(null);
 
-                        });
-                if (reIssuedRefreshToken.isEmpty())
-                    return onError(exchange, "refreshToken Refresh : Not found User Data", HttpStatus.NOT_FOUND);
+                if (user == null)
+                    return onError(exchange, "refreshToken : Not found User Data", HttpStatus.NOT_FOUND);
 
-                return chain.filter(exchange);
+                jwtService.sendAccessAndRefreshToken(response, jwtService.createAccessToken(user.getEmail()),
+                        reIssueRefreshToken(user));
             }
 
             if (refreshToken == null) {
-                checkAccessTokenAndAuthentication(request, response, filterChain);
+                String accessToken = jwtService.extractAccessToken(request)
+                        .filter(jwtService::isTokenValid)
+                        .orElse("");
+
+                if (accessToken.isEmpty())
+                    return onError(exchange, "Response Unauthorized", HttpStatus.UNAUTHORIZED);
             }
-            // if (!request.getHeaders().containsKey(HttpHeaders.AUTHORIZATION))
-            // return onError(exchange, "No authorization header", HttpStatus.UNAUTHORIZED);
-            // String authorizationHeader =
-            // request.getHeaders().get(HttpHeaders.AUTHORIZATION).get(0);
-            // String jwt = authorizationHeader.replace("Bearer", "");
-            // // if (!isJwtValid(jwt))
-            // // return onError(exchange, "JWT token is not valid",
-            // HttpStatus.UNAUTHORIZED);
             return chain.filter(exchange);
         };
     }
