@@ -28,7 +28,7 @@ class UserService extends GetxService {
     if (response.result) {
       user.value = response.value.user;
     } else {
-      setAuth(access: "", refresh: "");
+      await setAuth(access: "", refresh: "");
     }
 
     var x = await storage.readAll();

@@ -70,7 +70,17 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
         // RefreshToken까지 보낸 것이므로 리프레시 토큰이 DB의 리프레시 토큰과 일치하는지 판단 후,
         // 일치한다면 AccessToken을 재발급해준다.
         if (refreshToken != null) {
-            checkRefreshTokenAndReIssueAccessToken(response, refreshToken);
+            User user = userRepository.findByRefreshToken(refreshToken)
+                    .orElse(null);
+
+            if (user == null) {
+                response.sendError(HttpServletResponse.SC_NOT_FOUND);
+                return;
+            }
+
+            jwtService.sendAccessAndRefreshToken(response, jwtService.createAccessToken(user.getEmail()),
+                    reIssueRefreshToken(user));
+
             return; // RefreshToken을 보낸 경우에는 AccessToken을 재발급 하고 인증 처리는 하지 않게 하기위해 바로 return으로 필터 진행
                     // 막기
         }
@@ -81,22 +91,6 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
         if (refreshToken == null) {
             checkAccessTokenAndAuthentication(request, response, filterChain);
         }
-    }
-
-    /**
-     * [리프레시 토큰으로 유저 정보 찾기 & 액세스 토큰/리프레시 토큰 재발급 메소드]
-     * 파라미터로 들어온 헤더에서 추출한 리프레시 토큰으로 DB에서 유저를 찾고, 해당 유저가 있다면
-     * JwtService.createAccessToken()으로 AccessToken 생성,
-     * reIssueRefreshToken()로 리프레시 토큰 재발급 & DB에 리프레시 토큰 업데이트 메소드 호출
-     * 그 후 JwtService.sendAccessTokenAndRefreshToken()으로 응답 헤더에 보내기
-     */
-    public void checkRefreshTokenAndReIssueAccessToken(HttpServletResponse response, String refreshToken) {
-        userRepository.findByRefreshToken(refreshToken)
-                .ifPresent(user -> {
-                    String reIssuedRefreshToken = reIssueRefreshToken(user);
-                    jwtService.sendAccessAndRefreshToken(response, jwtService.createAccessToken(user.getEmail()),
-                            reIssuedRefreshToken);
-                });
     }
 
     /**
