@@ -1,6 +1,20 @@
 server:
   port: 8000
 spring:
+  profiles:
+    group:
+      "local" : "local, jwt"
+    active: local
+  
+  config:
+    activate:
+      on-profile: "local"
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: ai-gong
+      
   application:
     name: api-gateway
   cloud:
