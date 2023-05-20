@@ -2,8 +2,10 @@ import 'dart:html' as html;
 import 'dart:html';
 
 import 'package:ai_gong/common/common.dart';
+import 'package:ai_gong/common/service_response.dart';
 import 'package:ai_gong/pages/main/controller/main_view_controller.dart';
 import 'package:ai_gong/restAPI/api_service.dart';
+import 'package:ai_gong/restAPI/models/User.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
@@ -11,6 +13,7 @@ import 'package:get/get.dart';
 class UserService extends GetxService {
   static UserService get instance => Get.find<UserService>();
 
+  Rx<User> user = User().obs;
   Future<UserService> init() async {
     Common.logger.d('$runtimeType init!');
     reflectAuth();
@@ -21,6 +24,13 @@ class UserService extends GetxService {
   void reflectAuth() async {
     var storage = const FlutterSecureStorage();
     ApiService.instance.dio.options.headers["Authorization"] = "Bearer ${await storage.read(key: "access_token") ?? "0000"}";
+    ApiResponse response = await ApiService.instance.getUserInfo();
+    if (response.result) {
+      user.value = response.value.user;
+    } else {
+      setAuth(access: "", refresh: "");
+    }
+
     var x = await storage.readAll();
     print(x);
   }

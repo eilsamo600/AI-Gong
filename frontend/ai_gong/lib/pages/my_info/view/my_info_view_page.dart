@@ -13,7 +13,7 @@ class MyInfoViewPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = MyInfoViewController.instance;
-
+    final userService = UserService.instance;
     return SizedBox(
       width: Common.getWidth,
       child: SingleChildScrollView(
@@ -29,10 +29,10 @@ class MyInfoViewPage extends StatelessWidget {
                       () => Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            "홍길동님의 활동",
+                          Text(
+                            "${userService.user.value.nickname}님의 활동",
                             //textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 18, color: Color.fromRGBO(103, 103, 103, 1)),
+                            style: const TextStyle(fontSize: 18, color: Color.fromRGBO(103, 103, 103, 1)),
                           ),
                           const SizedBox(height: 12),
                           Row(

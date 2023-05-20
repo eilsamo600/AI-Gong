@@ -48,11 +48,11 @@ class RouteViewPage extends StatelessWidget {
               ElevatedButton(
                   onPressed: () async {
                     var storage = const FlutterSecureStorage();
-                    UserService.instance.setAuth(
+                    await UserService.instance.setAuth(
                         access:
-                            'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImV4cCI6MTY4NDQ5MDY3OSwiZW1haWwiOiJqa2c3MTcwQGdhY2hvbi5hYy5rciJ9.9RMlSVItfIKKUxzjUck_Rvg2OzMf38WKhgqXzyimpzx9Jz4t3Cq32HGWv4SdXvXT39Kf7k1jbPsF_EhFU5VNEQ',
+                            'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImV4cCI6MTY4NDU2NjcyOSwiZW1haWwiOiJqa2c3MTcwQGdhY2hvbi5hYy5rciJ9.THgL9mGsdpMYqOOCgJNFffwU7N_JQCvHyzaazd1ntXIkcEwUgz2AWWj7YpIRn7icnAdXPV6PUY0EiAq6tLXo2A',
                         refresh:
-                            'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJSZWZyZXNoVG9rZW4iLCJleHAiOjE2ODU2MjcwMjF9.3B9cGlZxTZ4iaGaHn4WRYGYIkDBJNdnmL-cgkEGan8f4mMhZEIHM_xxks4qrnZ6tu8MbgQ5HQjjU6oGhHmcjkQ');
+                            'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJSZWZyZXNoVG9rZW4iLCJleHAiOjE2ODU3NzI3Mjl9.YNIqy5A8_pWpW5tcB8NSuOzrnuSdLDMuyytpoIGoYaHg4u-6CaouJZClc5esB-9gkejP7O_I0QVmRAbwtxAowQ');
                     var data = await storage.readAll();
                     print(data);
                   },
