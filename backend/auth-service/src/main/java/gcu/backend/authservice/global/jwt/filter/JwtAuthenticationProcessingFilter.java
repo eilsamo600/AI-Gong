@@ -75,6 +75,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
                     .orElse(null);
 
             if (user == null) {
+                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 return;
             }
             log.info("user refreshtoken", user.getRefreshToken());
