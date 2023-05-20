@@ -1,5 +1,6 @@
 package gcu.backend.apigateway.jwt;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.core.env.Environment;
@@ -20,7 +21,9 @@ import reactor.core.publisher.Mono;
 @Slf4j
 @Component
 public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<AuthorizationHeaderFilter.Config> {
+    @Autowired
     private final JwtService jwtService;
+    @Autowired
     private final UserRepository userRepository;
 
     public AuthorizationHeaderFilter(JwtService jwtService, UserRepository userRepository) {
