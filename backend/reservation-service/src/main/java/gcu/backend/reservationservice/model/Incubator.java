@@ -17,7 +17,7 @@ public class Incubator {
     private ObjectId _id; // MongoDB에서 자동으로 생성되는 필드
 
     // MongoDB 필드랑 이름 같아야함
-    private String 층;
+    private int 층;
     private String 호;
     private String 수용인원;
     private int 번호;
@@ -32,7 +32,7 @@ public class Incubator {
     private Map<String, String> currentReservation;
 
     // @Transient를 사용할 때는 따로 Constructor를 만들어줘야함
-    public Incubator(ObjectId _id, String 층, String 호, String 수용인원, int 번호) {
+    public Incubator(ObjectId _id, int 층, String 호, String 수용인원, int 번호) {
         this._id = _id;
         this.층 = 층;
         this.호 = 호;
