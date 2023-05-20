@@ -74,15 +74,14 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
                     .orElse(null);
 
             if (user == null) {
-                response.sendError(HttpServletResponse.SC_NOT_FOUND);
                 return;
             }
 
             jwtService.sendAccessAndRefreshToken(response, jwtService.createAccessToken(user.getEmail()),
                     reIssueRefreshToken(user));
 
-            return; // RefreshToken을 보낸 경우에는 AccessToken을 재발급 하고 인증 처리는 하지 않게 하기위해 바로 return으로 필터 진행
-                    // 막기
+            saveAuthentication(user, request, response);
+            filterChain.doFilter(request, response);
         }
 
         // RefreshToken이 없거나 유효하지 않다면, AccessToken을 검사하고 인증을 처리하는 로직 수행

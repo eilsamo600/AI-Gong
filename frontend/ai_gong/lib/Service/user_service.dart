@@ -6,9 +6,10 @@ import 'package:ai_gong/common/service_response.dart';
 import 'package:ai_gong/pages/main/controller/main_view_controller.dart';
 import 'package:ai_gong/restAPI/api_service.dart';
 import 'package:ai_gong/restAPI/models/User.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Response;
 
 class UserService extends GetxService {
   static UserService get instance => Get.find<UserService>();
@@ -16,19 +17,32 @@ class UserService extends GetxService {
   Rx<User> user = User().obs;
   Future<UserService> init() async {
     Common.logger.d('$runtimeType init!');
-    reflectAuth();
+    loadUserInfo();
 
     return this;
   }
 
-  void reflectAuth() async {
+  void loadUserInfo() async {
     var storage = const FlutterSecureStorage();
     ApiService.instance.dio.options.headers["Authorization"] = "Bearer ${await storage.read(key: "access_token") ?? "0000"}";
     ApiResponse response = await ApiService.instance.getUserInfo();
     if (response.result) {
+      print('정보 가져오기 성공');
       user.value = response.value.user;
     } else {
-      await setAuth(access: "", refresh: "");
+      print('정보 가져오기 실패');
+      Dio dio = Dio(BaseOptions(
+          baseUrl: Common.baseUrl,
+          headers: {"Flutter-Rest-Api": "true", "Authorization-refresh": "Bearer ${await storage.read(key: "refresh_token") ?? "0000"}"}));
+      try {
+        Response response = await dio.get('/auth/info');
+        print('refresh Token을 통한 새 Token 발급');
+        await setAuth(access: response.data['access_token'], refresh: response.data['refresh_token']);
+      } catch (e) {
+        print(e);
+        print('refresh Token 만료');
+        await setAuth(access: "", refresh: "");
+      }
     }
 
     var x = await storage.readAll();
