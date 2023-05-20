@@ -11,7 +11,7 @@ class ListClassRoomViewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(ListClassRoomViewController());
+    final controller = ListClassRoomViewController.instance;
     const textstyle = TextStyle(fontSize: 20);
     const textstyle2 = TextStyle(fontSize: 22, fontWeight: FontWeight.bold);
     return SizedBox(
@@ -25,8 +25,7 @@ class ListClassRoomViewPage extends StatelessWidget {
               slivers: [
                 SliverToBoxAdapter(
                     child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 15, top: 25, bottom: 25),
+                        padding: const EdgeInsets.only(left: 15, top: 25, bottom: 25),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -40,10 +39,7 @@ class ListClassRoomViewPage extends StatelessWidget {
                                       const SizedBox(
                                         width: 7,
                                       ),
-                                      Text(
-                                          Common.instance
-                                              .getNowWeek(controller.now.value),
-                                          style: textstyle2)
+                                      Text(Common.instance.getNowWeek(controller.now.value), style: textstyle2)
                                     ],
                                   ),
                                   const SizedBox(
@@ -59,8 +55,7 @@ class ListClassRoomViewPage extends StatelessWidget {
                                         width: 10,
                                       ),
                                       Text(
-                                        Common.instance
-                                            .getNowTime(controller.now.value),
+                                        Common.instance.getNowTime(controller.now.value),
                                         style: textstyle2,
                                       )
                                     ],
@@ -69,20 +64,13 @@ class ListClassRoomViewPage extends StatelessWidget {
                               ),
                             ),
                             const Spacer(),
-                            IconButton(
-                                onPressed: () =>
-                                    Get.toNamed(SearchViewPage.url),
-                                padding: EdgeInsets.zero,
-                                icon: const Icon(Icons.search)),
+                            IconButton(onPressed: () => Get.toNamed(SearchViewPage.url), padding: EdgeInsets.zero, icon: const Icon(Icons.search)),
                             const SizedBox(
                               width: 20,
                             ),
                           ],
                         ))),
-                SliverPersistentHeader(
-                    pinned: true,
-                    floating: true,
-                    delegate: HeaderDelegate(controller)),
+                SliverPersistentHeader(pinned: true, floating: true, delegate: HeaderDelegate(controller)),
                 Obx(
                   () => SliverList(
                       delegate: SliverChildBuilderDelegate(
@@ -92,8 +80,7 @@ class ListClassRoomViewPage extends StatelessWidget {
                         child: Column(
                           children: [
                             if (index == 0) const SizedBox(height: 20),
-                            ClassRoomComponent(
-                                model: controller.classRoomList.value[index]),
+                            ClassRoomComponent(model: controller.classRoomList.value[index]),
                             const Padding(
                               padding: EdgeInsets.only(bottom: 10, top: 15),
                               child: Divider(
@@ -120,15 +107,10 @@ class HeaderDelegate extends SliverPersistentHeaderDelegate {
   HeaderDelegate(this.controller);
 
   @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
       padding: const EdgeInsets.only(top: 10, left: 10),
-      decoration: BoxDecoration(
-          color: Colors.white,
-          border: shrinkOffset > 0
-              ? const Border(bottom: BorderSide(color: Colors.black12))
-              : const Border()),
+      decoration: BoxDecoration(color: Colors.white, border: shrinkOffset > 0 ? const Border(bottom: BorderSide(color: Colors.black12)) : const Border()),
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
           physics: const BouncingScrollPhysics(),

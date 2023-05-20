@@ -9,7 +9,7 @@ class MainViewPage extends StatelessWidget {
   static const String url = '/main';
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(MainViewController());
+    final controller = MainViewController.instance;
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(child: Align(alignment: Alignment.topCenter, child: Obx(() => controller.bodyContent[controller.pageIndex.value]))),

@@ -12,7 +12,7 @@ class MyInfoViewPage extends StatelessWidget {
   static const String url = '/info';
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(MyInfoViewController());
+    final controller = MyInfoViewController.instance;
 
     return SizedBox(
       width: Common.getWidth,
@@ -32,9 +32,7 @@ class MyInfoViewPage extends StatelessWidget {
                           const Text(
                             "홍길동님의 활동",
                             //textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: Color.fromRGBO(103, 103, 103, 1)),
+                            style: TextStyle(fontSize: 18, color: Color.fromRGBO(103, 103, 103, 1)),
                           ),
                           const SizedBox(height: 12),
                           Row(
@@ -96,17 +94,13 @@ class MyInfoViewPage extends StatelessWidget {
             if (controller.myReservationList.value != Null)
               Obx(
                 () => Column(children: [
-                  for (int index = 0;
-                      index < controller.myReservationList.length;
-                      index++)
+                  for (int index = 0; index < controller.myReservationList.length; index++)
                     Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 5),
                         child: Column(
                           children: [
                             if (index == 0) const SizedBox(height: 20),
-                            MyInfoComponent(
-                                model:
-                                    controller.myReservationList.value[index]),
+                            MyInfoComponent(model: controller.myReservationList.value[index]),
                             const Padding(
                               padding: EdgeInsets.only(bottom: 10, top: 15),
                               child: Divider(
@@ -125,10 +119,7 @@ class MyInfoViewPage extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text("예약 정보가 없습니다.",
-                      style: TextStyle(
-                          color: Color.fromRGBO(103, 103, 103, 1),
-                          fontSize: 17)),
+                  const Text("예약 정보가 없습니다.", style: TextStyle(color: Color.fromRGBO(103, 103, 103, 1), fontSize: 17)),
                   TextButton(
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -136,10 +127,8 @@ class MyInfoViewPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(13.0),
                         ),
                       ),
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          const Color.fromARGB(255, 0, 140, 255)),
-                      minimumSize:
-                          MaterialStateProperty.all(const Size(90, 40)),
+                      backgroundColor: MaterialStateProperty.all<Color>(const Color.fromARGB(255, 0, 140, 255)),
+                      minimumSize: MaterialStateProperty.all(const Size(90, 40)),
                     ),
                     onPressed: () {
                       Get.toNamed(ListIncubatorViewPage.url);
@@ -154,10 +143,7 @@ class MyInfoViewPage extends StatelessWidget {
                     // },
                     child: const Text(
                       '예약하기',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w400),
+                      style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w400),
                     ),
                   ),
                 ],
@@ -176,10 +162,8 @@ class MyInfoViewPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(15.0),
                         ),
                       ),
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
-                      minimumSize:
-                          MaterialStateProperty.all(const Size(100, 50)),
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                      minimumSize: MaterialStateProperty.all(const Size(100, 50)),
                     ),
                     onPressed: () {
                       UserService.instance.logout();

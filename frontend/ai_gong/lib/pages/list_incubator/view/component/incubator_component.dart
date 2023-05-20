@@ -1,3 +1,5 @@
+import 'package:ai_gong/Service/user_service.dart';
+import 'package:ai_gong/common/common.dart';
 import 'package:ai_gong/common/widget/panel_component.dart';
 import 'package:ai_gong/pages/list_incubator/controller/list_incubator_view_controller.dart';
 import 'package:ai_gong/restAPI/models/Incubator.dart';
@@ -355,7 +357,12 @@ class IncubatorComponent extends StatelessWidget {
                           width: 450,
                           height: 55,
                           child: OutlinedButton(
-                            onPressed: () {
+                            onPressed: () async {
+                              bool islogin = await UserService.instance.isLogin();
+                              if (!islogin) {
+                                Common.loginPanel();
+                                return;
+                              }
                               controller.roomnumchange(model.roomNum!.toInt());
                               controller.postReservation(context);
                             },
