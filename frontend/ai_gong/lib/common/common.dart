@@ -9,7 +9,8 @@ class Common extends GetxService {
   static Common get instance => Get.find<Common>();
   static const bool isDev = true;
   static Logger logger = Logger(filter: MyFilter());
-  static const String baseUrl = "http://127.0.0.1:8000/";
+  static const String baseUrl = "https://ai-gong.com:8000/";
+  static const String authbaseUrl = "https://ai-gong.com:8003/";
 
   static double get getWidth => GetPlatform.isMobile ? Get.width : 500;
 
@@ -21,14 +22,11 @@ class Common extends GetxService {
     return Get.rawSnackbar(
       borderRadius: 0,
       snackPosition: position,
-      margin: position == SnackPosition.BOTTOM
-          ? const EdgeInsets.only(top: 16, left: 16, right: 16)
-          : const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+      margin: position == SnackPosition.BOTTOM ? const EdgeInsets.only(top: 16, left: 16, right: 16) : const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
       messageText: Text(
         messageText,
-        style: TextStyle(
-            color: textColor, fontSize: 16, fontWeight: FontWeight.normal),
+        style: TextStyle(color: textColor, fontSize: 16, fontWeight: FontWeight.normal),
       ),
       backgroundColor: backgroundColor,
     );
@@ -45,26 +43,19 @@ class Common extends GetxService {
               const SizedBox(
                 height: 100,
               ),
-              const Text('간단하게 로그인 하고',
-                  style: TextStyle(fontSize: 24, color: Colors.black)),
+              const Text('간단하게 로그인 하고', style: TextStyle(fontSize: 24, color: Colors.black)),
               const SizedBox(
                 height: 5,
               ),
-              const Text('메타버스 인큐베이터 예약하기',
-                  style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black)),
+              const Text('메타버스 인큐베이터 예약하기', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black)),
               const SizedBox(
                 height: 150,
               ),
-              const Text('애공은 가천 계정으로만 로그인 할 수 있어요!',
-                  style: TextStyle(fontSize: 15, color: Colors.black)),
+              const Text('애공은 가천 계정으로만 로그인 할 수 있어요!', style: TextStyle(fontSize: 15, color: Colors.black)),
               const SizedBox(
                 height: 5,
               ),
-              const Text('ex) abcdefg.gachon.ac.kr',
-                  style: TextStyle(fontSize: 15, color: Colors.black)),
+              const Text('ex) abcdefg.gachon.ac.kr', style: TextStyle(fontSize: 15, color: Colors.black)),
               const SizedBox(
                 height: 100,
               ),
@@ -85,9 +76,7 @@ class Common extends GetxService {
                           children: [
                             Image.asset('assets/images/google.png', width: 20),
                             const SizedBox(width: 15),
-                            const Text('가천 계정으로 로그인하기',
-                                style: TextStyle(
-                                    fontSize: 15, color: Colors.black)),
+                            const Text('가천 계정으로 로그인하기', style: TextStyle(fontSize: 15, color: Colors.black)),
                           ],
                         ),
                       ))),
