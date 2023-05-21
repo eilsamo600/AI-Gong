@@ -65,9 +65,11 @@ class Common extends GetxService {
                         backgroundColor: Colors.white,
                       ),
                       onPressed: () async {
-                        bool x = await UserService.instance.login();
-                        Navigator.pop(context);
-                        if (x) MainViewController.instance.selectTab(2);
+                        if (!UserService.instance.logining) {
+                          bool x = await UserService.instance.login();
+                          Navigator.pop(context);
+                          if (x) MainViewController.instance.selectTab(2);
+                        }
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(5.0),

@@ -58,7 +58,9 @@ class RouteViewPage extends StatelessWidget {
                   child: const Text('정민규로 로그인', style: TextStyle(color: Colors.black))),
               ElevatedButton(
                   onPressed: () async {
-                    UserService.instance.login();
+                    if (!UserService.instance.logining) {
+                      UserService.instance.login();
+                    }
                   },
                   child: const Text('로그인', style: TextStyle(color: Colors.black))),
               ElevatedButton(
