@@ -22,6 +22,9 @@ spring:
     name: api-gateway
   cloud:
     gateway:
+      httpclient:
+        ssl:
+          useInsecureTrustManager: true
       routes: # 라우팅 설정
         - id: classroom-service # 구분하기 위한 id값으로 임의로 작성해도 무관
           predicates: # 조건
