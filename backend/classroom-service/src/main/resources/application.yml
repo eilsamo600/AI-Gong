@@ -1,6 +1,12 @@
 
 server:
   port: 8001
+  # ssl:
+  #   enabled: true
+  #   key-store: /home/ubuntu/keystore.p12
+  #   key-store-password: gachon
+  #   key-store-type: PKCS12
+  #   key-alias: tomcat
 spring:
   data:
     mongodb:
