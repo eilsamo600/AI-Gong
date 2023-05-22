@@ -16,8 +16,10 @@ class IncubatorComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> buttons = [];
     final now = DateTime.now().toUtc().add(Duration(days: 2));
-    final firstTime = DateFormat('d').format(DateTime.utc(now.year, now.month, now.day - (now.weekday - 1)));
-    final lastTime = DateFormat('d').format(DateTime.utc(now.year, now.month, now.day + (7 - now.weekday)));
+    final firstTime = DateFormat('d')
+        .format(DateTime.utc(now.year, now.month, now.day - (now.weekday - 1)));
+    final lastTime = DateFormat('d')
+        .format(DateTime.utc(now.year, now.month, now.day + (7 - now.weekday)));
     final monthText = DateFormat('M월').format(DateTime(now.month, 5));
 
     final controller = Get.put(ListIncubatorViewController());
@@ -47,7 +49,8 @@ class IncubatorComponent extends StatelessWidget {
                         SizedBox(
                           width: 15,
                         ),
-                        Text('소회의실 ${model.roomNum ?? '???'}호', style: textstyle2),
+                        Text('소회의실 ${model.roomNum ?? '???'}호',
+                            style: textstyle2),
                       ]),
                     ),
                     SizedBox(
@@ -60,7 +63,11 @@ class IncubatorComponent extends StatelessWidget {
                             SizedBox(
                               width: 15,
                             ),
-                            Text(monthText, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, letterSpacing: 2.0)),
+                            Text(monthText,
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    letterSpacing: 2.0)),
                           ],
                         )),
                     // Padding(
@@ -99,11 +106,14 @@ class IncubatorComponent extends StatelessWidget {
                     // ),
 
                     Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 30, vertical: 15),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            for (var i = 0, j = int.parse(firstTime); i < 7; i++, j++)
+                            for (var i = 0, j = int.parse(firstTime);
+                                i < 7;
+                                i++, j++)
                               InkWell(
                                 onTap: () {
                                   controller.date(i.toInt(), j.toInt());
@@ -112,18 +122,25 @@ class IncubatorComponent extends StatelessWidget {
                                       width: 50,
                                       height: 65,
                                       decoration: BoxDecoration(
-                                        border: controller.dates.value[i.toInt()] == 2
-                                            ? Border.all(
-                                                color: Color(0xff567BE6),
-                                                width: 2.0,
-                                              )
-                                            // ) : Border.all(
-                                            //   color: Color(0xff567BE6),
-                                            //   width: 2.0,
-                                            // ),
-                                            : null,
-                                        color: controller.dates.value[i.toInt()] == 2 ? Color(0xffEFF3FF) : null,
-                                        borderRadius: BorderRadius.circular(10.0),
+                                        border:
+                                            controller.dates.value[i.toInt()] ==
+                                                    2
+                                                ? Border.all(
+                                                    color: Color(0xff567BE6),
+                                                    width: 2.0,
+                                                  )
+                                                // ) : Border.all(
+                                                //   color: Color(0xff567BE6),
+                                                //   width: 2.0,
+                                                // ),
+                                                : null,
+                                        color:
+                                            controller.dates.value[i.toInt()] ==
+                                                    2
+                                                ? Color(0xffEFF3FF)
+                                                : null,
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
                                       ),
                                       child: Column(
                                         children: [
@@ -132,14 +149,30 @@ class IncubatorComponent extends StatelessWidget {
                                           ),
                                           Text(
                                             weeks[i],
-                                            style: TextStyle(color: i > 4 ? Colors.grey : Colors.black),
+                                            style: TextStyle(
+                                                color: i > 4
+                                                    ? Colors.grey
+                                                    : i < now.weekday
+                                                        ? Colors.grey
+                                                        : Colors.black),
                                           ),
                                           SizedBox(
                                             height: 10,
                                           ),
                                           Text(
-                                            DateFormat('d').format(DateTime.utc(now.year, now.month, now.day - (now.weekday - 1) + i)),
-                                            style: TextStyle(color: i > 4 ? Colors.grey : Colors.black, decoration: i > 4 ? TextDecoration.lineThrough : null),
+                                            DateFormat('d').format(DateTime.utc(
+                                                now.year,
+                                                now.month,
+                                                now.day -
+                                                    (now.weekday - 1) +
+                                                    i)),
+                                            style: TextStyle(
+                                                color: i > 4
+                                                    ? Colors.grey
+                                                    : Colors.black,
+                                                decoration: i > 4
+                                                    ? TextDecoration.lineThrough
+                                                    : null),
                                           )
                                         ],
                                       ),
@@ -181,7 +214,9 @@ class IncubatorComponent extends StatelessWidget {
                         spacing: 50.0, // 각 버튼 사이의 가로 간격
                         runSpacing: 40.0, // 버튼 사이 세로 간격
                         children: [
-                          for (double i = 9.0, j = 1.0, a = 0; i < 17.0; i += 0.5, j++, a++)
+                          for (double i = 9.0, j = 1.0, a = 0;
+                              i < 17.0;
+                              i += 0.5, j++, a++)
                             InkWell(
                               onTap: () {
                                 controller.selected(a.toInt());
@@ -189,12 +224,16 @@ class IncubatorComponent extends StatelessWidget {
                               child: Obx(
                                 () => Container(
                                   decoration: BoxDecoration(
-                                      color: controller.states.value[a.toInt()] == 0
-                                          ? Colors.white
-                                          : controller.states.value[a.toInt()] == 2
+                                      color:
+                                          controller.states.value[a.toInt()] ==
+                                                  0
                                               ? Colors.white
-                                              : //Color(0xffEFF3FF),
-                                              Colors.white,
+                                              : controller.states
+                                                          .value[a.toInt()] ==
+                                                      2
+                                                  ? Colors.white
+                                                  : //Color(0xffEFF3FF),
+                                                  Colors.white,
                                       boxShadow: const [
                                         BoxShadow(
                                           color: Color(0xffDDDDDD),
@@ -203,12 +242,14 @@ class IncubatorComponent extends StatelessWidget {
                                           offset: Offset(0.0, 0.0),
                                         )
                                       ],
-                                      border: controller.states.value[a.toInt()] == 1
-                                          ? Border.all(
-                                              color: Color(0xff567BE6),
-                                              width: 2.0,
-                                            )
-                                          : null,
+                                      border:
+                                          controller.states.value[a.toInt()] ==
+                                                  1
+                                              ? Border.all(
+                                                  color: Color(0xff567BE6),
+                                                  width: 2.0,
+                                                )
+                                              : null,
                                       borderRadius: BorderRadius.circular(5)),
                                   width: 110,
                                   height: 55,
@@ -217,9 +258,13 @@ class IncubatorComponent extends StatelessWidget {
                                       '${i.toInt()}:${(i % 1 == 0.5) ? "30" : "00"} ~ ${(i % 1 == 0.5) ? "${i.toInt() + 1}:00" : "${i.toInt()}:30"}',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
-                                        color: controller.states.value[a.toInt()] == 0
+                                        color: controller
+                                                    .states.value[a.toInt()] ==
+                                                0
                                             ? Colors.black
-                                            : controller.states.value[a.toInt()] == 2
+                                            : controller.states
+                                                        .value[a.toInt()] ==
+                                                    2
                                                 ? Color(0xffDEE0E4)
                                                 : Colors.black,
                                         fontSize: 14,
@@ -358,7 +403,8 @@ class IncubatorComponent extends StatelessWidget {
                           height: 55,
                           child: OutlinedButton(
                             onPressed: () async {
-                              bool islogin = await UserService.instance.isLogin();
+                              bool islogin =
+                                  await UserService.instance.isLogin();
                               if (!islogin) {
                                 Common.loginPanel();
                                 return;
@@ -368,7 +414,8 @@ class IncubatorComponent extends StatelessWidget {
                             },
                             child: Text(
                               '예약하기',
-                              style: TextStyle(color: Colors.black, fontSize: 16),
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 16),
                             ),
                           ),
                         ),
@@ -410,7 +457,8 @@ class IncubatorComponent extends StatelessWidget {
               children: [
                 Text(
                   '소회의실 ${model.roomNum ?? '???'}',
-                  style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 25, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(
                   height: 5,
@@ -422,7 +470,8 @@ class IncubatorComponent extends StatelessWidget {
                     children: [
                       Text(
                         'AI공학관 ${model.classNum ?? '???'}호',
-                        style: const TextStyle(fontSize: 12, color: Colors.black54),
+                        style: const TextStyle(
+                            fontSize: 12, color: Colors.black54),
                       ),
                       const SizedBox(
                         height: 7,
@@ -452,7 +501,8 @@ class IncubatorComponent extends StatelessWidget {
                         ),
                         Text(
                           'AI공학관 ${model.classNum ?? '???'}호',
-                          style: const TextStyle(fontSize: 12, color: Colors.black87),
+                          style: const TextStyle(
+                              fontSize: 12, color: Colors.black87),
                         ),
                       ],
                     ),
