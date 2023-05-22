@@ -12,6 +12,7 @@ import 'package:ai_gong/restAPI/response/get_incubator_response.dart';
 import 'package:ai_gong/restAPI/response/get_reservation_list_response.dart';
 import 'package:ai_gong/restAPI/response/get_user.response.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
@@ -19,8 +20,6 @@ class ApiService extends GetxService {
   static ApiService get instance => Get.find<ApiService>();
 
   Dio dio = Dio(BaseOptions(baseUrl: Common.baseUrl, headers: {"Flutter-Rest-Api": "true", "Authorization": "Bearer 0000"}));
-
-  Options dioOptions = Options();
   Future<ApiService> init() async {
     Common.logger.d('$runtimeType init!');
     if (Common.isDev) {
@@ -51,8 +50,11 @@ class ApiService extends GetxService {
 
   Future<ApiResponse<UserResponse>> getUserInfo() async {
     try {
-      var response = await dio.get(
-        '/auth/info',
+      var storage = const FlutterSecureStorage();
+      Dio authdio = Dio(BaseOptions(
+          baseUrl: Common.authbaseUrl, headers: {"Flutter-Rest-Api": "true", "Authorization": "Bearer ${await storage.read(key: "access_token") ?? "0000"}"}));
+      var response = await authdio.get(
+        '/info',
         data: jsonEncode({}),
       );
       UserResponse getUserResponse = UserResponse.fromJson(response.data);

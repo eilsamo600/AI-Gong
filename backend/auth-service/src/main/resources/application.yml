@@ -5,8 +5,13 @@ spring:
         active: local
 
 server:
-  port: 8003
-  
+    port: 8003
+    ssl:
+        enabled: true
+        key-store: /home/ubuntu/keystore.p12
+        key-store-password: gachon
+        key-store-type: PKCS12
+        key-alias: tomcat
 eureka:
     instance:
         ip-address: 43.201.81.76

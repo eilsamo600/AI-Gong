@@ -29,8 +29,8 @@ class IncubatorComponent extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        controller.statesInit();
         controller.datesInit();
+        controller.statesInit(model.roomNum);
         controller.numInit();
         controller.roomnumInit();
         showModalBottomSheet(
@@ -116,7 +116,8 @@ class IncubatorComponent extends StatelessWidget {
                                 i++, j++)
                               InkWell(
                                 onTap: () {
-                                  controller.date(i.toInt(), j.toInt());
+                                  controller.date(
+                                      i.toInt(), j.toInt(), model.roomNum);
                                 },
                                 child: Obx(() => Container(
                                       width: 50,
@@ -152,9 +153,7 @@ class IncubatorComponent extends StatelessWidget {
                                             style: TextStyle(
                                                 color: i > 4
                                                     ? Colors.grey
-                                                    : i < now.weekday
-                                                        ? Colors.grey
-                                                        : Colors.black),
+                                                    : Colors.black),
                                           ),
                                           SizedBox(
                                             height: 10,
@@ -403,14 +402,15 @@ class IncubatorComponent extends StatelessWidget {
                           height: 55,
                           child: OutlinedButton(
                             onPressed: () async {
-                              bool islogin =
-                                  await UserService.instance.isLogin();
-                              if (!islogin) {
-                                Common.loginPanel();
-                                return;
-                              }
+                              // bool islogin =
+                              //     await UserService.instance.isLogin();
+                              // if (!islogin) {
+                              //   Common.loginPanel();
+                              //   return;
+                              // }
                               controller.roomnumchange(model.roomNum!.toInt());
-                              controller.postReservation(context);
+                              controller.postReservation(
+                                  context, model.roomNum);
                             },
                             child: Text(
                               '예약하기',

@@ -13,10 +13,11 @@ class ListIncubatorViewController extends GetxController {
   static ListIncubatorViewController get instance =>
       Get.find<ListIncubatorViewController>();
 
+  RxList<int> dates = List.filled(7, 0).obs;
   RxList<int> states = List.filled(17, 0).obs;
-  final today = DateTime.now().toUtc();
+  var today = DateTime.now().toUtc();
 
-  void postReservation(BuildContext context) async {
+  void postReservation(BuildContext context, int? roomNum) async {
     int val = dates.value.indexOf(2);
     List<int> timeval = [];
 
@@ -27,9 +28,10 @@ class ListIncubatorViewController extends GetxController {
     }
     String day = DateFormat('d').format(DateTime.utc(
         today.year, today.month, today.day - (today.weekday - 1) + val));
+
     var data = Reservation.fromJson({
       'email': 'thwjd082@gachon.ac.kr',
-      'number': roomnum.value.toString(),
+      'number': roomnum.toString(),
       'time': (timeval as List).cast<int>(),
       'date': (today.year.toString() + today.month.toString() + day),
       'people': (num.value as int),
@@ -104,9 +106,25 @@ class ListIncubatorViewController extends GetxController {
     }
   }
 
-  void statesInit() {
+  void statesInit(int? roomNum) {
     states.value = List.filled(16, 0);
     int count = -2;
+    int val = dates.value.indexOf(2);
+    var todayIndex = today.weekday - 1;
+    if (todayIndex == 5) {
+      today = today.add(Duration(days: 2)); // Add 2 days to skip the weekend
+      todayIndex = today.weekday - 1;
+    }
+    if (todayIndex == 6) {
+      today = today.add(Duration(days: 1)); // Add 2 days to skip the weekend
+      todayIndex = today.weekday - 1;
+    }
+    String day = DateFormat('d').format(DateTime.utc(
+        today.year, today.month, today.day - (today.weekday - 1) + val));
+    String checkday = today.year.toString() + today.month.toString() + day;
+    print("checkday:" + checkday + " 오늘 날짜: " + day);
+    getAvailableReservation(checkday, roomNum.toString());
+
     if (now.value.hour >= 9) {
       for (int i = 9; i <= now.value.hour; i++) {
         if (i >= 17) {
@@ -223,12 +241,15 @@ class ListIncubatorViewController extends GetxController {
     states.refresh();
   }
 
-  RxList<int> dates = List.filled(7, 0).obs;
-
   void datesInit() {
     var todayIndex = today.weekday - 1;
-    if (todayIndex == 5 || todayIndex == 6) {
-      todayIndex = 0;
+    if (todayIndex == 5) {
+      today = today.add(Duration(days: 2)); // Add 2 days to skip the weekend
+      todayIndex = today.weekday - 1;
+    }
+    if (todayIndex == 6) {
+      today = today.add(Duration(days: 1)); // Add 2 days to skip the weekend
+      todayIndex = today.weekday - 1;
     }
     dates.value = List.filled(7, 0);
     for (int i = 0; i < 7; i++) {
@@ -245,7 +266,7 @@ class ListIncubatorViewController extends GetxController {
     dates.refresh();
   }
 
-  void date(int d, int today) {
+  void date(int d, int today, int? roomNum) {
     if (d == 5 || d == 6) {
       //토요일, 일요일은 안눌리게끔
       dates.value[d] = 0;
@@ -255,7 +276,7 @@ class ListIncubatorViewController extends GetxController {
       for (int i = 0; i < 7; i++) {
         if (i != d && dates.value[i] == 2) {
           dates.value[i] = 1;
-          statesInit();
+          statesInit(roomNum);
           numInit();
         }
       }
@@ -317,14 +338,44 @@ class ListIncubatorViewController extends GetxController {
     }
   }
 
-  Future<void> getAvailableReservation(String date, String number) async {
+  void getAvailableReservation(String date, String number) async {
+    List<int> timelist = [];
     ApiResponse<AvailableReservationResponse> response =
         await ApiService.instance.getAvailableReservation(date, number);
-    await Future.delayed(const Duration(milliseconds: 150));
     if (response.result) {
-      reservations.value = response.value!.reservation!;
+      reservations.value = response.value!.reservations!;
+      print("t");
+      for (var i in reservations) {
+        print("true");
+        if (i.time != null) {
+          print(i.time);
+          for (var time in i.time!) {
+            for (var val in time) {
+              timelist.add(val);
+              print(timelist);
+            }
+          }
+        }
+      }
     }
-    reservation.refresh();
+    // if (response.result) {
+    //   for (var item in response.value!.reservations!) {
+    //     print("item1");
+    //     if (item.time != null) {
+    //       print("time1");
+    //       for (var time in item.time!) {
+    //         print(time + ",");
+    //         timelist.add(time);
+    //       }
+    //     }
+    //   }
+    // }
+    for (int i = 0; i < timelist.length; i++) {
+      int val = timelist[i];
+      print(val);
+      states.value[val] = 2;
+    }
+    states.refresh();
   }
 
   void checkTimer() async {
