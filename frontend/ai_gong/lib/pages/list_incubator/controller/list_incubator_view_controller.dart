@@ -344,14 +344,16 @@ class ListIncubatorViewController extends GetxController {
         await ApiService.instance.getAvailableReservation(date, number);
     if (response.result) {
       reservations.value = response.value!.reservations!;
-      print(reservation);
+      print("t");
       for (var i in reservations) {
-        print("1");
+        print("true");
         if (i.time != null) {
           print(i.time);
           for (var time in i.time!) {
-            timelist.add(time);
-            print(timelist);
+            for (var val in time) {
+              timelist.add(val);
+              print(timelist);
+            }
           }
         }
       }
