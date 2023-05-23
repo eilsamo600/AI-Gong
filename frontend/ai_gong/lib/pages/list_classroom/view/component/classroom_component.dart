@@ -143,7 +143,6 @@ class ClassRoomComponent extends StatelessWidget {
                       ? const Center(child: CupertinoActivityIndicator())
                       : TimeTable(
                           classRoom: ListClassRoomViewController.instance.classRoom.value,
-                          lecturesLength: ListClassRoomViewController.instance.lectures.value,
                         ))
                 ],
               ));

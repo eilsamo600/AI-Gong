@@ -36,9 +36,11 @@ class ListClassRoomViewController extends GetxController {
       classRoom.value = response.value!.classroom!;
       classRoom.refresh();
       response.value!.classroom!.lectures!.forEach((key, value) {
-        classRoom.value.lectures![key] = value;
-        classRoom.refresh();
-        lectures.value++;
+        print(key);
+        print(value);
+        for (var element in value) {
+          lectures.value++;
+        }
       });
     } else {
       lectures.value = 0;

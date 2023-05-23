@@ -78,6 +78,7 @@ class ApiService extends GetxService {
         data: jsonEncode({}),
       );
       ClassRoomResponse getClassRoomResponse = ClassRoomResponse.fromJson(response.data);
+
       return ApiResponse<ClassRoomResponse>(result: response.isSuccessful, value: getClassRoomResponse);
     } on DioError catch (e) {
       Common.logger.d(e);
