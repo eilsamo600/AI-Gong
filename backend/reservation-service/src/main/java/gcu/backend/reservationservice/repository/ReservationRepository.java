@@ -12,7 +12,7 @@ public interface ReservationRepository extends MongoRepository<Reservation, Long
     List<Reservation> findByEmailList(String email);
 
     @Query("{'number': ?0, 'date': ?1}")
-    List<Reservation> findByEmailAndDate(String number, String date);
+    List<Reservation> findByNumberAndDate(String number, String date);
 
     @Query("{'email':?0}")
     Reservation findByEmail(String email);

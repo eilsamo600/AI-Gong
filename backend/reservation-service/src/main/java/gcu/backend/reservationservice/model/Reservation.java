@@ -24,4 +24,6 @@ public class Reservation {
     private List<Integer> time;
     private String date;
     private int people;
+    private int state;
+
 }

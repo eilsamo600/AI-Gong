@@ -106,7 +106,7 @@ class ListIncubatorViewController extends GetxController {
     }
   }
 
-  void statesInit(int? roomNum) {
+  void statesInit(int? roomNum) async {
     states.value = List.filled(16, 0);
     int count = -2;
     int val = dates.value.indexOf(2);
@@ -123,7 +123,7 @@ class ListIncubatorViewController extends GetxController {
         today.year, today.month, today.day - (today.weekday - 1) + val));
     String checkday = today.year.toString() + today.month.toString() + day;
     print("checkday:" + checkday + " 오늘 날짜: " + day);
-    getAvailableReservation(checkday, roomNum.toString());
+    getAvailableReservation(roomNum.toString(), checkday);
 
     if (now.value.hour >= 9) {
       for (int i = 9; i <= now.value.hour; i++) {
@@ -338,38 +338,29 @@ class ListIncubatorViewController extends GetxController {
     }
   }
 
-  void getAvailableReservation(String date, String number) async {
+  Future<void> getAvailableReservation(String number, String date) async {
     List<int> timelist = [];
-    ApiResponse<AvailableReservationResponse> response =
-        await ApiService.instance.getAvailableReservation(date, number);
-    if (response.result) {
-      reservations.value = response.value!.reservations!;
-      print("t");
+
+    ApiResponse<AvailableReservationResponse> responseresult =
+        await ApiService.instance.getAvailableReservation(number, date);
+    if (responseresult.result) {
+      print('1');
+      reservations.value = responseresult.value!.reservations!;
+      print('2');
       for (var i in reservations) {
         print("true");
         if (i.time != null) {
           print(i.time);
           for (var time in i.time!) {
-            for (var val in time) {
-              timelist.add(val);
-              print(timelist);
-            }
+            timelist.forEach((time) {
+              print(time);
+              states.value[time] = 2;
+            });
           }
         }
       }
+      print("finish");
     }
-    // if (response.result) {
-    //   for (var item in response.value!.reservations!) {
-    //     print("item1");
-    //     if (item.time != null) {
-    //       print("time1");
-    //       for (var time in item.time!) {
-    //         print(time + ",");
-    //         timelist.add(time);
-    //       }
-    //     }
-    //   }
-    // }
     for (int i = 0; i < timelist.length; i++) {
       int val = timelist[i];
       print(val);
