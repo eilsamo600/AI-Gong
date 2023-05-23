@@ -83,9 +83,9 @@ class ListClassRoomViewController extends GetxController {
   Rx<DateTime> now = DateTime.now().obs;
 
   Rx<ClassRoom> classRoom = ClassRoom().obs;
-  Rx<int> lectures = (-1).obs;
+  RxInt lectures = (-1).obs;
   RxList<ClassRoom> classRoomList = RxList<ClassRoom>();
   RxList<bool> onTapList = List.filled(4, false).obs;
   RxList<String> filterList = ['새로고침', '즐겨찾기', '바로', '곧 끝나는'].obs;
-  Rx<int> bookmark = 0.obs;
+  RxInt bookmark = 0.obs;
 }

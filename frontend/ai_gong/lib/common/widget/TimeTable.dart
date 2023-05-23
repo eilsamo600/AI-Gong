@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 
 class TimeTable extends StatelessWidget {
   final ClassRoom classRoom;
-  const TimeTable({super.key, required this.classRoom});
+  final int lecturesLength;
+  const TimeTable({super.key, required this.classRoom, required this.lecturesLength});
 
   static List week = ['월', '화', '수', '목', '금'];
   static var kColumnLength = 11;
