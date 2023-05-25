@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:ai_gong/common/common.dart';
+import 'package:ai_gong/pages/list_classroom/controller/list_classroom_view_controller.dart';
 import 'package:ai_gong/restAPI/models/Classroom.dart';
 import 'package:flutter/material.dart';
 
@@ -17,6 +18,10 @@ class TimeTable extends StatelessWidget {
   static double horizontalwidth = 0.5;
   @override
   Widget build(BuildContext context) {
+    print(classRoom.lectures);
+    classRoom.lectures ??= {};
+
+    print(ListClassRoomViewController.instance.lectures.value);
     return Column(
       children: [
         Container(
@@ -39,12 +44,12 @@ class TimeTable extends StatelessWidget {
     if (classRoom.lectures!.containsKey((index + 1).toString())) {
       int length = 1;
       if (classRoom.lectures![(index + 1).toString()].runtimeType == List) {
-        length = classRoom.lectures![(index + 1).toString()].length;
+        length = classRoom.lectures![(index + 1).toString()]!.length;
       }
       for (var x = 0; x < length; x++) {
-        if (classRoom.lectures![(index + 1).toString()][x]['수업시간'] > 60) {
-          for (var i = 0; i < classRoom.lectures![(index + 1).toString()][x]['수업시간'] ~/ 60; i++) {
-            removed.add(classRoom.lectures![(index + 1).toString()][x]['시작시간'].floor() + i);
+        if (classRoom.lectures![(index + 1).toString()]![x]['수업시간'] > 60) {
+          for (var i = 0; i < classRoom.lectures![(index + 1).toString()]![x]['수업시간'] ~/ 60; i++) {
+            removed.add(classRoom.lectures![(index + 1).toString()]![x]['시작시간'].floor() + i);
           }
         }
       }
@@ -88,11 +93,11 @@ class TimeTable extends StatelessWidget {
           ),
           if (classRoom.lectures!.containsKey((index + 1).toString()))
             ...List.generate(
-              classRoom.lectures![(index + 1).toString()].runtimeType == List ? classRoom.lectures![(index + 1).toString()].length : 1,
+              classRoom.lectures![(index + 1).toString()].runtimeType == List ? classRoom.lectures![(index + 1).toString()]!.length : 1,
               (idx) {
                 return Positioned(
-                  top: kFirstColumnHeight + kBoxSize * (classRoom.lectures![(index + 1).toString()][idx]['시작시간'] - 1),
-                  height: kBoxSize * (classRoom.lectures![(index + 1).toString()][idx]['수업시간'] / 60.0),
+                  top: kFirstColumnHeight + kBoxSize * (classRoom.lectures![(index + 1).toString()]![idx]['시작시간'] - 1),
+                  height: kBoxSize * (classRoom.lectures![(index + 1).toString()]![idx]['수업시간'] / 60.0),
                   width: 85,
                   child: Container(
                     padding: const EdgeInsets.only(top: 1.0, bottom: 1.0, left: 2.5, right: 7.5),
@@ -101,11 +106,11 @@ class TimeTable extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          classRoom.lectures![(index + 1).toString()][idx]['교과목명'],
+                          classRoom.lectures![(index + 1).toString()]![idx]['교과목명'],
                           style: const TextStyle(fontSize: 11, fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          classRoom.lectures![(index + 1).toString()][idx]['담당교수'],
+                          classRoom.lectures![(index + 1).toString()]![idx]['담당교수'],
                           style: const TextStyle(fontSize: 10),
                         )
                       ],

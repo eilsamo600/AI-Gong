@@ -1,3 +1,4 @@
+import 'package:ai_gong/common/title.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -19,22 +20,26 @@ class MainViewPage extends StatelessWidget {
 
   static Widget homeNavigationBar() {
     final controller = MainViewController.instance;
-    return Material(
-      child: Container(
-        decoration: const BoxDecoration(border: Border(top: BorderSide(color: Colors.grey, width: 0.2))),
-        child: SafeArea(
-          top: false,
-          child: Material(
-            color: Colors.transparent,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 0),
-              child: Row(
-                children: [
-                  Expanded(child: _bottomNavigationButton(index: 0, icon: [Icons.feed_outlined, Icons.feed])),
-                  // Expanded(child: _bottomNavigationButton(index: 1, icon: [Icons.search_outlined, LineIcons.search])),
-                  Expanded(child: _bottomNavigationButton(index: 1, icon: [Icons.access_time, Icons.access_time_filled])),
-                  Expanded(child: _bottomNavigationButton(index: 2, icon: [Icons.account_circle_outlined, Icons.account_circle])),
-                ],
+    return Title(
+      title: PageTitle.main,
+      color: Colors.white,
+      child: Material(
+        child: Container(
+          decoration: const BoxDecoration(border: Border(top: BorderSide(color: Colors.grey, width: 0.2))),
+          child: SafeArea(
+            top: false,
+            child: Material(
+              color: Colors.transparent,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 0),
+                child: Row(
+                  children: [
+                    Expanded(child: _bottomNavigationButton(index: 0, icon: [Icons.feed_outlined, Icons.feed])),
+                    // Expanded(child: _bottomNavigationButton(index: 1, icon: [Icons.search_outlined, LineIcons.search])),
+                    Expanded(child: _bottomNavigationButton(index: 1, icon: [Icons.access_time, Icons.access_time_filled])),
+                    Expanded(child: _bottomNavigationButton(index: 2, icon: [Icons.account_circle_outlined, Icons.account_circle])),
+                  ],
+                ),
               ),
             ),
           ),

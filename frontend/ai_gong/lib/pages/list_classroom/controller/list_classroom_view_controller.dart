@@ -36,9 +36,11 @@ class ListClassRoomViewController extends GetxController {
       classRoom.value = response.value!.classroom!;
       classRoom.refresh();
       response.value!.classroom!.lectures!.forEach((key, value) {
-        classRoom.value.lectures![key] = value;
-        classRoom.refresh();
-        lectures.value++;
+        print(key);
+        print(value);
+        for (var element in value) {
+          lectures.value++;
+        }
       });
     } else {
       lectures.value = 0;
@@ -83,9 +85,9 @@ class ListClassRoomViewController extends GetxController {
   Rx<DateTime> now = DateTime.now().obs;
 
   Rx<ClassRoom> classRoom = ClassRoom().obs;
-  Rx<int> lectures = (-1).obs;
+  RxInt lectures = (-1).obs;
   RxList<ClassRoom> classRoomList = RxList<ClassRoom>();
   RxList<bool> onTapList = List.filled(4, false).obs;
   RxList<String> filterList = ['새로고침', '즐겨찾기', '바로', '곧 끝나는'].obs;
-  Rx<int> bookmark = 0.obs;
+  RxInt bookmark = 0.obs;
 }
