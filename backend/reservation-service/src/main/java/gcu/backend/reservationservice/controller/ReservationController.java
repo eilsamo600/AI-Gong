@@ -1,17 +1,22 @@
 package gcu.backend.reservationservice.controller;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.netflix.discovery.converters.Auto;
+
 import io.swagger.v3.oas.annotations.Operation;
 // import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.web.bind.annotation.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import gcu.backend.reservationservice.jwt.JwtService;
 import gcu.backend.reservationservice.model.Incubator;
 import gcu.backend.reservationservice.model.Reservation;
 import gcu.backend.reservationservice.repository.ReservationRepository;
@@ -30,6 +35,9 @@ public class ReservationController {
     @Autowired
     private IncubatorRepository incubatorRepository;
 
+    @Autowired
+    private JwtService jwtService;
+
     @PostMapping("/reservation")
     @Operation(summary = "예약 내역 보내기", description = "예약 내역 보내요~.")
     public ResponseEntity<Reservation> postReservation(@Valid @RequestBody Reservation reservation) {
@@ -45,6 +53,24 @@ public class ReservationController {
         List<Reservation> reservations = reservationRepository.findByEmailList(email);
         return new ResponseEntity<List<Reservation>>(reservations, HttpStatus.OK);
     }
+
+    // 토큰에서 이메일 빼오기
+    // @GetMapping("/reservation/")
+    // @Operation(summary = "사용자 예약 테이블 조회", description = "예약 테이블 정보입니다.")
+    // public ResponseEntity<List<Reservation>>
+    // getReservations(@RequestHeader("Authorization") String value) {
+
+    // Optional<String> email = jwtService.extractAccessTokenInString(value)
+    // .map(token -> jwtService.extractEmail(token)).orElse(null);
+
+    // if (!email.isPresent()) {
+    // return ResponseEntity.notFound().build();
+    // }
+
+    // List<Reservation> reservations =
+    // reservationRepository.findByEmailList(email.get());
+    // return new ResponseEntity<List<Reservation>>(reservations, HttpStatus.OK);
+    // }
 
     @GetMapping("/reservation/reservation/{number}")
     @Operation(summary = "예약 정보 조회", description = "예약정보입니다")

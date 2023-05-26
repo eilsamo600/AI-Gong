@@ -37,6 +37,14 @@ spring:
           #   # 콤마 기준 오른쪽 부분은 ${변수명}으로 url 가져오고 앞에 / 붙여준거라고 보면 된다.
           - RewritePath=/classroom/(?<segment>.*), /$\{segment}
           #- AuthorizationHeaderFilter 
+        # - id: reservation
+        #   predicates:
+        #     - Path=/reservation/show
+        #   uri: lb://RESERVATION-SERVICE
+        #   filters:
+        #     - RewritePath=/reservation/show, /show
+        #     - AuthorizationHeaderFilter 
+
         - id: classroom-swagger
           predicates:
             - Path=/v3/api-docs/classroom
