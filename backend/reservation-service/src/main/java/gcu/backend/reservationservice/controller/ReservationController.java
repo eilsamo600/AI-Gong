@@ -3,7 +3,9 @@ package gcu.backend.reservationservice.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -85,14 +87,17 @@ public class ReservationController {
     @DeleteMapping("/reservation/{id}")
     @Operation(summary = "특정 예약정보 삭제", description = "특정 예약정보를 삭제합니다.")
     public ResponseEntity<Reservation> deleteReservation(@PathVariable String id) {
-        Reservation reservation = reservationRepository.findByEmail(id);
 
-        if (reservation == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        try {
+            reservationRepository.deleteById(new ObjectId(id));
+            return ResponseEntity.ok().build();
+        } catch (EmptyResultDataAccessException e) {
+            // 예약 ID에 해당하는 예약이 없을 경우 예외 처리
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            // 그 외의 예외 발생 시 예외 처리
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-        reservationRepository.delete(reservation);
-
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/incubators")
