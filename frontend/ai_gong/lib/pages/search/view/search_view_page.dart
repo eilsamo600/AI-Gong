@@ -96,7 +96,7 @@ class SearchViewPage extends StatelessWidget {
                             height: 80,
                           ),
                           Text(
-                            '찾고 싶은 강의실, 교수, 수업을\n검색해 보세요.',
+                            '찾고 싶은 강의실을 검색해 보세요.',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Colors.black45,
