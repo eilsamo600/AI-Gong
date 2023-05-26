@@ -16,6 +16,7 @@ class SearchViewPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(SearchViewController());
+    final TextEditingController searchController = TextEditingController();
     return Scaffold(
       body: Center(
         child: SizedBox(
@@ -59,8 +60,12 @@ class SearchViewPage extends StatelessWidget {
                   ),
                 ),
                 child: CupertinoSearchTextField(
-                  onSubmitted: (value) async {
-                    await controller.getClassRoomList();
+                  controller: searchController,
+                  onChanged: (value) {
+                    controller.searchClassRoomList(value);
+                  },
+                  onSubmitted: (value) {
+                    controller.searchClassRoomList(value);
                   },
                   backgroundColor: Colors.transparent,
                   prefixIcon: const Icon(
@@ -91,7 +96,7 @@ class SearchViewPage extends StatelessWidget {
                             height: 80,
                           ),
                           Text(
-                            '찾고 싶은 강의실, 교수, 수업을\n검색해 보세요.',
+                            '찾고 싶은 강의실을 검색해 보세요.',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Colors.black45,
