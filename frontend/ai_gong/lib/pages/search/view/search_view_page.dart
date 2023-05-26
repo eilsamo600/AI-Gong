@@ -16,6 +16,7 @@ class SearchViewPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(SearchViewController());
+    final TextEditingController searchController = TextEditingController();
     return Scaffold(
       body: Center(
         child: SizedBox(
@@ -59,8 +60,12 @@ class SearchViewPage extends StatelessWidget {
                   ),
                 ),
                 child: CupertinoSearchTextField(
-                  onSubmitted: (value) async {
-                    await controller.getClassRoomList();
+                  controller: searchController,
+                  onChanged: (value) {
+                    controller.searchClassRoomList(value);
+                  },
+                  onSubmitted: (value) {
+                    controller.searchClassRoomList(value);
                   },
                   backgroundColor: Colors.transparent,
                   prefixIcon: const Icon(
