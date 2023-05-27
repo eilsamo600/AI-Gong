@@ -195,7 +195,7 @@ class ApiService extends GetxService {
   Future<ApiResponse> postReservation(Reservation data) async {
     try {
       var response = await dio.post(
-        '/reservation',
+        '/reservation/reservation',
         data: jsonEncode(data.toJson()),
       );
       return ApiResponse(result: true);
@@ -208,12 +208,11 @@ class ApiService extends GetxService {
       String number, String date) async {
     try {
       var response = await dio.get(
-        '/reservation/$number/$date',
+        '/reservation/reservation/$number/$date',
         data: jsonEncode({}),
       );
       AvailableReservationResponse getReservationResponse =
           AvailableReservationResponse.fromJson(response.data);
-
       return ApiResponse<AvailableReservationResponse>(
           result: response.isSuccessful, value: getReservationResponse);
     } on DioError catch (e) {

@@ -25,7 +25,8 @@ void main() async {
           primary: Colors.white,
           secondary: Colors.black,
         ),
-        appBarTheme: const AppBarTheme(iconTheme: IconThemeData(color: Colors.black))),
+        appBarTheme:
+            const AppBarTheme(iconTheme: IconThemeData(color: Colors.black))),
     getPages: CustomRouter.routes,
     themeMode: ThemeMode.light,
   ));

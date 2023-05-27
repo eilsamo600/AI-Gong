@@ -25,7 +25,8 @@ class UserService extends GetxService {
 
   Future<void> loadUserInfo() async {
     var storage = const FlutterSecureStorage();
-    ApiService.instance.dio.options.headers["Authorization"] = "Bearer ${await storage.read(key: "access_token") ?? "0000"}";
+    ApiService.instance.dio.options.headers["Authorization"] =
+        "Bearer ${await storage.read(key: "access_token") ?? "0000"}";
     ApiResponse response = await ApiService.instance.getUserInfo();
     if (response.result) {
       print('정보 가져오기 성공');
@@ -35,12 +36,15 @@ class UserService extends GetxService {
       try {
         Dio dio = Dio(BaseOptions(baseUrl: Common.authbaseUrl, headers: {
           "Flutter-Rest-Api": "true",
-          "authorization-refresh": "Bearer ${await storage.read(key: "refresh_token") ?? "0000"}",
+          "authorization-refresh":
+              "Bearer ${await storage.read(key: "refresh_token") ?? "0000"}",
         }));
         Response response = await dio.get('/info');
         print('refresh Token을 통한 새 Token 발급');
 
-        await setAuth(access: response.headers.value('authorization') ?? '', refresh: response.headers.value('authorization-refresh') ?? '');
+        await setAuth(
+            access: response.headers.value('authorization') ?? '',
+            refresh: response.headers.value('authorization-refresh') ?? '');
         await loadUserInfo();
       } catch (e) {
         print('refresh Token 만료');
@@ -51,7 +55,8 @@ class UserService extends GetxService {
     print(x);
   }
 
-  Future<void> setAuth({required String access, required String refresh}) async {
+  Future<void> setAuth(
+      {required String access, required String refresh}) async {
     var storage = const FlutterSecureStorage();
     ApiService.instance.dio.options.headers["Authorization"] = "Bearer $access";
     await storage.write(key: 'access_token', value: access);
@@ -75,9 +80,13 @@ class UserService extends GetxService {
       logining = true;
       html.WindowBase? popupWin;
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-        popupWin = html.window.open('https://ai-gong.com:8003/oauth2/authorization/google', 'name', 'width=600,height=400');
+        popupWin = html.window.open(
+            'https://ai-gong.com:8003/oauth2/authorization/google',
+            'name',
+            'width=600,height=400');
       });
-      final stream = html.window.onMessage.timeout(const Duration(seconds: 30), onTimeout: (sink) {
+      final stream = html.window.onMessage.timeout(const Duration(seconds: 30),
+          onTimeout: (sink) {
         sink.add(MessageEvent('timeout'));
       });
 
@@ -92,7 +101,9 @@ class UserService extends GetxService {
         }
         var uri = Uri.dataFromString(event.data.toString());
         Map<String, String> params = uri.queryParameters;
-        await setAuth(refresh: params['refresh_token'] ?? "", access: params['access_token'] ?? "");
+        await setAuth(
+            refresh: params['refresh_token'] ?? "",
+            access: params['access_token'] ?? "");
         await UserService.instance.loadUserInfo();
         Common.showSnackBar(messageText: '로그인이 완료되었습니다.');
         if (popupWin != null) {

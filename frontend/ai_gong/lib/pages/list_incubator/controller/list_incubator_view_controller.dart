@@ -343,6 +343,7 @@ class ListIncubatorViewController extends GetxController {
 
     ApiResponse<AvailableReservationResponse> responseresult =
         await ApiService.instance.getAvailableReservation(number, date);
+
     if (responseresult.result) {
       print('1');
       reservations.value = responseresult.value!.reservations!;

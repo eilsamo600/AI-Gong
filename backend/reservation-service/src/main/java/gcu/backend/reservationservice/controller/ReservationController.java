@@ -51,10 +51,10 @@ public class ReservationController {
     public ResponseEntity<List<Reservation>> getAvailableReservation(@PathVariable String number,
             @PathVariable String date) {
         List<Reservation> reservation = reservationRepository.findByNumberAndDate(number, date);
-        if (reservation == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        System.out.print("reservation" + reservation);
+        // if (reservation == null) {
+        // return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        // }
+        System.out.print("reservationfind" + reservation);
         return new ResponseEntity<List<Reservation>>(reservation, HttpStatus.OK);
     }
 
