@@ -25,8 +25,4 @@ public class Reservation {
     private String date;
     private int people;
     private int state;
-
-    public void setState(int state) {
-        this.state = state;
-    }
 }

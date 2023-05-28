@@ -43,7 +43,7 @@ public class ReservationController {
     @PostMapping("/reservation")
     @Operation(summary = "예약 내역 보내기", description = "예약 내역 보내요~.")
     public ResponseEntity<Reservation> postReservation(@RequestHeader("Authorization") String value,
-            @Valid @RequestBody Reservation reservation) {
+            @RequestBody Reservation reservation) {
         Optional<String> email = jwtService.extractAccessTokenInString(value)
                 .map(token -> jwtService.extractEmail(token)).orElse(Optional.empty());
         if (!email.isPresent()) {
