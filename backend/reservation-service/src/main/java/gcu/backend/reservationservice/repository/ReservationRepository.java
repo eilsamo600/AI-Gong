@@ -4,6 +4,7 @@ import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import java.util.List;
+import java.util.Optional;
 
 import gcu.backend.reservationservice.model.Reservation;
 
@@ -18,5 +19,5 @@ public interface ReservationRepository extends MongoRepository<Reservation, Obje
     @Query("{'email':?0}")
     Reservation findByEmail(String email);
 
-    Reservation findById(String objectId);
+    Optional<Reservation> findById(ObjectId _id);
 }
