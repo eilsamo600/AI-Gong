@@ -1,3 +1,4 @@
+import 'package:ai_gong/common/common.dart';
 import 'package:ai_gong/common/widget/panel_component.dart';
 import 'package:ai_gong/pages/list_incubator/controller/list_incubator_view_controller.dart';
 import 'package:ai_gong/restAPI/models/Incubator.dart';
@@ -29,7 +30,6 @@ class IncubatorComponent extends StatelessWidget {
         controller.datesInit();
         controller.statesInit(model.roomNum);
         controller.numInit();
-        controller.roomnumInit();
         showModalBottomSheet(
             isScrollControlled: true,
             context: context,
@@ -326,13 +326,24 @@ class IncubatorComponent extends StatelessWidget {
                                       height: 55,
                                       child: OutlinedButton(
                                         onPressed: () async {
-                                          // bool islogin =
-                                          //     await UserService.instance.isLogin();
-                                          // if (!islogin) {
-                                          //   Common.loginPanel();
-                                          //   return;
-                                          // }
-                                          controller.roomnumchange(model.roomNum!.toInt());
+                                          if (controller.states.value.contains(1) == false) {
+                                            Common.showAlertDialog(
+                                                context: context,
+                                                children: [
+                                                  Text('예약할 시간을 선택해주세요.'),
+                                                ],
+                                                title: '알림');
+                                            return;
+                                          }
+                                          if (controller.num.value == 0) {
+                                            Common.showAlertDialog(
+                                                context: context,
+                                                children: [
+                                                  Text('인원을 선택해주세요.'),
+                                                ],
+                                                title: '알림');
+                                            return;
+                                          }
                                           controller.postReservation(context, model.roomNum);
                                         },
                                         child: Text(

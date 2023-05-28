@@ -30,7 +30,7 @@ class ListIncubatorViewController extends GetxController {
 
     var data = Reservation.fromJson({
       'email': 'thwjd082@gachon.ac.kr',
-      'number': roomnum.toString(),
+      'number': roomNum.toString(),
       'time': (timeval).cast<int>(),
       'date': (today.year.toString() + today.month.toString().padLeft(2, '0') + day.padLeft(2, '0')),
       'people': num.value,
@@ -247,21 +247,10 @@ class ListIncubatorViewController extends GetxController {
   }
 
   Rx<int> num = 0.obs;
-  Rx<int> roomnum = 0.obs;
 
   void numInit() {
     num.value = 0;
     num.refresh();
-  }
-
-  void roomnumInit() {
-    roomnum.value = 0;
-    roomnum.refresh();
-  }
-
-  void roomnumchange(int n) {
-    roomnum.value += n;
-    roomnum.refresh();
   }
 
   void numchange(int n) {
