@@ -29,7 +29,6 @@ class ListIncubatorViewController extends GetxController {
     String day = DateFormat('d').format(DateTime.utc(today.year, today.month, today.day - (today.weekday - 1) + val));
 
     var data = Reservation.fromJson({
-      'email': 'thwjd082@gachon.ac.kr',
       'number': roomNum.toString(),
       'time': (timeval).cast<int>(),
       'date': (today.year.toString() + today.month.toString().padLeft(2, '0') + day.padLeft(2, '0')),
