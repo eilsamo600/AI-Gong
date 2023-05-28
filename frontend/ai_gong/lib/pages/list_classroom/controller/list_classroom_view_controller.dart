@@ -28,7 +28,7 @@ class ListClassRoomViewController extends GetxController {
     classRoomList.refresh();
   }
 
-  Future<void> getClassRoom(int id) async {
+  Future<void> getClassRoom(String id) async {
     lectures.value = -1;
     ApiResponse<ClassRoomResponse> response = await ApiService.instance.getClassRoom(id);
     await Future.delayed(const Duration(milliseconds: 250));
@@ -45,6 +45,15 @@ class ListClassRoomViewController extends GetxController {
     } else {
       lectures.value = 0;
     }
+  }
+
+  Future<void> postLikeClassRoom(String id) async {
+    ApiResponse<ClassRoomResponse> response = await ApiService.instance.postLikeAndClassroom(id);
+    await Future.delayed(const Duration(milliseconds: 250));
+    if (response.result) {
+      classRoom.value.isLike = response.value!.classroom!.isLike;
+      classRoom.refresh();
+    } else {}
   }
 
   void selectFilter(int index) {
@@ -68,19 +77,6 @@ class ListClassRoomViewController extends GetxController {
     }
   }
 
-  void checkbookmark() {
-    if (bookmark.value == 1) {
-      bookmark.value = 0;
-    } else {
-      bookmark.value = 1;
-    }
-    bookmark.refresh();
-  }
-
-  void bookmarkInit() {
-    bookmark.value = 0;
-  }
-
   Rx<ScrollController> scrollcontroller = ScrollController().obs;
   Rx<DateTime> now = DateTime.now().obs;
 
@@ -89,5 +85,4 @@ class ListClassRoomViewController extends GetxController {
   RxList<ClassRoom> classRoomList = RxList<ClassRoom>();
   RxList<bool> onTapList = List.filled(4, false).obs;
   RxList<String> filterList = ['새로고침', '즐겨찾기', '바로', '곧 끝나는'].obs;
-  RxInt bookmark = 0.obs;
 }

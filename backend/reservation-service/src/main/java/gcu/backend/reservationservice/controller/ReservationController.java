@@ -56,7 +56,7 @@ public class ReservationController {
         return new ResponseEntity<List<Reservation>>(reservations, HttpStatus.OK);
     }
 
-    @GetMapping("/reservation/{number}/{date}")
+    // @GetMapping("/reservation/{number}/{date}")
     // 토큰에서 이메일 빼오기
     // @GetMapping("/reservation/")
     // @Operation(summary = "사용자 예약 테이블 조회", description = "예약 테이블 정보입니다.")

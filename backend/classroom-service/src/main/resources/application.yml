@@ -10,7 +10,7 @@ server:
 spring:
   data:
     mongodb:
-      host: localhost
+      host: 43.201.81.76
       port: 27017
       database: ai-gong
   application:
