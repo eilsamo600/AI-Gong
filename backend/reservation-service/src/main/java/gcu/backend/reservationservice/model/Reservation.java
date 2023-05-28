@@ -26,4 +26,7 @@ public class Reservation {
     private int people;
     private int state;
 
+    public void setState(int state) {
+        this.state = state;
+    }
 }

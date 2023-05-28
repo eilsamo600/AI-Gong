@@ -83,6 +83,26 @@ public class ReservationController {
         return new ResponseEntity<List<Reservation>>(reservation, HttpStatus.OK);
     }
 
+    // @PutMapping("/reservation/state/{id}")
+    // @Operation(summary = "예약 상태 업데이트", description = "예약 배정완료, 배정하기, 취소완료 상태 업데이트")
+    // public ResponseEntity<String> updateReservationState(@PathVariable("id") String objectId,
+    //         @RequestParam("state") int newState) {
+    //     // objectId와 일치하는 데이터를 데이터베이스에서 찾습니다.
+    //     Reservation reservation = reservationRepository.findById(objectId);
+
+    //     if (reservation == null) {
+    //         // objectId에 해당하는 데이터가 없을 경우 에러 응답을 반환합니다.
+    //         return ResponseEntity.notFound().build();
+    //     }
+
+    //     // 데이터의 state를 변경합니다.
+    //     reservation.setState(newState);
+    //     reservationRepository.save(reservation); // 변경된 데이터를 저장하거나 업데이트하는 로직을 구현해야 합니다.
+
+    //     // 변경된 데이터에 대한 성공 응답을 반환합니다.
+    //     return ResponseEntity.ok("Reservation state updated successfully.");
+    // }
+
     @DeleteMapping("/reservation/{id}")
     @Operation(summary = "특정 예약정보 삭제", description = "특정 예약정보를 삭제합니다.")
     public ResponseEntity<Reservation> deleteReservation(@PathVariable String id) {

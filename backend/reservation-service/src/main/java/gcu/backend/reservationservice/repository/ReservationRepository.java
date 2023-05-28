@@ -18,4 +18,5 @@ public interface ReservationRepository extends MongoRepository<Reservation, Obje
     @Query("{'email':?0}")
     Reservation findByEmail(String email);
 
+    Reservation findById(String objectId);
 }
