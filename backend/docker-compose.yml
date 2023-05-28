@@ -1,0 +1,13 @@
+version: "3"
+services:
+  eureka:
+    container_name: eureka
+    build:
+      context: ./eureka_server
+      dockerfile: Dockerfile
+  # api:
+  #   container_name: api
+  #   build:
+  #     context: ./api-gateway
+  #     dockerfile: Dockerfile
+  
