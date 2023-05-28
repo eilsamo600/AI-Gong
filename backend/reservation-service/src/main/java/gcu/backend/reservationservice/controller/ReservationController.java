@@ -80,7 +80,6 @@ public class ReservationController {
     public ResponseEntity<List<Reservation>> getAvailableReservation(@PathVariable String number,
             @PathVariable String date) {
         List<Reservation> reservation = reservationRepository.findByNumberAndDate(number, date);
-        System.out.print("reservationfind" + reservation);
         return new ResponseEntity<List<Reservation>>(reservation, HttpStatus.OK);
     }
 

@@ -14,6 +14,7 @@ class ListIncubatorViewController extends GetxController {
 
   RxList<int> dates = List.filled(7, 0).obs;
   RxList<int> states = List.filled(17, 0).obs;
+  RxBool isAvailable = false.obs;
   var today = DateTime.now().toUtc();
 
   void postReservation(BuildContext context, int? roomNum) async {
@@ -31,7 +32,7 @@ class ListIncubatorViewController extends GetxController {
       'email': 'thwjd082@gachon.ac.kr',
       'number': roomnum.toString(),
       'time': (timeval).cast<int>(),
-      'date': (today.year.toString() + today.month.toString() + day),
+      'date': (today.year.toString() + today.month.toString().padLeft(2, '0') + day.padLeft(2, '0')),
       'people': num.value,
       'state': 0
     });
@@ -117,13 +118,14 @@ class ListIncubatorViewController extends GetxController {
       today = today.add(const Duration(days: 1)); // Add 2 days to skip the weekend
       todayIndex = today.weekday - 1;
     }
-    String day = DateFormat('d').format(DateTime.utc(today.year, today.month, today.day - (today.weekday - 1) + val));
-    String checkday = today.year.toString() + today.month.toString() + day;
-    String checknow = now.value.year.toString() + now.value.month.toString() + now.value.day.toString();
-    int parsedCheckday = int.parse(checknow);
+    DateTime selectday = DateTime.utc(today.year, today.month, today.day - (today.weekday - 1) + val);
+    String checkday = selectday.year.toString() + selectday.month.toString().padLeft(2, '0') + selectday.day.toString().padLeft(2, '0');
+    String checknow = now.value.year.toString() + now.value.month.toString().padLeft(2, '0') + now.value.day.toString().padLeft(2, '0');
+    int parsedCheckday = int.parse(checkday);
     int parsednow = int.parse(checknow);
 
-    print("checkday:$checkday 오늘 날짜: $day");
+    print("checkday:$checkday");
+    print("checknow:$checknow ");
 
     if (parsedCheckday > parsednow) {
       states.value = List.filled(17, 0);
@@ -155,40 +157,44 @@ class ListIncubatorViewController extends GetxController {
     states.refresh();
   }
 
+  void changeStates(int index, int value) {
+    if (states.value[index] != 3) {
+      states.value[index] = value;
+    }
+  }
+
   void selected(int index) {
     int start = states.value.indexOf(1);
     int end = 0;
-    // 0이 안눌림, 1이 눌림, 2는 안됨
+    // 0이 안눌림, 1이 눌림, 2는 안됨, 3은 예약됨
     if (states.value[index] == 0) {
       if (start == -1) {
         // 아무것도 안 눌림
-        states.value[index] = 1;
+        changeStates(index, 1);
 
         for (int i = index + 4; i < states.length; i++) {
           if (i < states.length) {
-            states.value[i] = 2;
+            changeStates(i, 2);
           }
         }
         for (int i = index - 1; i >= 0; i--) {
-          states.value[i] = 2;
+          changeStates(i, 2);
         }
       } else {
         // 무언가 눌림
         for (int i = start; i < index + 1; i++) {
-          states.value[i] = 1;
+          changeStates(i, 1);
         }
       }
     } else if (states.value[index] == 1) {
       for (int i = index; i < (start + 4 > 15 ? 16 : start + 4); i++) {
         if (states.value[i] != 2) {
-          states.value[i] = 0;
+          changeStates(i, 0);
         }
       }
       if (!states.value.contains(1)) {
         for (int i = 0; i < states.length; i++) {
-          if (states.value[i] != 2) {
-            states.value[i] = 0;
-          }
+          changeStates(i, 0);
         }
       }
     }
@@ -292,35 +298,22 @@ class ListIncubatorViewController extends GetxController {
   }
 
   Future<void> getAvailableReservation(String number, String date) async {
-    List<int> timelist = [];
-
+    isAvailable.value = false;
     ApiResponse<AvailableReservationResponse> responseresult = await ApiService.instance.getAvailableReservation(number, date);
-
-    print(responseresult.value.toString());
-    if (responseresult.result != null) {
-      print('1');
+    if (responseresult.result) {
       reservations.value = responseresult.value!.reservations!;
-      print('2');
       for (var i in reservations) {
-        print("true");
         if (i.time != null) {
           print(i.time);
           for (var time in i.time!) {
-            for (var time in timelist) {
-              print(time);
-              states.value[time] = 2;
-            }
+            print(time);
+            states.value[time] = 3;
           }
         }
       }
-      print("finish");
-    } else if (responseresult.value == null) {
+      isAvailable.value = true;
+    } else {
       states.value = List.filled(16, 0);
-    }
-    for (int i = 0; i < timelist.length; i++) {
-      int val = timelist[i];
-      print(val);
-      states.value[val] = 2;
     }
     states.refresh();
   }
