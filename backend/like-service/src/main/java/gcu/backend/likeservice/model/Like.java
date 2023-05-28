@@ -20,8 +20,6 @@ public class Like {
     private ObjectId _id;
 
     private String email;
-    private String number;
-    private List<Integer> time;
-    private String date;
-    private int people;
+    private String 호;
+
 }

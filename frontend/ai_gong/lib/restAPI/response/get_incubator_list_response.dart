@@ -9,7 +9,9 @@ class IncubatorListResponse {
     if (jsonList.isNotEmpty) {
       incubators = <Incubator>[];
       for (var v in jsonList) {
+        print(v);
         incubators!.add(Incubator.fromJson(v));
+        print(incubators);
       }
     }
   }
