@@ -1,6 +1,6 @@
 import 'package:ai_gong/Service/user_service.dart';
 import 'package:ai_gong/common/common.dart';
-import 'package:ai_gong/pages/list_incubator/view/list_incubator_view_page.dart';
+import 'package:ai_gong/pages/main/controller/main_view_controller.dart';
 import 'package:ai_gong/pages/my_info/controller/my_info_view_controller.dart';
 import 'package:ai_gong/pages/my_info/view/component/myInfo_component.dart';
 import 'package:flutter/material.dart';
@@ -131,16 +131,8 @@ class MyInfoViewPage extends StatelessWidget {
                       minimumSize: MaterialStateProperty.all(const Size(90, 40)),
                     ),
                     onPressed: () {
-                      Get.toNamed(ListIncubatorViewPage.url);
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) =>
-                      //             const ListIncubatorViewPage()));
+                      MainViewController.instance.selectTab(1);
                     },
-                    // {
-                    //   getPages:CustomRouter.routes;
-                    // },
                     child: const Text(
                       '예약하기',
                       style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w400),

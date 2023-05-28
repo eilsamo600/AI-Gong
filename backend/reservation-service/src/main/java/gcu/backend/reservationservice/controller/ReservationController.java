@@ -64,7 +64,7 @@ public class ReservationController {
     // getReservations(@RequestHeader("Authorization") String value) {
 
     // Optional<String> email = jwtService.extractAccessTokenInString(value)
-    // .map(token -> jwtService.extractEmail(token)).orElse(null);
+    // .map(token -> jwtService.extractEmail(token)).orElse(Optional.empty());
 
     // if (!email.isPresent()) {
     // return ResponseEntity.notFound().build();
@@ -75,14 +75,11 @@ public class ReservationController {
     // return new ResponseEntity<List<Reservation>>(reservations, HttpStatus.OK);
     // }
 
-    @GetMapping("/reservation/{number}")
+    @GetMapping("/reservation/{number}/{date}")
     @Operation(summary = "예약 정보 조회", description = "예약정보입니다")
     public ResponseEntity<List<Reservation>> getAvailableReservation(@PathVariable String number,
             @PathVariable String date) {
         List<Reservation> reservation = reservationRepository.findByNumberAndDate(number, date);
-        // if (reservation == null) {
-        // return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        // }
         System.out.print("reservationfind" + reservation);
         return new ResponseEntity<List<Reservation>>(reservation, HttpStatus.OK);
     }

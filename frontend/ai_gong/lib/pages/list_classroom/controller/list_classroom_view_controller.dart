@@ -28,6 +28,14 @@ class ListClassRoomViewController extends GetxController {
     classRoomList.refresh();
   }
 
+  Future<void> getClassRoomListByLike() async {
+    ApiResponse<ClassRoomListResponse> response = await ApiService.instance.getClassRoomListByLike();
+    if (response.result) {
+      classRoomList.value = response.value!.classrooms!;
+    }
+    classRoomList.refresh();
+  }
+
   Future<void> getClassRoom(String id) async {
     lectures.value = -1;
     ApiResponse<ClassRoomResponse> response = await ApiService.instance.getClassRoom(id);
@@ -57,7 +65,19 @@ class ListClassRoomViewController extends GetxController {
   }
 
   void selectFilter(int index) {
-    index = index;
+    scrollcontroller.value.animateTo(0.0, duration: const Duration(milliseconds: 300), curve: Curves.ease);
+    if (index == 0) {
+      restFilter();
+      getClassRoomList();
+      return;
+    } else if (index == 1) {
+      if (onTapList[index]) {
+        getClassRoomList();
+      } else {
+        getClassRoomListByLike();
+      }
+    }
+
     onTapList.value[index] = !onTapList.value[index];
     onTapList.refresh();
   }

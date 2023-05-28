@@ -14,13 +14,6 @@ class FilterComponent extends StatelessWidget {
       final onTap = controller.onTapList[index];
       return GestureDetector(
         onTap: () {
-          controller.scrollcontroller.value.animateTo(0.0, duration: const Duration(milliseconds: 300), curve: Curves.ease);
-          if (index == 0) {
-            controller.restFilter();
-            Future.delayed(const Duration(milliseconds: 350), () => controller.getClassRoomList());
-            return;
-          }
-
           controller.selectFilter(index);
         },
         child: Container(

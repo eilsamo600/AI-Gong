@@ -1,7 +1,10 @@
 package gcu.backend.likeservice.controller;
 
 import java.util.List;
+
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import gcu.backend.likeservice.model.Like;
 import gcu.backend.likeservice.repository.LikeRepository;
 import io.swagger.v3.oas.annotations.Operation;
-// import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.web.bind.annotation.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -19,14 +21,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 
 @RestController
-@Tag(name = "Like", description = "예약 API")
+@Tag(name = "Like", description = "즐겨찾기 API")
 public class LikeController {
 
     @Autowired
     private LikeRepository likeRepository;
 
     @PostMapping("/like")
-    @Operation(summary = "예약 내역 보내기", description = "예약 내역 보내요~.")
+    @Operation(summary = "즐겨찾기", description = "즐겨찾기 테스트.")
     public ResponseEntity<Like> postLike(@Valid @RequestBody Like like) {
         System.out.print(like.toString());
         Like savedLike = likeRepository.save(like);
@@ -34,36 +36,20 @@ public class LikeController {
 
     }
 
-    @GetMapping("/like/{email}")
-    @Operation(summary = "사용자 예약 테이블 조회", description = "예약 테이블 정보입니다.")
-    public ResponseEntity<List<Like>> getLikes(@PathVariable String email) {
-        List<Like> likes = likeRepository.findByEmailList(email);
-        return new ResponseEntity<List<Like>>(likes, HttpStatus.OK);
+    @DeleteMapping("/like/{number}")
+    @Operation(summary = "특정 즐겨찾기 정보 삭제", description = "즐겨찾기 삭제합니다.")
+    public ResponseEntity<Like> deleteReservation(@PathVariable String number, String id) {
+
+        try {
+            likeRepository.deleteById(new ObjectId(id));
+            return ResponseEntity.ok().build();
+        } catch (EmptyResultDataAccessException e) {
+            // 예약 ID에 해당하는 예약이 없을 경우 예외 처리
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            // 그 외의 예외 발생 시 예외 처리
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
-
-    // @GetMapping("/reservation/reservation/{number}")
-    // @Operation(summary = "예약 정보 조회", description = "예약정보입니다")
-    // public ResponseEntity<List<Like>> getavailable(@PathVariable String number,
-    // String date) {
-    // List<Like> reservation = reservationRepository.findByEmailAndDate(number,
-    // date);
-    // if (reservation == null) {
-    // return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    // }
-    // return new ResponseEntity<List<Like>>(reservation, HttpStatus.OK);
-    // }
-
-    // @DeleteMapping("/reservation/{id}")
-    // @Operation(summary = "특정 예약정보 삭제", description = "특정 예약정보를 삭제합니다.")
-    // public ResponseEntity<Like> deleteReservation(@PathVariable String id) {
-    // Like reservation = reservationRepository.findByEmail(id);
-
-    // if (reservation == null) {
-    // return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    // }
-    // reservationRepository.delete(reservation);
-
-    // return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    // }
 
 }

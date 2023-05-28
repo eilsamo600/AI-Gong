@@ -1,7 +1,7 @@
 class Reservation {
   String? email;
   String? number;
-  List<int>? time;
+  List<dynamic>? time;
   String? date;
   int? people;
   int? state;

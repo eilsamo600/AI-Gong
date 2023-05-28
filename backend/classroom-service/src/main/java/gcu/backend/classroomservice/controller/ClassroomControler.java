@@ -20,9 +20,12 @@ import gcu.backend.classroomservice.repository.ClassRoomRepository;
 import gcu.backend.classroomservice.repository.LikeRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.val;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @Tag(name = "Classroom", description = "강의실 API")
+@Slf4j
 public class ClassroomControler {
     @Autowired
     private ClassRoomRepository classRoomRepository;
@@ -49,6 +52,26 @@ public class ClassroomControler {
         return new ResponseEntity<List<ClassRoom>>(classRoomList, HttpStatus.OK);
     }
 
+    @GetMapping("/classrooms/like")
+    @Operation(summary = "즐겨찾기 강의실 목록 조회", description = "즐겨찾기 강의실 목록을 조회합니다.")
+    public ResponseEntity<List<ClassRoom>> getClassRoomListByLike(@RequestHeader("Authorization") String value) {
+        Optional<String> email = jwtService.extractAccessTokenInString(value)
+                .map(token -> jwtService.extractEmail(token)).orElse(Optional.empty());
+        if (!email.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        List<Like> likeList = likeRepository.findByEmail(email.get());
+        List<String> 호List = likeList.stream().map(like -> like.get호()).toList();
+
+        List<ClassRoom> classRoomList = classRoomRepository.findBy호In(호List);
+
+        for (ClassRoom classRoom : classRoomList) { // 강의목록 삭제해서 보냄
+            classRoom.set강의목록(null);
+        }
+        return new ResponseEntity<List<ClassRoom>>(classRoomList, HttpStatus.OK);
+    }
+
     @GetMapping("/classroom/{id}")
     @Operation(summary = "특정 강의실 조회", description = "특정 강의실을 조회합니다.")
     public ResponseEntity<ClassRoom> getClassRoom(@RequestHeader("Authorization") String value,
@@ -58,8 +81,8 @@ public class ClassroomControler {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         Optional<String> email = jwtService.extractAccessTokenInString(value)
-                .map(token -> jwtService.extractEmail(token)).orElse(null);
-        if (email != null) {
+                .map(token -> jwtService.extractEmail(token)).orElse(Optional.empty());
+        if (email.isPresent()) {
             Like like = likeRepository.findBy호AndEmail(id, email.get());
             if (like != null) {
                 classRoom.setIsLike(true);
@@ -77,8 +100,8 @@ public class ClassroomControler {
             @PathVariable String id) {
 
         Optional<String> email = jwtService.extractAccessTokenInString(value)
-                .map(token -> jwtService.extractEmail(token)).orElse(null);
-        if (email == null) {
+                .map(token -> jwtService.extractEmail(token)).orElse(Optional.empty());
+        if (!email.isPresent()) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         ClassRoom classRoom = classRoomRepository.findBy호(id);
