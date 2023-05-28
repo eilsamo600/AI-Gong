@@ -42,7 +42,14 @@ public class ReservationController {
 
     @PostMapping("/reservation")
     @Operation(summary = "예약 내역 보내기", description = "예약 내역 보내요~.")
-    public ResponseEntity<Reservation> postReservation(@Valid @RequestBody Reservation reservation) {
+    public ResponseEntity<Reservation> postReservation(@RequestHeader("Authorization") String value,
+            @Valid @RequestBody Reservation reservation) {
+        Optional<String> email = jwtService.extractAccessTokenInString(value)
+                .map(token -> jwtService.extractEmail(token)).orElse(Optional.empty());
+        if (!email.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        reservation.setEmail(email.get());
         System.out.print(reservation.toString());
         Reservation savedReservation = reservationRepository.save(reservation);
         return ResponseEntity.ok(savedReservation);
@@ -80,7 +87,6 @@ public class ReservationController {
     public ResponseEntity<List<Reservation>> getAvailableReservation(@PathVariable String number,
             @PathVariable String date) {
         List<Reservation> reservation = reservationRepository.findByNumberAndDate(number, date);
-        System.out.print("reservationfind" + reservation);
         return new ResponseEntity<List<Reservation>>(reservation, HttpStatus.OK);
     }
 

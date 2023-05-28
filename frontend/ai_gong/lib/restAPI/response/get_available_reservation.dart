@@ -16,6 +16,7 @@ class AvailableReservationResponse {
       }
     } else {
       print("jsonlist 빔");
+      reservations = [];
     }
   }
 }
