@@ -2,6 +2,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "LikeServiceApplication",
+            "request": "launch",
+            "mainClass": "gcu.backend.likeservice.LikeServiceApplication",
+            "projectName": "like-service"
+        },
+        {
+            "type": "java",
+            "name": "ReservationServiceApplication",
+            "request": "launch",
+            "mainClass": "gcu.backend.reservationservice.ReservationServiceApplication",
+            "projectName": "reservation-service"
+        },
+        {
+            "type": "java",
             "name": "Spring Boot-EurekaServerApplication<eureka_server>",
             "request": "launch",
             "cwd": "${workspaceFolder}",

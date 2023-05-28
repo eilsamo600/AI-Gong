@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:ai_gong/common/common.dart';
 import 'package:ai_gong/common/dio_extension.dart';
@@ -48,6 +49,26 @@ class ApiService extends GetxService {
     }
   }
 
+  Future<ApiResponse<ClassRoomListResponse>> getClassRoomListByLike() async {
+    try {
+      var response = await dio.get(
+        '/classroom/classrooms/like',
+        data: jsonEncode({}),
+      );
+      ClassRoomListResponse getClassRoomListResponse = ClassRoomListResponse.fromJson(response.data);
+      return ApiResponse<ClassRoomListResponse>(result: response.isSuccessful, value: getClassRoomListResponse);
+    } on DioError catch (e) {
+      Common.logger.d(e);
+      try {
+        return ApiResponse<ClassRoomListResponse>(result: false, errorMsg: e.response?.data['message'] ?? "오류가 발생했습니다.");
+      } catch (e) {
+        return ApiResponse<ClassRoomListResponse>(result: false, errorMsg: "오류가 발생했습니다.");
+      }
+    } catch (e) {
+      return ApiResponse<ClassRoomListResponse>(result: false, errorMsg: "오류가 발생했습니다.");
+    }
+  }
+
   Future<ApiResponse<UserResponse>> getUserInfo() async {
     try {
       var storage = const FlutterSecureStorage();
@@ -71,10 +92,30 @@ class ApiService extends GetxService {
     }
   }
 
-  Future<ApiResponse<ClassRoomResponse>> getClassRoom(int id) async {
+  Future<ApiResponse<ClassRoomResponse>> getClassRoom(String id) async {
     try {
       var response = await dio.get(
         '/classroom/classroom/$id',
+        data: jsonEncode({}),
+      );
+      ClassRoomResponse getClassRoomResponse = ClassRoomResponse.fromJson(response.data);
+      return ApiResponse<ClassRoomResponse>(result: response.isSuccessful, value: getClassRoomResponse);
+    } on DioError catch (e) {
+      Common.logger.d(e);
+      try {
+        return ApiResponse<ClassRoomResponse>(result: false, errorMsg: e.response?.data['message'] ?? "오류가 발생했습니다.");
+      } catch (e) {
+        return ApiResponse<ClassRoomResponse>(result: false, errorMsg: "오류가 발생했습니다.");
+      }
+    } catch (e) {
+      return ApiResponse<ClassRoomResponse>(result: false, errorMsg: "오류가 발생했습니다.");
+    }
+  }
+
+  Future<ApiResponse<ClassRoomResponse>> postLikeAndClassroom(String roomid) async {
+    try {
+      var response = await dio.post(
+        '/classroom/classroom/$roomid/like',
         data: jsonEncode({}),
       );
       ClassRoomResponse getClassRoomResponse = ClassRoomResponse.fromJson(response.data);
@@ -98,6 +139,7 @@ class ApiService extends GetxService {
         data: jsonEncode({}),
       );
       IncubatorListResponse getIncubatorListResponse = IncubatorListResponse.fromJson(response.data);
+      print(getIncubatorListResponse.toString());
       return ApiResponse<IncubatorListResponse>(result: response.isSuccessful, value: getIncubatorListResponse);
     } on DioError catch (e) {
       Common.logger.d(e);
@@ -118,6 +160,7 @@ class ApiService extends GetxService {
         data: jsonEncode({}),
       );
       ReservationListResponse getReservationListResponse = ReservationListResponse.fromJson(response.data);
+
       return ApiResponse<ReservationListResponse>(result: response.isSuccessful, value: getReservationListResponse);
     } on DioError catch (e) {
       Common.logger.d(e);
@@ -154,7 +197,7 @@ class ApiService extends GetxService {
   Future<ApiResponse> postReservation(Reservation data) async {
     try {
       var response = await dio.post(
-        '/reservation',
+        '/reservation/reservation',
         data: jsonEncode(data.toJson()),
       );
       return ApiResponse(result: true);
@@ -163,16 +206,17 @@ class ApiService extends GetxService {
     }
   }
 
-  Future<ApiResponse<AvailableReservationResponse>> getAvailableReservation(String date, String number) async {
+  Future<ApiResponse<AvailableReservationResponse>> getAvailableReservation(String number, String date) async {
     try {
       var response = await dio.get(
-        '/reservation/reservation/$number',
+        '/reservation/reservation/$number/$date',
         data: jsonEncode({}),
       );
       AvailableReservationResponse getReservationResponse = AvailableReservationResponse.fromJson(response.data);
+      Common.logger.d(e);
       return ApiResponse<AvailableReservationResponse>(result: response.isSuccessful, value: getReservationResponse);
     } on DioError catch (e) {
-      Common.logger.d(e);
+      // Common.logger.d(e);
       try {
         return ApiResponse<AvailableReservationResponse>(result: false, errorMsg: e.response?.data['message'] ?? "오류가 발생했습니다.");
       } catch (e) {

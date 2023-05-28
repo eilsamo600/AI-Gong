@@ -28,7 +28,15 @@ class ListClassRoomViewController extends GetxController {
     classRoomList.refresh();
   }
 
-  Future<void> getClassRoom(int id) async {
+  Future<void> getClassRoomListByLike() async {
+    ApiResponse<ClassRoomListResponse> response = await ApiService.instance.getClassRoomListByLike();
+    if (response.result) {
+      classRoomList.value = response.value!.classrooms!;
+    }
+    classRoomList.refresh();
+  }
+
+  Future<void> getClassRoom(String id) async {
     lectures.value = -1;
     ApiResponse<ClassRoomResponse> response = await ApiService.instance.getClassRoom(id);
     await Future.delayed(const Duration(milliseconds: 250));
@@ -36,17 +44,40 @@ class ListClassRoomViewController extends GetxController {
       classRoom.value = response.value!.classroom!;
       classRoom.refresh();
       response.value!.classroom!.lectures!.forEach((key, value) {
-        classRoom.value.lectures![key] = value;
-        classRoom.refresh();
-        lectures.value++;
+        print(key);
+        print(value);
+        for (var element in value) {
+          lectures.value++;
+        }
       });
     } else {
       lectures.value = 0;
     }
   }
 
+  Future<void> postLikeClassRoom(String id) async {
+    ApiResponse<ClassRoomResponse> response = await ApiService.instance.postLikeAndClassroom(id);
+    await Future.delayed(const Duration(milliseconds: 250));
+    if (response.result) {
+      classRoom.value.isLike = response.value!.classroom!.isLike;
+      classRoom.refresh();
+    } else {}
+  }
+
   void selectFilter(int index) {
-    index = index;
+    scrollcontroller.value.animateTo(0.0, duration: const Duration(milliseconds: 300), curve: Curves.ease);
+    if (index == 0) {
+      restFilter();
+      getClassRoomList();
+      return;
+    } else if (index == 1) {
+      if (onTapList[index]) {
+        getClassRoomList();
+      } else {
+        getClassRoomListByLike();
+      }
+    }
+
     onTapList.value[index] = !onTapList.value[index];
     onTapList.refresh();
   }
@@ -66,26 +97,12 @@ class ListClassRoomViewController extends GetxController {
     }
   }
 
-  void checkbookmark() {
-    if (bookmark.value == 1) {
-      bookmark.value = 0;
-    } else {
-      bookmark.value = 1;
-    }
-    bookmark.refresh();
-  }
-
-  void bookmarkInit() {
-    bookmark.value = 0;
-  }
-
   Rx<ScrollController> scrollcontroller = ScrollController().obs;
   Rx<DateTime> now = DateTime.now().obs;
 
   Rx<ClassRoom> classRoom = ClassRoom().obs;
-  Rx<int> lectures = (-1).obs;
+  RxInt lectures = (-1).obs;
   RxList<ClassRoom> classRoomList = RxList<ClassRoom>();
   RxList<bool> onTapList = List.filled(4, false).obs;
   RxList<String> filterList = ['새로고침', '즐겨찾기', '바로', '곧 끝나는'].obs;
-  Rx<int> bookmark = 0.obs;
 }
