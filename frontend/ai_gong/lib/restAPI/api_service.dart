@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:ai_gong/common/common.dart';
 import 'package:ai_gong/common/dio_extension.dart';
@@ -120,7 +121,7 @@ class ApiService extends GetxService {
       );
       IncubatorListResponse getIncubatorListResponse =
           IncubatorListResponse.fromJson(response.data);
-
+      print(getIncubatorListResponse.toString());
       return ApiResponse<IncubatorListResponse>(
           result: response.isSuccessful, value: getIncubatorListResponse);
     } on DioError catch (e) {
@@ -148,6 +149,7 @@ class ApiService extends GetxService {
       );
       ReservationListResponse getReservationListResponse =
           ReservationListResponse.fromJson(response.data);
+
       return ApiResponse<ReservationListResponse>(
           result: response.isSuccessful, value: getReservationListResponse);
     } on DioError catch (e) {
@@ -213,10 +215,11 @@ class ApiService extends GetxService {
       );
       AvailableReservationResponse getReservationResponse =
           AvailableReservationResponse.fromJson(response.data);
+      Common.logger.d(e);
       return ApiResponse<AvailableReservationResponse>(
           result: response.isSuccessful, value: getReservationResponse);
     } on DioError catch (e) {
-      Common.logger.d(e);
+      // Common.logger.d(e);
       try {
         return ApiResponse<AvailableReservationResponse>(
             result: false,

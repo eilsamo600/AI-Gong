@@ -1,5 +1,6 @@
 package gcu.backend.likeservice.repository;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
@@ -7,7 +8,7 @@ import gcu.backend.likeservice.model.Like;
 
 import java.util.List;
 
-public interface LikeRepository extends MongoRepository<Like, Long> {
+public interface LikeRepository extends MongoRepository<Like, ObjectId> {
 
     @Query("{'email':?0}")
     List<Like> findByEmailList(String email);

@@ -122,27 +122,40 @@ class ListIncubatorViewController extends GetxController {
     String day = DateFormat('d').format(DateTime.utc(
         today.year, today.month, today.day - (today.weekday - 1) + val));
     String checkday = today.year.toString() + today.month.toString() + day;
-    print("checkday:" + checkday + " 오늘 날짜: " + day);
-    getAvailableReservation(roomNum.toString(), checkday);
+    String checknow = now.value.year.toString() +
+        now.value.month.toString() +
+        now.value.day.toString();
+    int parsedCheckday = int.parse(checknow);
+    int parsednow = int.parse(checknow);
 
-    if (now.value.hour >= 9) {
-      for (int i = 9; i <= now.value.hour; i++) {
-        if (i >= 17) {
-          count++;
-          break;
+    print("checkday:" + checkday + " 오늘 날짜: " + day);
+
+    if (parsedCheckday > parsednow) {
+      states.value = List.filled(17, 0);
+      await getAvailableReservation(roomNum.toString(), checkday);
+    } else if (parsedCheckday == parsednow) {
+      await getAvailableReservation(roomNum.toString(), checkday);
+      if (now.value.hour >= 9) {
+        for (int i = 9; i <= now.value.hour; i++) {
+          if (i >= 17) {
+            count++;
+            break;
+          }
+          count += 2;
         }
-        count += 2;
       }
-    }
-    for (int i = 0; i <= count; i++) {
-      //현재 시각까지 안눌리게
-      states.value[i] = 2;
-    }
-    if (now.value.hour < 17) {
-      //30분이 넘었다면 앞타임도 안눌리게
-      if (now.value.minute >= 30) {
-        states.value[++count] = 2;
+      for (int i = 0; i <= count; i++) {
+        //현재 시각까지 안눌리게
+        states.value[i] = 2;
       }
+      if (now.value.hour < 17) {
+        //30분이 넘었다면 앞타임도 안눌리게
+        if (now.value.minute >= 30) {
+          states.value[++count] = 2;
+        }
+      }
+    } else {
+      states.value = List.filled(17, 2);
     }
     states.refresh();
   }
@@ -344,7 +357,8 @@ class ListIncubatorViewController extends GetxController {
     ApiResponse<AvailableReservationResponse> responseresult =
         await ApiService.instance.getAvailableReservation(number, date);
 
-    if (responseresult.result) {
+    print(responseresult.value.toString());
+    if (responseresult.result != null) {
       print('1');
       reservations.value = responseresult.value!.reservations!;
       print('2');
@@ -361,6 +375,8 @@ class ListIncubatorViewController extends GetxController {
         }
       }
       print("finish");
+    } else if (responseresult.value == null) {
+      states.value = List.filled(16, 0);
     }
     for (int i = 0; i < timelist.length; i++) {
       int val = timelist[i];

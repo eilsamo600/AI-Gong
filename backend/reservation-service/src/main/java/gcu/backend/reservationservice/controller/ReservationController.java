@@ -56,7 +56,6 @@ public class ReservationController {
         return new ResponseEntity<List<Reservation>>(reservations, HttpStatus.OK);
     }
 
-    @GetMapping("/reservation/{number}/{date}")
     // 토큰에서 이메일 빼오기
     // @GetMapping("/reservation/")
     // @Operation(summary = "사용자 예약 테이블 조회", description = "예약 테이블 정보입니다.")
@@ -75,14 +74,11 @@ public class ReservationController {
     // return new ResponseEntity<List<Reservation>>(reservations, HttpStatus.OK);
     // }
 
-    @GetMapping("/reservation/reservation/{number}")
+    @GetMapping("/reservation/{number}/{date}")
     @Operation(summary = "예약 정보 조회", description = "예약정보입니다")
     public ResponseEntity<List<Reservation>> getAvailableReservation(@PathVariable String number,
             @PathVariable String date) {
         List<Reservation> reservation = reservationRepository.findByNumberAndDate(number, date);
-        // if (reservation == null) {
-        // return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        // }
         System.out.print("reservationfind" + reservation);
         return new ResponseEntity<List<Reservation>>(reservation, HttpStatus.OK);
     }
