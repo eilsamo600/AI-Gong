@@ -75,7 +75,7 @@ public class ReservationController {
     // return new ResponseEntity<List<Reservation>>(reservations, HttpStatus.OK);
     // }
 
-    @GetMapping("/reservation/reservation/{number}")
+    @GetMapping("/reservation/{number}")
     @Operation(summary = "예약 정보 조회", description = "예약정보입니다")
     public ResponseEntity<List<Reservation>> getAvailableReservation(@PathVariable String number,
             @PathVariable String date) {
