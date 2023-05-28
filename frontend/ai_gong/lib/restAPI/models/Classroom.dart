@@ -7,8 +7,9 @@ class ClassRoom {
   int? usableLevel;
   Map? currentLecture;
   Map? lectures;
+  bool? isLike;
 
-  ClassRoom({this.roomid, this.department, this.floor, this.capacity, this.scale, this.usableLevel, this.currentLecture, this.lectures});
+  ClassRoom({this.roomid, this.department, this.floor, this.capacity, this.scale, this.usableLevel, this.currentLecture, this.lectures, this.isLike});
 
   ClassRoom.fromJson(Map<String, dynamic> json) {
     roomid = json['호'];
@@ -19,6 +20,7 @@ class ClassRoom {
     usableLevel = json['usableLevel'];
     currentLecture = json['currentLecture'];
     lectures = json['강의목록'];
+    isLike = json['isLike'];
   }
 
   Map<String, dynamic> toJson() {
@@ -31,6 +33,7 @@ class ClassRoom {
     data['usableLevel'] = usableLevel;
     data['currentLecture'] = currentLecture;
     data['강의목록'] = lectures;
+    data['isLike'] = isLike;
     return data;
   }
 }

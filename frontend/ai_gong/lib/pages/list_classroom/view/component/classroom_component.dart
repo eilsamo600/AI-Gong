@@ -15,8 +15,8 @@ class ClassRoomComponent extends StatelessWidget {
     final controller = Get.put(ListClassRoomViewController());
     return InkWell(
       onTap: () {
-        controller.bookmarkInit();
-        ListClassRoomViewController.instance.getClassRoom(int.parse(model.roomid!));
+        controller.classRoom.value.isLike = null;
+        ListClassRoomViewController.instance.getClassRoom(model.roomid!);
         showModalBottomSheet(
             isScrollControlled: true,
             context: context,
@@ -37,25 +37,23 @@ class ClassRoomComponent extends StatelessWidget {
                         const Spacer(),
                         Container(
                             padding: const EdgeInsets.fromLTRB(20, 0, 15, 0),
-                            child: InkWell(
-                                onTap: () {
-                                  // controller.checkbookmark();
-                                },
-                                child: Obx(() => controller.bookmark.value == 1
+                            child: Obx(() => controller.classRoom.value.isLike == null
+                                ? const SizedBox()
+                                : controller.classRoom.value.isLike == true
                                     ? IconButton(
                                         icon: const Icon(Icons.bookmark),
                                         color: Colors.blue,
                                         iconSize: 27,
-                                        onPressed: () {
-                                          controller.checkbookmark();
+                                        onPressed: () async {
+                                          await controller.postLikeClassRoom(model.roomid!);
                                         })
                                     : IconButton(
                                         icon: const Icon(Icons.bookmark_border),
                                         iconSize: 27,
-                                        onPressed: () {
-                                          controller.checkbookmark();
+                                        onPressed: () async {
+                                          await controller.postLikeClassRoom(model.roomid!);
                                         },
-                                      )))),
+                                      ))),
                       ],
                     ),
                   ),

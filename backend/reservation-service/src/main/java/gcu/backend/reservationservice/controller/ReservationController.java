@@ -56,6 +56,7 @@ public class ReservationController {
         return new ResponseEntity<List<Reservation>>(reservations, HttpStatus.OK);
     }
 
+    // @GetMapping("/reservation/{number}/{date}")
     // 토큰에서 이메일 빼오기
     // @GetMapping("/reservation/")
     // @Operation(summary = "사용자 예약 테이블 조회", description = "예약 테이블 정보입니다.")
@@ -63,7 +64,7 @@ public class ReservationController {
     // getReservations(@RequestHeader("Authorization") String value) {
 
     // Optional<String> email = jwtService.extractAccessTokenInString(value)
-    // .map(token -> jwtService.extractEmail(token)).orElse(null);
+    // .map(token -> jwtService.extractEmail(token)).orElse(Optional.empty());
 
     // if (!email.isPresent()) {
     // return ResponseEntity.notFound().build();

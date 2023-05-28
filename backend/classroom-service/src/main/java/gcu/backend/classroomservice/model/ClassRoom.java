@@ -39,6 +39,9 @@ public class ClassRoom {
     @Transient
     private Map<String, String> currentLecture;
 
+    @Transient
+    private Boolean isLike;
+
     // @Transient를 사용할 때는 따로 Constructor를 만들어줘야함
     public ClassRoom(ObjectId _id, String 호, String 전공, int 층, int 수용인원, String 규모,
             Map<String, List<Map<String, Object>>> 강의목록) {
