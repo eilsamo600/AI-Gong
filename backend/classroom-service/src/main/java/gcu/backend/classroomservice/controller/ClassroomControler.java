@@ -20,9 +20,12 @@ import gcu.backend.classroomservice.repository.ClassRoomRepository;
 import gcu.backend.classroomservice.repository.LikeRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.val;
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @Tag(name = "Classroom", description = "강의실 API")
+@Slf4j
 public class ClassroomControler {
     @Autowired
     private ClassRoomRepository classRoomRepository;
@@ -58,8 +61,8 @@ public class ClassroomControler {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         Optional<String> email = jwtService.extractAccessTokenInString(value)
-                .map(token -> jwtService.extractEmail(token)).orElse(null);
-        if (email != null) {
+                .map(token -> jwtService.extractEmail(token)).orElse(Optional.empty());
+        if (email.isPresent()) {
             Like like = likeRepository.findBy호AndEmail(id, email.get());
             if (like != null) {
                 classRoom.setIsLike(true);
@@ -77,8 +80,8 @@ public class ClassroomControler {
             @PathVariable String id) {
 
         Optional<String> email = jwtService.extractAccessTokenInString(value)
-                .map(token -> jwtService.extractEmail(token)).orElse(null);
-        if (email == null) {
+                .map(token -> jwtService.extractEmail(token)).orElse(Optional.empty());
+        if (!email.isPresent()) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         ClassRoom classRoom = classRoomRepository.findBy호(id);

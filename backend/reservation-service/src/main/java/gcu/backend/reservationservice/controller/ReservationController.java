@@ -64,7 +64,7 @@ public class ReservationController {
     // getReservations(@RequestHeader("Authorization") String value) {
 
     // Optional<String> email = jwtService.extractAccessTokenInString(value)
-    // .map(token -> jwtService.extractEmail(token)).orElse(null);
+    // .map(token -> jwtService.extractEmail(token)).orElse(Optional.empty());
 
     // if (!email.isPresent()) {
     // return ResponseEntity.notFound().build();
