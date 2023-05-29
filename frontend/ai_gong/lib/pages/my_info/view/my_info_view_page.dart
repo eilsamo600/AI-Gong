@@ -117,7 +117,7 @@ class MyInfoViewPage extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(controller.myReservationList.isEmpty ? "예약 정보가 없습니다." : ".새로운 예약을 해보세요.",
+                  Text(controller.myReservationList.isEmpty ? "예약 정보가 없습니다." : "새로운 예약을 해보세요.",
                       style: const TextStyle(color: Color.fromRGBO(103, 103, 103, 1), fontSize: 17)),
                   TextButton(
                     style: ButtonStyle(
