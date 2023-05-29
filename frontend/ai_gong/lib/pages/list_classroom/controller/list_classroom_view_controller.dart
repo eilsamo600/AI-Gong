@@ -1,3 +1,5 @@
+import 'package:ai_gong/Service/user_service.dart';
+import 'package:ai_gong/common/common.dart';
 import 'package:ai_gong/common/service_response.dart';
 import 'package:ai_gong/restAPI/api_service.dart';
 import 'package:ai_gong/restAPI/models/Classroom.dart';
@@ -72,6 +74,10 @@ class ListClassRoomViewController extends GetxController {
     if (index == 0) {
       restFilter();
       getClassRoomList();
+      return;
+    }
+    if (index == 1 && UserService.instance.logining == false) {
+      Common.loginPanel();
       return;
     }
 

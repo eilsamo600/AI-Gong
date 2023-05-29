@@ -111,7 +111,7 @@ class Common extends GetxService {
                                 backgroundColor: Colors.white,
                               ),
                               onPressed: () async {
-                                if (!UserService.instance.logining) {
+                                if (!await UserService.instance.isLogin()) {
                                   bool x = await UserService.instance.login();
                                   Navigator.pop(context);
                                   if (x) MainViewController.instance.selectTab(2);
