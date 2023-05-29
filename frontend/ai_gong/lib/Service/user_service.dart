@@ -60,7 +60,7 @@ class UserService extends GetxService {
 
   Future<bool> isLogin() async {
     var storage = const FlutterSecureStorage();
-    return (await storage.read(key: "access_token") ?? '') != '' ? true : false;
+    return (await storage.read(key: "access_token") ?? '') != '' ? logining : false;
   }
 
   void logout() async {
@@ -100,7 +100,6 @@ class UserService extends GetxService {
         if (popupWin != null) {
           popupWin!.close();
         }
-        logining = false;
         return true;
       }
     } on Exception {

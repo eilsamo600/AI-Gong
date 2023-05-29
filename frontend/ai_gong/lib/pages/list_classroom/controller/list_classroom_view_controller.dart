@@ -23,7 +23,9 @@ class ListClassRoomViewController extends GetxController {
   Future<void> getClassRoomList() async {
     ApiResponse<ClassRoomListResponse> response = await ApiService.instance.getClassRoomList();
     if (response.result) {
-      classRoomList.value = response.value!.classrooms!;
+      if (response.value!.classrooms!.isNotEmpty) {
+        classRoomList.value = response.value!.classrooms!;
+      }
     }
     classRoomList.refresh();
   }

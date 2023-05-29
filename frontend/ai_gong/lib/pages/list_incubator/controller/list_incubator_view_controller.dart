@@ -142,12 +142,12 @@ class ListIncubatorViewController extends GetxController {
       }
       for (int i = 0; i <= count; i++) {
         //현재 시각까지 안눌리게
-        states.value[i] = 2;
+        states.value[i] = 3;
       }
       if (now.value.hour < 17) {
         //30분이 넘었다면 앞타임도 안눌리게
         if (now.value.minute >= 30) {
-          states.value[++count] = 2;
+          states.value[++count] = 3;
         }
       }
     } else {
@@ -271,7 +271,9 @@ class ListIncubatorViewController extends GetxController {
   Future<void> getIncubatorList() async {
     ApiResponse<IncubatorListResponse> response = await ApiService.instance.getIncubatorList();
     if (response.result) {
-      incubatorList.value = response.value!.incubators!;
+      if (response.value!.incubators!.isNotEmpty) {
+        incubatorList.value = response.value!.incubators!;
+      }
     }
     incubatorList.refresh();
   }

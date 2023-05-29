@@ -91,35 +91,34 @@ class MyInfoViewPage extends StatelessWidget {
                     ),
                   ),
                 ])),
-            if (controller.myReservationList.value != Null)
-              Obx(
-                () => Column(children: [
-                  for (int index = 0; index < controller.myReservationList.length; index++)
-                    Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5),
-                        child: Column(
-                          children: [
-                            if (index == 0) const SizedBox(height: 20),
-                            MyInfoComponent(model: controller.myReservationList.value[index]),
-                            const Padding(
-                              padding: EdgeInsets.only(bottom: 10, top: 15),
-                              child: Divider(
-                                height: 1,
-                                thickness: 1,
-                              ),
-                            )
-                          ],
-                        ))
-                ]),
-              ),
-            // if (controller.classRoomList.value == Null)
+            Obx(
+              () => Column(children: [
+                for (int index = 0; index < controller.myReservationList.length; index++)
+                  Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                      child: Column(
+                        children: [
+                          if (index == 0) const SizedBox(height: 20),
+                          MyInfoComponent(model: controller.myReservationList.value[index]),
+                          const Padding(
+                            padding: EdgeInsets.only(bottom: 10, top: 15),
+                            child: Divider(
+                              height: 1,
+                              thickness: 1,
+                            ),
+                          )
+                        ],
+                      ))
+              ]),
+            ),
             Container(
               padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 25),
               //margin: EdgeInsets.all(15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text("예약 정보가 없습니다.", style: TextStyle(color: Color.fromRGBO(103, 103, 103, 1), fontSize: 17)),
+                  Text(controller.myReservationList.isEmpty ? "예약 정보가 없습니다." : ".새로운 예약을 해보세요.",
+                      style: const TextStyle(color: Color.fromRGBO(103, 103, 103, 1), fontSize: 17)),
                   TextButton(
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(

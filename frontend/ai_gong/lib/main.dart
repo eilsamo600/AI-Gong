@@ -1,9 +1,9 @@
 import 'package:ai_gong/Service/user_service.dart';
 import 'package:ai_gong/common/common.dart';
-import 'package:ai_gong/pages/dev_route/view/route_view_page.dart';
 import 'package:ai_gong/pages/list_classroom/controller/list_classroom_view_controller.dart';
 import 'package:ai_gong/pages/list_incubator/controller/list_incubator_view_controller.dart';
 import 'package:ai_gong/pages/main/controller/main_view_controller.dart';
+import 'package:ai_gong/pages/main/view/main_view_page.dart';
 import 'package:ai_gong/pages/my_info/controller/my_info_view_controller.dart';
 import 'package:ai_gong/restAPI/api_service.dart';
 import 'package:ai_gong/routes.dart';
@@ -14,7 +14,7 @@ void main() async {
   await initServices();
   initController();
   runApp(GetMaterialApp(
-    initialRoute: RouteViewPage.url,
+    initialRoute: MainViewPage.url,
     debugShowCheckedModeBanner: false,
     theme: ThemeData(
         canvasColor: Colors.transparent,
@@ -25,8 +25,7 @@ void main() async {
           primary: Colors.white,
           secondary: Colors.black,
         ),
-        appBarTheme:
-            const AppBarTheme(iconTheme: IconThemeData(color: Colors.black))),
+        appBarTheme: const AppBarTheme(iconTheme: IconThemeData(color: Colors.black))),
     getPages: CustomRouter.routes,
     themeMode: ThemeMode.light,
   ));

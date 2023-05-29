@@ -1,3 +1,4 @@
+import 'package:ai_gong/Service/user_service.dart';
 import 'package:ai_gong/common/common.dart';
 import 'package:ai_gong/common/widget/panel_component.dart';
 import 'package:ai_gong/pages/list_incubator/controller/list_incubator_view_controller.dart';
@@ -326,6 +327,16 @@ class IncubatorComponent extends StatelessWidget {
                                       height: 55,
                                       child: OutlinedButton(
                                         onPressed: () async {
+                                          if (!UserService.instance.logining) {
+                                            Common.showAlertDialog(
+                                                context: context,
+                                                children: [
+                                                  Text('로그인 후 이용해주세요.'),
+                                                ],
+                                                title: '알림');
+                                            return;
+                                          }
+
                                           if (controller.states.value.contains(1) == false) {
                                             Common.showAlertDialog(
                                                 context: context,
