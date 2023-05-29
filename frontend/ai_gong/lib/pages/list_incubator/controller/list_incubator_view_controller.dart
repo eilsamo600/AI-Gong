@@ -37,7 +37,6 @@ class ListIncubatorViewController extends GetxController {
       'people': num.value,
       'state': 0
     });
-
     ApiResponse response = await ApiService.instance.postReservation(data);
 
     if (response.result == true) {
@@ -271,6 +270,7 @@ class ListIncubatorViewController extends GetxController {
     if (responseresult.result) {
       reservations.value = responseresult.value!.reservations!;
       for (var i in reservations) {
+        if (i.state == 2) break;
         if (i.time != null) {
           print(i.time);
           for (var time in i.time!) {

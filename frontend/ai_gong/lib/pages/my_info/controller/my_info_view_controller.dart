@@ -12,6 +12,8 @@ class MyInfoViewController extends GetxController {
     ApiResponse<ReservationListResponse> response = await ApiService.instance.getReservationList();
     if (response.result) {
       myReservationList.value = response.value!.reservations!;
+      // sorting by id desc
+      myReservationList.value.sort((a, b) => b.timestamp!.compareTo(a.timestamp!));
     }
     myReservationList.refresh();
   }

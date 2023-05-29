@@ -6,6 +6,7 @@ class Reservation {
   int? people;
   int? state;
   String? id;
+  int? timestamp;
 
   Reservation({this.email, this.number, this.time, this.date, this.people, this.state});
 
@@ -17,10 +18,14 @@ class Reservation {
     date = json['date'];
     people = json['people'];
     state = json['state'];
+    if (json['_id'] != null) {
+      timestamp = json['_id']['timestamp'];
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+
     data['email'] = email;
     data['number'] = number;
     data['time'] = time;

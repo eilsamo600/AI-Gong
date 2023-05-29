@@ -108,6 +108,7 @@ public class ReservationController {
             if (!reservation.getEmail().equalsIgnoreCase(email.get())) {
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
+            // 배정인증 해야함 0 , 배정인증 완료 1, 취소 됨 2
             reservation.setState(newState);
             reservationRepository.save(reservation); // 변경된 데이터를 저장하거나 업데이트하는 로직을 구현해야합니다.
 
