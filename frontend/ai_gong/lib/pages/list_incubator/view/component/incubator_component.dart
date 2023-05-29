@@ -390,10 +390,12 @@ class IncubatorComponent extends StatelessWidget {
                 color: (model.usableLevel ?? 1) == 1
                     ? Colors.green
                     : model.usableLevel == 2
-                        ? Colors.orange
-                        : model.usableLevel == 4
-                            ? const Color.fromARGB(255, 206, 0, 0)
-                            : Colors.red,
+                        ? Colors.red
+                        : model.usableLevel == 3
+                            ? Colors.orange
+                            : model.usableLevel == 4
+                                ? const Color.fromARGB(255, 206, 0, 0)
+                                : Colors.red,
               ),
             ),
             const SizedBox(
@@ -429,27 +431,21 @@ class IncubatorComponent extends StatelessWidget {
             const Spacer(),
             Padding(
               padding: const EdgeInsets.only(top: 12.0),
-              child: model.usableLevel == null
-                  ? const Text(
-                      '다음 예약이 없습니다.',
-                      style: TextStyle(fontSize: 12, color: Colors.black87),
-                    )
-                  : Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          '현재 사용중',
-                          style: TextStyle(fontSize: 12, color: Colors.black87),
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          'AI공학관 ${model.classNum ?? '???'}호',
-                          style: const TextStyle(fontSize: 12, color: Colors.black87),
-                        ),
-                      ],
-                    ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    (model.usableLevel ?? 1) == 1
+                        ? '현재 사용 가능'
+                        : model.usableLevel == 2
+                            ? '현재 사용 중'
+                            : model.usableLevel == 3
+                                ? '현재 예약 중'
+                                : '현재 사용 불가',
+                    style: TextStyle(fontSize: 13, color: Colors.black87),
+                  ),
+                ],
+              ),
             )
           ],
         ),

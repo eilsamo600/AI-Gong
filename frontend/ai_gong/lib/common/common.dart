@@ -68,30 +68,30 @@ class Common extends GetxService {
         context: Get.context!,
         builder: ((context) {
           return SizedBox(
-            height: 250,
+            height: 200,
             child: PanelComponent(
               radius: 15,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 40),
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(
-                        height: 30,
+                        height: 20,
                       ),
                       Row(
                         children: [
-                          const Text('AiGong', style: TextStyle(fontSize: 32, color: Colors.black, fontWeight: FontWeight.bold)),
+                          const Text('AiGong', style: TextStyle(fontSize: 28, color: Colors.black, fontWeight: FontWeight.bold)),
                           const Spacer(),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: const [
-                              Text('간단하게 로그인 하고', style: TextStyle(fontSize: 23, color: Colors.black)),
+                              Text('간단하게 로그인 하고', style: TextStyle(fontSize: 19, color: Colors.black)),
                               SizedBox(
                                 height: 5,
                               ),
-                              Text('더 많은 애공 서비스 누리기', style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold, color: Colors.black)),
+                              Text('더 많은 애공 서비스 누리기', style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold, color: Colors.black)),
                             ],
                           ),
                         ],
@@ -99,12 +99,12 @@ class Common extends GetxService {
                     ],
                   ),
                   const SizedBox(
-                    height: 30,
+                    height: 40,
                   ),
                   Center(
                     child: SizedBox(
-                      width: 320,
-                      height: 60,
+                      width: 300,
+                      height: 40,
                       child: ButtonTheme(
                           child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
@@ -124,14 +124,11 @@ class Common extends GetxService {
                                   children: [
                                     Image.asset('assets/images/google.png', width: 25),
                                     const SizedBox(width: 15),
-                                    const Text('Google 계정으로 로그인하기', style: TextStyle(fontSize: 17, color: Colors.black, fontWeight: FontWeight.bold)),
+                                    const Text('Google 계정으로 로그인하기', style: TextStyle(fontSize: 15, color: Colors.black, fontWeight: FontWeight.bold)),
                                   ],
                                 ),
                               ))),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 20,
                   ),
                 ]),
               ),

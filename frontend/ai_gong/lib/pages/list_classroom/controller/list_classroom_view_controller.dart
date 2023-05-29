@@ -21,19 +21,20 @@ class ListClassRoomViewController extends GetxController {
   }
 
   Future<void> getClassRoomList() async {
-    ApiResponse<ClassRoomListResponse> response = await ApiService.instance.getClassRoomList();
-    if (response.result) {
-      if (response.value!.classrooms!.isNotEmpty) {
-        classRoomList.value = response.value!.classrooms!;
-      }
+    ApiResponse<ClassRoomListResponse> response;
+    if (onTapList.value[1]) {
+      response = await ApiService.instance.getClassRoomListByLike();
+    } else {
+      response = await ApiService.instance.getClassRoomList();
     }
-    classRoomList.refresh();
-  }
-
-  Future<void> getClassRoomListByLike() async {
-    ApiResponse<ClassRoomListResponse> response = await ApiService.instance.getClassRoomListByLike();
     if (response.result) {
       classRoomList.value = response.value!.classrooms!;
+      classRoomList.value = classRoomList.value
+          .where((classRoom) =>
+              (classRoom.usableLevel == 1 && onTapList.value[2]) ||
+              (classRoom.usableLevel == 2 && onTapList.value[3]) ||
+              (!onTapList.value[2] && !onTapList.value[3]))
+          .toList();
     }
     classRoomList.refresh();
   }
@@ -72,15 +73,15 @@ class ListClassRoomViewController extends GetxController {
       restFilter();
       getClassRoomList();
       return;
-    } else if (index == 1) {
-      if (onTapList[index]) {
-        getClassRoomList();
-      } else {
-        getClassRoomListByLike();
-      }
     }
 
     onTapList.value[index] = !onTapList.value[index];
+    if (index == 2) {
+      onTapList.value[3] = false;
+    } else if (index == 3) {
+      onTapList.value[2] = false;
+    }
+    getClassRoomList();
     onTapList.refresh();
   }
 

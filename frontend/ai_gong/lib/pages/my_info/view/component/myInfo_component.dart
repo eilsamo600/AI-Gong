@@ -151,7 +151,24 @@ class MyInfoComponent extends StatelessWidget {
                       const SizedBox(height: 10),
                       InkWell(
                         onTap: () async {
-                          await controller.postReservationState(model.id!, 2);
+                          Common.showAlertDialog(context: context, title: "예약 삭제", children: const [
+                            Text("예약을 취소하시겠습니까?"),
+                          ], actions: [
+                            TextButton(
+                                onPressed: () async {
+                                  try {
+                                    await controller.postReservationState(model.id!, 2);
+                                  } finally {
+                                    Get.back();
+                                  }
+                                },
+                                child: const Text("예약 취소", style: TextStyle(color: Colors.blue))),
+                            TextButton(
+                                onPressed: () {
+                                  Get.back();
+                                },
+                                child: const Text("선택 취소", style: TextStyle(color: Colors.blue))),
+                          ]);
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,

@@ -13,7 +13,7 @@ public interface ReservationRepository extends MongoRepository<Reservation, Obje
     @Query("{'email':?0}")
     List<Reservation> findByEmailList(String email);
 
-    @Query("{'number': ?0, 'date': ?1}")
+    @Query("{'number':?0, 'date':?1}")
     List<Reservation> findByNumberAndDate(String number, String date);
 
     @Query("{'email':?0}")

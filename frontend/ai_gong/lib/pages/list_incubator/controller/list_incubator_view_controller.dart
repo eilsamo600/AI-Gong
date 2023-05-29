@@ -95,7 +95,6 @@ class ListIncubatorViewController extends GetxController {
 
   void statesInit(int? roomNum) async {
     states.value = List.filled(16, 0);
-    int count = -2;
     int val = dates.value.indexOf(2);
     var todayIndex = today.weekday - 1;
     if (todayIndex == 5) {
@@ -112,8 +111,7 @@ class ListIncubatorViewController extends GetxController {
     int parsedCheckday = int.parse(checkday);
     int parsednow = int.parse(checknow);
 
-    print("checkday:$checkday");
-    print("checknow:$checknow ");
+    int currentTime = now.value.hour * 60 + now.value.minute;
 
     if (parsedCheckday > parsednow) {
       states.value = List.filled(17, 0);
@@ -121,23 +119,14 @@ class ListIncubatorViewController extends GetxController {
     } else if (parsedCheckday == parsednow) {
       await getAvailableReservation(roomNum.toString(), checkday);
       if (now.value.hour >= 9) {
-        for (int i = 9; i <= now.value.hour; i++) {
-          if (i >= 17) {
-            count++;
-            break;
-          }
-          count += 2;
-        }
-      }
-      for (int i = 0; i <= count; i++) {
-        //현재 시각까지 안눌리게
-        states.value[i] = 3;
-      }
-      if (now.value.hour < 17) {
-        //30분이 넘었다면 앞타임도 안눌리게
-        if (now.value.minute >= 30) {
-          states.value[++count] = 3;
-        }
+        // for (int i = 0; i < states.value.length; i++) {
+        //   if (currentTime >= 540 + (i + 1) * 30) {
+        //     print(currentTime);
+        //     print((540 + (i + 1) * 30));
+        //     states.value[i] = 3;
+        //   }
+        // }
+
       }
     } else {
       states.value = List.filled(17, 2);

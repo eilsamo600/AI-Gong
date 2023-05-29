@@ -23,6 +23,7 @@ import gcu.backend.reservationservice.jwt.JwtService;
 import gcu.backend.reservationservice.model.Incubator;
 import gcu.backend.reservationservice.model.Reservation;
 import gcu.backend.reservationservice.repository.ReservationRepository;
+import gcu.backend.reservationservice.service.ReservationService;
 import gcu.backend.reservationservice.repository.IncubatorRepository;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,6 +42,9 @@ public class ReservationController {
 
     @Autowired
     private JwtService jwtService;
+
+    @Autowired
+    private ReservationService reservationService;
 
     @PostMapping("/reservation")
     @Operation(summary = "예약 내역 보내기", description = "예약 내역 보내요~.")
@@ -140,6 +144,9 @@ public class ReservationController {
     @Operation(summary = "인큐베이터 목록 조회", description = "인큐베이터 정보입니다.")
     public ResponseEntity<List<Incubator>> getIncubators() {
         List<Incubator> incubators = incubatorRepository.findAll();
+        for (Incubator incubator : incubators) {
+            incubator.setUsableLevel(reservationService.getUsableLevel(Integer.toString(incubator.get번호())));
+        }
         return new ResponseEntity<List<Incubator>>(incubators, HttpStatus.OK);
     }
 
