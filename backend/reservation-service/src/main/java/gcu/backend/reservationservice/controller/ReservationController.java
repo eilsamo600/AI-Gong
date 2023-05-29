@@ -65,6 +65,9 @@ public class ReservationController {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         List<Reservation> reservations = reservationRepository.findByEmailList(email.get());
+        // Sorting by String date in Reservation class, descending order
+        reservations.sort((r1, r2) -> r2.getDate().compareTo(r1.getDate()));
+
         return new ResponseEntity<List<Reservation>>(reservations, HttpStatus.OK);
     }
 

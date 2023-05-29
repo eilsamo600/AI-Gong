@@ -23,13 +23,12 @@ class MyInfoComponent extends StatelessWidget {
     starttime += (model.time ?? [0]).first * 30;
     endtime += (model.time ?? [0]).last * 30;
     // 분을 시간으로 변경
-    starttime = starttime ~/ 60;
-    endtime = endtime ~/ 60;
-    String start = starttime.toString() + (starttime / 60).toString();
-    String end = endtime.toString() + (endtime / 60).toString();
-
-    start = starttime.toString().padLeft(4, '0');
-    end = endtime.toString().padLeft(4, '0');
+    String startHour = (starttime / 60).round().toString();
+    String endHour = (endtime / 60).round().toString();
+    String start = startHour + ((starttime.remainder(60))).toString().padLeft(2, '0');
+    String end = endHour + ((endtime.remainder(60))).toString().padLeft(2, '0');
+    start = start.padLeft(4, '0');
+    end = end.padLeft(4, '0');
     start = "${start.substring(0, 2)}:${start.substring(2, 4)}";
     end = "${end.substring(0, 2)}:${end.substring(2, 4)}";
 
