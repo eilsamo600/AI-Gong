@@ -68,6 +68,7 @@ class UserService extends GetxService {
     MainViewController.instance.selectTab(0);
     await storage.deleteAll();
     await setAuth(refresh: "", access: "");
+    logining = false;
 
     Common.showSnackBar(messageText: '로그아웃이 되었습니다.');
   }

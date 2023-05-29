@@ -5,10 +5,12 @@ class Reservation {
   String? date;
   int? people;
   int? state;
+  String? id;
 
   Reservation({this.email, this.number, this.time, this.date, this.people, this.state});
 
   Reservation.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     email = json['email'];
     number = json['number'];
     time = json['time'].cast<int>();
@@ -25,6 +27,7 @@ class Reservation {
     data['date'] = date;
     data['people'] = people;
     data['state'] = state;
+    data['id'] = id;
     return data;
   }
 }

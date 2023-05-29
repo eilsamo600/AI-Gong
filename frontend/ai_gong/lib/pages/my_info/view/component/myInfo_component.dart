@@ -1,3 +1,4 @@
+import 'package:ai_gong/common/common.dart';
 import 'package:ai_gong/pages/my_info/controller/my_info_view_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -68,94 +69,165 @@ class MyInfoComponent extends StatelessWidget {
                     ],
                   ),
                 ),
-                // if (model.usableLevel == 2)
-                //   Container(
-                //       alignment: Alignment.centerRight,
-                //       child: Row(
-                //         children: const [
-                //           SizedBox(height: 3),
-                //           Text("배정인증 완료",
-                //               style: TextStyle(
-                //                   fontSize: 12.5,
-                //                   color: Color.fromARGB(255, 0, 140, 255))),
-                //           SizedBox(width: 3),
-                //           Icon(Icons.check_circle_outline,
-                //               color: Color.fromARGB(255, 0, 140,
-                //                   255)), //Icon(Icons.check_circle_outline_rounded),
-                //         ],
-                //       )),
-                // const Spacer(),
-                // if (model.usableLevel == 1)
-                //   Container(
-                //       //alignment: Alignment.centerRight,
-                //       child: Column(
-                //     crossAxisAlignment: CrossAxisAlignment.end,
-                //     children: [
-                //       Row(
-                //         //mainAxisAlignment: MainAxisAlignment.end,
-                //         children: [
-                //           const SizedBox(height: 3),
-                //           const Text("배정인증하기",
-                //               style: TextStyle(
-                //                   fontSize: 12.5,
-                //                   color: Color.fromARGB(255, 0, 140, 255))),
-                //           //SizedBox(width: 2),
-                //           InkWell(
-                //             onTap: () {
-                //               // 클릭 이벤트
-                //             },
-                //             child: const Padding(
-                //               padding: EdgeInsets.all(0.0),
-                //               child: Icon(Icons.chevron_right_sharp,
-                //                   color: Color.fromARGB(255, 0, 140, 255)),
-                //             ),
-                //           )
-                //         ],
-                //       ),
-                //       const SizedBox(height: 10),
-                //       Row(
-                //         mainAxisAlignment: MainAxisAlignment.end,
-                //         children: [
-                //           const SizedBox(height: 3),
-                //           const Text("취소하기",
-                //               style: TextStyle(
-                //                   fontSize: 12.5,
-                //                   color: Color.fromARGB(255, 0, 140, 255))),
-                //           // SizedBox(width: 2),
-                //           // Icon(Icons.chevron_right_sharp,
-                //           //     color: Color.fromARGB(
-                //           //         255, 0, 140, 255)),
-                //           InkWell(
-                //             onTap: () {
-                //               // 클릭 이벤트
-                //             },
-                //             child: const Padding(
-                //               padding: EdgeInsets.all(0.0),
-                //               child: Icon(Icons.chevron_right_sharp,
-                //                   color: Color.fromARGB(255, 0, 140, 255)),
-                //             ),
-                //           )
-                //         ],
-                //       ),
-                //     ],
-                //   )),
-                // if (model.usableLevel == 3)
-                //   Container(
-                //       alignment: Alignment.centerRight,
-                //       child: Row(
-                //         // crossAxisAlignment: CrossAxisAlignment.start,
-                //         children: const [
-                //           SizedBox(height: 3),
-                //           Text("취소되었습니다.",
-                //               style: TextStyle(
-                //                   fontSize: 12.5,
-                //                   color: Color.fromARGB(255, 255, 44, 44))),
-                //           SizedBox(width: 3),
-                //           //Icon(Icons.check_circle_outline_rounded),
-                //         ],
-                //       )),
-                // Container(
-                //     height: 2, color: const Color.fromARGB(255, 228, 228, 228)),
+                const Spacer(),
+                if (model.state == 1)
+                  Container(
+                      alignment: Alignment.centerRight,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Row(
+                            children: const [
+                              SizedBox(height: 3),
+                              Text("배정인증 완료", style: TextStyle(fontSize: 12.5, color: Color.fromARGB(255, 0, 140, 255))),
+                              SizedBox(width: 3),
+                              Icon(Icons.check_circle_outline, color: Color.fromARGB(255, 0, 140, 255)), //Icon(Icons.check_circle_outline_rounded),
+                            ],
+                          ),
+                          const SizedBox(height: 10),
+                          InkWell(
+                            onTap: () async {
+                              // 삭제하기 전에 alertdialog로 확인하기
+                              Common.showAlertDialog(context: context, title: "예약 삭제", children: const [
+                                Text("예약을 삭제하시겠습니까?"),
+                              ], actions: [
+                                TextButton(
+                                    onPressed: () async {
+                                      try {
+                                        await controller.deleteReservation(model.id!);
+                                      } finally {
+                                        Get.back();
+                                      }
+                                    },
+                                    child: const Text("삭제", style: TextStyle(color: Colors.blue))),
+                                TextButton(
+                                    onPressed: () {
+                                      Get.back();
+                                    },
+                                    child: const Text("취소", style: TextStyle(color: Colors.blue))),
+                              ]);
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: const [
+                                SizedBox(height: 3),
+                                Text("내역 삭제", style: TextStyle(fontSize: 12.5, color: Colors.grey)),
+                                // SizedBox(width: 2),
+                                // Icon(Icons.chevron_right_sharp,
+                                //     color: Color.fromARGB(
+                                //         255, 0, 140, 255)),
+                                Padding(
+                                  padding: EdgeInsets.all(0.0),
+                                  child: Icon(Icons.chevron_right_sharp, color: Colors.grey),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      )),
+                if (model.state == 0)
+                  Container(
+                      //alignment: Alignment.centerRight,
+                      child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      InkWell(
+                        onTap: () async {
+                          await controller.postReservationState(model.id!, 1);
+                        },
+                        child: Row(
+                          //mainAxisAlignment: MainAxisAlignment.end,
+                          children: const [
+                            SizedBox(height: 3),
+                            Text("배정인증하기", style: TextStyle(fontSize: 12.5, color: Color.fromARGB(255, 0, 140, 255))),
+                            //SizedBox(width: 2),
+                            Padding(
+                              padding: EdgeInsets.all(0.0),
+                              child: Icon(Icons.chevron_right_sharp, color: Color.fromARGB(255, 0, 140, 255)),
+                            )
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      InkWell(
+                        onTap: () async {
+                          await controller.postReservationState(model.id!, 2);
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: const [
+                            SizedBox(height: 3),
+                            Text("취소하기", style: TextStyle(fontSize: 12.5, color: Color.fromARGB(255, 246, 48, 38))),
+                            // SizedBox(width: 2),
+                            // Icon(Icons.chevron_right_sharp,
+                            //     color: Color.fromARGB(
+                            //         255, 0, 140, 255)),
+                            Padding(
+                              padding: EdgeInsets.all(0.0),
+                              child: Icon(Icons.chevron_right_sharp, color: Color.fromARGB(255, 246, 48, 38)),
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  )),
+                if (model.state == 2)
+                  Container(
+                      alignment: Alignment.centerRight,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Row(
+                            // crossAxisAlignment: CrossAxisAlignment.start,
+                            children: const [
+                              SizedBox(height: 3),
+                              Text("취소되었습니다.", style: TextStyle(fontSize: 12.5, color: Color.fromARGB(255, 255, 44, 44))),
+                              SizedBox(width: 3),
+                              //Icon(Icons.check_circle_outline_rounded),
+                            ],
+                          ),
+                          const SizedBox(height: 10),
+                          InkWell(
+                            onTap: () async {
+                              // 삭제하기 전에 alertdialog로 확인하기
+                              Common.showAlertDialog(context: context, title: "예약 삭제", children: const [
+                                Text("예약을 삭제하시겠습니까?"),
+                              ], actions: [
+                                TextButton(
+                                    onPressed: () async {
+                                      try {
+                                        await controller.deleteReservation(model.id!);
+                                      } finally {
+                                        Get.back();
+                                      }
+                                    },
+                                    child: const Text("삭제", style: TextStyle(color: Colors.blue))),
+                                TextButton(
+                                    onPressed: () {
+                                      Get.back();
+                                    },
+                                    child: const Text("취소", style: TextStyle(color: Colors.blue))),
+                              ]);
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: const [
+                                SizedBox(height: 3),
+                                Text("내역 삭제", style: TextStyle(fontSize: 12.5, color: Color.fromARGB(255, 50, 50, 50))),
+                                // SizedBox(width: 2),
+                                // Icon(Icons.chevron_right_sharp,
+                                //     color: Color.fromARGB(
+                                //         255, 0, 140, 255)),
+                                Padding(
+                                  padding: EdgeInsets.all(0.0),
+                                  child: Icon(Icons.chevron_right_sharp, color: Color.fromARGB(255, 50, 50, 50)),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      )),
+                Container(height: 2, color: const Color.fromARGB(255, 228, 228, 228)),
               ],
             ),
           ),

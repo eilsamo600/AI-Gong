@@ -20,4 +20,7 @@ public interface ReservationRepository extends MongoRepository<Reservation, Obje
     Reservation findByEmail(String email);
 
     Optional<Reservation> findById(ObjectId _id);
+
+    @Query(value = "{'_id':?0, 'email':?1}", delete = true)
+    void DeleteByIdAndEmail(ObjectId _id, String email);
 }

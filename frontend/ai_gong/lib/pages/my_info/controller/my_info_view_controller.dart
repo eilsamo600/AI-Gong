@@ -16,5 +16,19 @@ class MyInfoViewController extends GetxController {
     myReservationList.refresh();
   }
 
+  Future<void> postReservationState(String id, int state) async {
+    ApiResponse response = await ApiService.instance.postReservationState(id, state);
+    if (response.result) {
+      await getMyReservationList();
+    }
+  }
+
+  Future<void> deleteReservation(String id) async {
+    ApiResponse response = await ApiService.instance.deleteReservation(id);
+    if (response.result) {
+      await getMyReservationList();
+    }
+  }
+
   RxList<Reservation> myReservationList = RxList<Reservation>();
 }

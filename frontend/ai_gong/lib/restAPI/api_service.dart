@@ -174,6 +174,30 @@ class ApiService extends GetxService {
     }
   }
 
+  Future<ApiResponse> postReservationState(String id, int state) async {
+    try {
+      var response = await dio.post(
+        '/reservation/reservation/$id/$state',
+        data: jsonEncode({}),
+      );
+      return ApiResponse(result: true);
+    } catch (e) {
+      return ApiResponse(result: false, errorMsg: "오류가 발생했습니다.");
+    }
+  }
+
+  Future<ApiResponse> deleteReservation(String id) async {
+    try {
+      var response = await dio.delete(
+        '/reservation/reservation/$id',
+        data: jsonEncode({}),
+      );
+      return ApiResponse(result: true);
+    } catch (e) {
+      return ApiResponse(result: false, errorMsg: "오류가 발생했습니다.");
+    }
+  }
+
   Future<ApiResponse<IncubatorResponse>> getIncubator(int id) async {
     try {
       var response = await dio.get(

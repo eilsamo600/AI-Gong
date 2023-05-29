@@ -1,4 +1,6 @@
+import 'package:ai_gong/common/common.dart';
 import 'package:ai_gong/common/service_response.dart';
+import 'package:ai_gong/pages/main/controller/main_view_controller.dart';
 import 'package:ai_gong/restAPI/api_service.dart';
 import 'package:ai_gong/restAPI/models/Incubator.dart';
 import 'package:ai_gong/restAPI/models/Reservation.dart';
@@ -39,38 +41,25 @@ class ListIncubatorViewController extends GetxController {
     ApiResponse response = await ApiService.instance.postReservation(data);
 
     if (response.result == true) {
-      showDialog(
+      Common.showAlertDialog(
         context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: const [
-                SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  '예약이 완료 되었습니다.',
-                  style: TextStyle(fontSize: 15),
-                ),
-                SizedBox(height: 8),
-                Text('예약시간까지 배정인증을 해주세요.', style: TextStyle(fontSize: 15)),
-              ],
+        title: "예약 삭제",
+        children: const [
+          Text("예약이 완료되었습니다.\n내 정보로 이동하여 배정인증을 해주세요."),
+        ],
+        actions: <Widget>[
+          TextButton(
+            child: const Text(
+              '확인',
+              style: TextStyle(color: Colors.blue),
             ),
-            actions: <Widget>[
-              TextButton(
-                child: const Text(
-                  '확인',
-                  style: TextStyle(color: Colors.blue),
-                ),
-                onPressed: () {
-                  Get.back();
-                  Get.back();
-                },
-              ),
-            ],
-          );
-        },
+            onPressed: () {
+              Get.back();
+              Get.back();
+              MainViewController.instance.selectTab(2);
+            },
+          ),
+        ],
       );
     } else if (response.result == false) {
       showDialog(

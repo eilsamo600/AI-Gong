@@ -32,7 +32,7 @@ class Common extends GetxService {
     );
   }
 
-  static void showAlertDialog({required BuildContext context, required String title, required List<Widget> children}) {
+  static void showAlertDialog({required BuildContext context, required String title, required List<Widget> children, List<Widget>? actions}) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -45,17 +45,18 @@ class Common extends GetxService {
             mainAxisSize: MainAxisSize.min,
             children: children,
           ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text(
-                '확인',
-                style: TextStyle(color: Colors.blue),
-              ),
-              onPressed: () {
-                Get.back();
-              },
-            ),
-          ],
+          actions: actions ??
+              <Widget>[
+                TextButton(
+                  child: const Text(
+                    '확인',
+                    style: TextStyle(color: Colors.blue),
+                  ),
+                  onPressed: () {
+                    Get.back();
+                  },
+                ),
+              ],
         );
       },
     );

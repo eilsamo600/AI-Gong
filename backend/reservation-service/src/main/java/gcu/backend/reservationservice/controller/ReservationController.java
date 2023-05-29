@@ -18,6 +18,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.bind.annotation.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import gcu.backend.reservationservice.jwt.JwtService;
 import gcu.backend.reservationservice.model.Incubator;
 import gcu.backend.reservationservice.model.Reservation;
@@ -29,6 +30,7 @@ import org.springframework.http.HttpStatus;
 
 @RestController
 @Tag(name = "Reservation", description = "예약 API")
+@Slf4j
 public class ReservationController {
 
     @Autowired
@@ -79,17 +81,29 @@ public class ReservationController {
         return new ResponseEntity<List<Reservation>>(reservation, HttpStatus.OK);
     }
 
-    @PutMapping("/reservation/state/{id}")
+    @PostMapping("/reservation/{id}/{state}")
     @Operation(summary = "예약 상태 업데이트", description = "예약 배정완료, 배정하기, 취소완료 상태 업데이트")
-    public ResponseEntity<String> updateReservationState(@PathVariable("id") String id,
-            @RequestParam("state") int newState) {
+    public ResponseEntity<String> updateReservationState(@RequestHeader("Authorization") String value,
+            @PathVariable("id") String id,
+            @PathVariable("state") int newState) {
+        Optional<String> email = jwtService.extractAccessTokenInString(value)
+                .map(token -> jwtService.extractEmail(token)).orElse(Optional.empty());
+        if (!email.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
         // id와 일치하는 데이터를 데이터베이스에서 찾습니다.
         Optional<Reservation> optionalReservation = reservationRepository.findById(new ObjectId(id));
 
         if (optionalReservation.isPresent()) {
             Reservation reservation = optionalReservation.get();
 
+            if (newState < 0 || newState > 3) {
+                return ResponseEntity.badRequest().build();
+            }
             // 데이터의 state를 변경합니다.
+            if (!reservation.getEmail().equalsIgnoreCase(email.get())) {
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
             reservation.setState(newState);
             reservationRepository.save(reservation); // 변경된 데이터를 저장하거나 업데이트하는 로직을 구현해야합니다.
 
@@ -103,10 +117,15 @@ public class ReservationController {
 
     @DeleteMapping("/reservation/{id}")
     @Operation(summary = "특정 예약정보 삭제", description = "특정 예약정보를 삭제합니다.")
-    public ResponseEntity<Reservation> deleteReservation(@PathVariable String id) {
-
+    public ResponseEntity<String> deleteReservation(@RequestHeader("Authorization") String value,
+            @PathVariable String id) {
+        Optional<String> email = jwtService.extractAccessTokenInString(value)
+                .map(token -> jwtService.extractEmail(token)).orElse(Optional.empty());
+        if (!email.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
         try {
-            reservationRepository.deleteById(new ObjectId(id));
+            reservationRepository.DeleteByIdAndEmail(new ObjectId(id), email.get());
             return ResponseEntity.ok().build();
         } catch (EmptyResultDataAccessException e) {
             // 예약 ID에 해당하는 예약이 없을 경우 예외 처리
