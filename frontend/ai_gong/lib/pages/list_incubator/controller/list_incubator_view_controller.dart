@@ -12,7 +12,8 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class ListIncubatorViewController extends GetxController {
-  static ListIncubatorViewController get instance => Get.find<ListIncubatorViewController>();
+  static ListIncubatorViewController get instance =>
+      Get.find<ListIncubatorViewController>();
 
   RxList<int> dates = List.filled(7, 0).obs;
   RxList<int> states = List.filled(17, 0).obs;
@@ -28,12 +29,15 @@ class ListIncubatorViewController extends GetxController {
         timeval.add(i);
       }
     }
-    String day = DateFormat('d').format(DateTime.utc(today.year, today.month, today.day - (today.weekday - 1) + val));
+    String day = DateFormat('d').format(DateTime.utc(
+        today.year, today.month, today.day - (today.weekday - 1) + val));
 
     var data = Reservation.fromJson({
       'number': roomNum.toString(),
       'time': (timeval).cast<int>(),
-      'date': (today.year.toString() + today.month.toString().padLeft(2, '0') + day.padLeft(2, '0')),
+      'date': (today.year.toString() +
+          today.month.toString().padLeft(2, '0') +
+          day.padLeft(2, '0')),
       'people': num.value,
       'state': 0
     });
@@ -42,7 +46,7 @@ class ListIncubatorViewController extends GetxController {
     if (response.result == true) {
       Common.showAlertDialog(
         context: context,
-        title: "예약 삭제",
+        title: "예약 완료",
         children: const [
           Text("예약이 완료되었습니다.\n내 정보로 이동하여 배정인증을 해주세요."),
         ],
@@ -97,16 +101,23 @@ class ListIncubatorViewController extends GetxController {
     int val = dates.value.indexOf(2);
     var todayIndex = today.weekday - 1;
     if (todayIndex == 5) {
-      today = today.add(const Duration(days: 2)); // Add 2 days to skip the weekend
+      today =
+          today.add(const Duration(days: 2)); // Add 2 days to skip the weekend
       todayIndex = today.weekday - 1;
     }
     if (todayIndex == 6) {
-      today = today.add(const Duration(days: 1)); // Add 2 days to skip the weekend
+      today =
+          today.add(const Duration(days: 1)); // Add 2 days to skip the weekend
       todayIndex = today.weekday - 1;
     }
-    DateTime selectday = DateTime.utc(today.year, today.month, today.day - (today.weekday - 1) + val);
-    String checkday = selectday.year.toString() + selectday.month.toString().padLeft(2, '0') + selectday.day.toString().padLeft(2, '0');
-    String checknow = now.value.year.toString() + now.value.month.toString().padLeft(2, '0') + now.value.day.toString().padLeft(2, '0');
+    DateTime selectday = DateTime.utc(
+        today.year, today.month, today.day - (today.weekday - 1) + val);
+    String checkday = selectday.year.toString() +
+        selectday.month.toString().padLeft(2, '0') +
+        selectday.day.toString().padLeft(2, '0');
+    String checknow = now.value.year.toString() +
+        now.value.month.toString().padLeft(2, '0') +
+        now.value.day.toString().padLeft(2, '0');
     int parsedCheckday = int.parse(checkday);
     int parsednow = int.parse(checknow);
 
@@ -181,11 +192,13 @@ class ListIncubatorViewController extends GetxController {
   void datesInit() {
     var todayIndex = today.weekday - 1;
     if (todayIndex == 5) {
-      today = today.add(const Duration(days: 2)); // Add 2 days to skip the weekend
+      today =
+          today.add(const Duration(days: 2)); // Add 2 days to skip the weekend
       todayIndex = today.weekday - 1;
     }
     if (todayIndex == 6) {
-      today = today.add(const Duration(days: 1)); // Add 2 days to skip the weekend
+      today =
+          today.add(const Duration(days: 1)); // Add 2 days to skip the weekend
       todayIndex = today.weekday - 1;
     }
     dates.value = List.filled(7, 0);
@@ -246,7 +259,8 @@ class ListIncubatorViewController extends GetxController {
   }
 
   Future<void> getIncubatorList() async {
-    ApiResponse<IncubatorListResponse> response = await ApiService.instance.getIncubatorList();
+    ApiResponse<IncubatorListResponse> response =
+        await ApiService.instance.getIncubatorList();
     if (response.result) {
       if (response.value!.incubators!.isNotEmpty) {
         incubatorList.value = response.value!.incubators!;
@@ -257,7 +271,8 @@ class ListIncubatorViewController extends GetxController {
 
   Future<void> getIncubator(int id) async {
     incubator.value = Incubator();
-    ApiResponse<IncubatorResponse> response = await ApiService.instance.getIncubator(id);
+    ApiResponse<IncubatorResponse> response =
+        await ApiService.instance.getIncubator(id);
     await Future.delayed(const Duration(milliseconds: 150));
     if (response.result) {
       incubator.value = response.value!.incubator!;
@@ -266,7 +281,8 @@ class ListIncubatorViewController extends GetxController {
 
   Future<void> getAvailableReservation(String number, String date) async {
     isAvailable.value = false;
-    ApiResponse<AvailableReservationResponse> responseresult = await ApiService.instance.getAvailableReservation(number, date);
+    ApiResponse<AvailableReservationResponse> responseresult =
+        await ApiService.instance.getAvailableReservation(number, date);
     if (responseresult.result) {
       reservations.value = responseresult.value!.reservations!;
       for (var i in reservations) {
