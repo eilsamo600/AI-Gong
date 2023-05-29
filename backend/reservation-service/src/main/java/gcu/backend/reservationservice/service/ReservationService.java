@@ -32,8 +32,6 @@ public class ReservationService {
         LocalDate today = LocalDate.now();
         int hour = now.getHour();
         int minute = now.getMinute();
-        hour = 13;
-        minute = 25;
         int currentTime = hour * 60 + minute;
         if (currentTime >= END_TIME) {
             log.info("currentTime >= END_TIME");
