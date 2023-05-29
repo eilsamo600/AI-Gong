@@ -68,59 +68,73 @@ class Common extends GetxService {
         context: Get.context!,
         builder: ((context) {
           return SizedBox(
-            height: 300,
+            height: 250,
             child: PanelComponent(
-              child: Center(
-                  child: Column(children: <Widget>[
-                const SizedBox(
-                  height: 35,
-                ),
-                const Text('간단하게 로그인 하고', style: TextStyle(fontSize: 24, color: Colors.black)),
-                const SizedBox(
-                  height: 5,
-                ),
-                const Text('더 많은 애공 서비스 누리기', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black)),
-                const SizedBox(
-                  height: 20,
-                ),
-                const Text('애공은 가천 계정으로만 로그인 할 수 있어요!', style: TextStyle(fontSize: 15, color: Colors.black)),
-                const SizedBox(
-                  height: 5,
-                ),
-                const Text('ex) aigong@gachon.ac.kr', style: TextStyle(fontSize: 15, color: Colors.black45, fontStyle: FontStyle.italic)),
-                const SizedBox(
-                  height: 30,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 90.0, right: 90),
-                  child: ButtonTheme(
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
+              radius: 15,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Row(
+                        children: [
+                          const Text('AiGong', style: TextStyle(fontSize: 32, color: Colors.black, fontWeight: FontWeight.bold)),
+                          const Spacer(),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: const [
+                              Text('간단하게 로그인 하고', style: TextStyle(fontSize: 23, color: Colors.black)),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text('더 많은 애공 서비스 누리기', style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold, color: Colors.black)),
+                            ],
                           ),
-                          onPressed: () async {
-                            if (!UserService.instance.logining) {
-                              bool x = await UserService.instance.login();
-                              Navigator.pop(context);
-                              if (x) MainViewController.instance.selectTab(2);
-                            }
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset('assets/images/google.png', width: 20),
-                                const SizedBox(width: 15),
-                                const Text('가천 계정으로 로그인하기', style: TextStyle(fontSize: 15, color: Colors.black)),
-                              ],
-                            ),
-                          ))),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-              ])),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Center(
+                    child: SizedBox(
+                      width: 320,
+                      height: 60,
+                      child: ButtonTheme(
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.white,
+                              ),
+                              onPressed: () async {
+                                if (!UserService.instance.logining) {
+                                  bool x = await UserService.instance.login();
+                                  Navigator.pop(context);
+                                  if (x) MainViewController.instance.selectTab(2);
+                                }
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset('assets/images/google.png', width: 25),
+                                    const SizedBox(width: 15),
+                                    const Text('Google 계정으로 로그인하기', style: TextStyle(fontSize: 17, color: Colors.black, fontWeight: FontWeight.bold)),
+                                  ],
+                                ),
+                              ))),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                ]),
+              ),
             ),
           );
         }));
