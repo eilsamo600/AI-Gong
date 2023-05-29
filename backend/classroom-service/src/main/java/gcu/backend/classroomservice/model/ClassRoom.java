@@ -63,8 +63,9 @@ public class ClassRoom {
         int hour = now.getHour();
         int minute = now.getMinute();
         // 서버 시간 고정
-        // week = 1;
-        // hour = 10;
+        week = 1;
+        hour = 10;
+        minute = 30;
         float time = hour * 60 + minute;
         this.serverTime = String.format("%d-%02d:%02d", week, hour, minute);
 
