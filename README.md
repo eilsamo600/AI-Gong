@@ -1,2 +1,2 @@
-# AI-GONG, Find out Empty Classroom In AI Building
+# SW Project, Finding out Empty Classroom In Gachon AI Building
 hello
