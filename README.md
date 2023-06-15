@@ -79,9 +79,15 @@ src="https://raw.githubusercontent.com/Jaezic/Sw_Engineering_Project_23/d64e6617
   <img src="https://raw.githubusercontent.com/Jaezic/Sw_Engineering_Project_23/93058e4cd3afc77b1959863f1daa92d905a42371/assets/ai-gong.png"width="50%" height="40%"></img></p> 
   
   *<div align="center"> You don't need a separate web server, you can use python to use the server. Go to the pre-built build/web directory and execute it like below, and you can see it in your browser at the address 127.0.0.1:8080.</div>*
-  
 
-## Sourcode Code Comment
++ ### Spring boot run
+  Navigate to the project you want to run and type the following command in the command window.
+  
+  ``` sh
+  ./mvnw spring-boot:run
+  ```
+
+## Sourecode Code Comment
 This is the actual classroom model used by the ai-gong project.
 ``` java
     // Field '_id', type 'ObjectId'
