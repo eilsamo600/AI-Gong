@@ -2,6 +2,8 @@ import 'package:ai_gong/common/common.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+// PanelComponent
+// This component is used to display a panel at the bottom of the screen
 class PanelComponent extends StatelessWidget {
   Widget child;
   double radius;
@@ -11,6 +13,8 @@ class PanelComponent extends StatelessWidget {
     this.radius = 20,
   });
 
+  // Build
+  // This displays the panel at the bottom of the screen
   @override
   Widget build(BuildContext context) {
     return Stack(

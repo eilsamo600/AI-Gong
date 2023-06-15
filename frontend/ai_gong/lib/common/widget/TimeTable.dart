@@ -5,6 +5,7 @@ import 'package:ai_gong/pages/list_classroom/controller/list_classroom_view_cont
 import 'package:ai_gong/restAPI/models/Classroom.dart';
 import 'package:flutter/material.dart';
 
+// TimeTable Widget, used to display the timetable of a classroom
 class TimeTable extends StatelessWidget {
   final ClassRoom classRoom;
   const TimeTable({super.key, required this.classRoom});
@@ -17,6 +18,10 @@ class TimeTable extends StatelessWidget {
   static double outwidth = 1.0;
   static double verticalwidth = 0.5;
   static double horizontalwidth = 0.5;
+
+  // This displays the week column, which is the first column of the timetable
+  // It displays the days of the week
+  // It also displays the time of the day
   @override
   Widget build(BuildContext context) {
     print(classRoom.lectures);
@@ -47,7 +52,8 @@ class TimeTable extends StatelessWidget {
     );
   }
 
-  // Generates the columns for each day of the week
+  // classColumn is used to display the timetable of a classroom
+  // It displays the time of the day
   List<Widget> classColumn(int index) {
     List removed = [];
     if (classRoom.lectures!.containsKey((index + 1).toString())) {
@@ -156,6 +162,8 @@ class TimeTable extends StatelessWidget {
     ];
   }
 
+  // weekColumn is used to display the timetable of a classroom
+  // It displays the time of the day
   Expanded weekColumn() {
     return Expanded(
       child: Column(

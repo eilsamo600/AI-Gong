@@ -5,15 +5,21 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
+// Common Service
+// This service is used to store common variables and function related to the app
 class Common extends GetxService {
   static Common get instance => Get.find<Common>();
   static const bool isDev = true;
   static Logger logger = Logger(filter: MyFilter());
+  // baseUrl is the base url of the backend server
   static const String baseUrl = "https://ai-gong.com:8000/";
+  // authbaseUrl is the base url of the auth server
   static const String authbaseUrl = "https://ai-gong.com:8003/";
 
+  // getWidth is used to get the width of the screen
   static double get getWidth => GetPlatform.isMobile ? Get.width : 500;
 
+  // This function is used to display a snackbar
   static SnackbarController showSnackBar(
       {required String messageText,
       Color textColor = Colors.white,
@@ -32,6 +38,7 @@ class Common extends GetxService {
     );
   }
 
+  // This function is used to display a dialog
   static void showAlertDialog({required BuildContext context, required String title, required List<Widget> children, List<Widget>? actions}) {
     showDialog(
       context: context,
@@ -62,6 +69,8 @@ class Common extends GetxService {
     );
   }
 
+  // This function is used to display a dialog
+  // loginPanel is used to display a login panel
   static void loginPanel() async {
     showModalBottomSheet(
         isScrollControlled: true,
@@ -137,15 +146,18 @@ class Common extends GetxService {
         }));
   }
 
+  // init is used to initialize the service
   Future<Common> init() async {
     Common.logger.d('$runtimeType init!');
     return this;
   }
 
+  // getNowTime is used to get the current time
   String getNowTime(DateTime now) {
     return '${now.hour > 12 ? '오후' : '오전'} ${now.hour > 12 ? now.hour - 12 : now.hour == 0 ? 12 : now.hour}시 ${now.minute}분';
   }
 
+// getNowWeek is used to get the current week
   String getNowWeek(DateTime now) {
     switch (now.weekday) {
       case 1:
@@ -168,6 +180,7 @@ class Common extends GetxService {
   }
 }
 
+// MyFilter is used to filter the log
 class MyFilter extends LogFilter {
   @override
   bool shouldLog(LogEvent event) {
