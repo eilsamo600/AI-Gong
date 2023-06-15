@@ -1,6 +1,6 @@
 import 'package:ai_gong/Service/user_service.dart';
 import 'package:ai_gong/common/common.dart';
-import 'package:ai_gong/pages/list_incubator/view/list_incubator_view_page.dart';
+import 'package:ai_gong/pages/main/controller/main_view_controller.dart';
 import 'package:ai_gong/pages/my_info/controller/my_info_view_controller.dart';
 import 'package:ai_gong/pages/my_info/view/component/myInfo_component.dart';
 import 'package:flutter/material.dart';
@@ -91,35 +91,34 @@ class MyInfoViewPage extends StatelessWidget {
                     ),
                   ),
                 ])),
-            if (controller.myReservationList.value != Null)
-              Obx(
-                () => Column(children: [
-                  for (int index = 0; index < controller.myReservationList.length; index++)
-                    Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5),
-                        child: Column(
-                          children: [
-                            if (index == 0) const SizedBox(height: 20),
-                            MyInfoComponent(model: controller.myReservationList.value[index]),
-                            const Padding(
-                              padding: EdgeInsets.only(bottom: 10, top: 15),
-                              child: Divider(
-                                height: 1,
-                                thickness: 1,
-                              ),
-                            )
-                          ],
-                        ))
-                ]),
-              ),
-            // if (controller.classRoomList.value == Null)
+            Obx(
+              () => Column(children: [
+                for (int index = 0; index < controller.myReservationList.length; index++)
+                  Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                      child: Column(
+                        children: [
+                          if (index == 0) const SizedBox(height: 20),
+                          MyInfoComponent(model: controller.myReservationList.value[index]),
+                          const Padding(
+                            padding: EdgeInsets.only(bottom: 10, top: 15),
+                            child: Divider(
+                              height: 1,
+                              thickness: 1,
+                            ),
+                          )
+                        ],
+                      ))
+              ]),
+            ),
             Container(
               padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 25),
               //margin: EdgeInsets.all(15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text("예약 정보가 없습니다.", style: TextStyle(color: Color.fromRGBO(103, 103, 103, 1), fontSize: 17)),
+                  Text(controller.myReservationList.isEmpty ? "예약 정보가 없습니다." : "새로운 예약을 해보세요.",
+                      style: const TextStyle(color: Color.fromRGBO(103, 103, 103, 1), fontSize: 17)),
                   TextButton(
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -131,16 +130,8 @@ class MyInfoViewPage extends StatelessWidget {
                       minimumSize: MaterialStateProperty.all(const Size(90, 40)),
                     ),
                     onPressed: () {
-                      Get.toNamed(ListIncubatorViewPage.url);
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) =>
-                      //             const ListIncubatorViewPage()));
+                      MainViewController.instance.selectTab(1);
                     },
-                    // {
-                    //   getPages:CustomRouter.routes;
-                    // },
                     child: const Text(
                       '예약하기',
                       style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w400),

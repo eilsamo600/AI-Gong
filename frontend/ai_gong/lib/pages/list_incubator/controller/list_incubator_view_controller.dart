@@ -1,10 +1,12 @@
+import 'package:ai_gong/common/common.dart';
 import 'package:ai_gong/common/service_response.dart';
+import 'package:ai_gong/pages/main/controller/main_view_controller.dart';
 import 'package:ai_gong/restAPI/api_service.dart';
 import 'package:ai_gong/restAPI/models/Incubator.dart';
+import 'package:ai_gong/restAPI/models/Reservation.dart';
 import 'package:ai_gong/restAPI/response/get_available_reservation.dart';
 import 'package:ai_gong/restAPI/response/get_incubator_list_response.dart';
 import 'package:ai_gong/restAPI/response/get_incubator_response.dart';
-import 'package:ai_gong/restAPI/models/Reservation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -15,6 +17,7 @@ class ListIncubatorViewController extends GetxController {
 
   RxList<int> dates = List.filled(7, 0).obs;
   RxList<int> states = List.filled(17, 0).obs;
+  RxBool isAvailable = false.obs;
   var today = DateTime.now().toUtc();
 
   void postReservation(BuildContext context, int? roomNum) async {
@@ -30,49 +33,36 @@ class ListIncubatorViewController extends GetxController {
         today.year, today.month, today.day - (today.weekday - 1) + val));
 
     var data = Reservation.fromJson({
-      'email': 'thwjd082@gachon.ac.kr',
-      'number': roomnum.toString(),
-      'time': (timeval as List).cast<int>(),
-      'date': (today.year.toString() + today.month.toString() + day),
-      'people': (num.value as int),
+      'number': roomNum.toString(),
+      'time': (timeval).cast<int>(),
+      'date': (today.year.toString() +
+          today.month.toString().padLeft(2, '0') +
+          day.padLeft(2, '0')),
+      'people': num.value,
       'state': 0
     });
-
     ApiResponse response = await ApiService.instance.postReservation(data);
 
     if (response.result == true) {
-      showDialog(
+      Common.showAlertDialog(
         context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: const [
-                SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  '예약이 완료 되었습니다.',
-                  style: TextStyle(fontSize: 15),
-                ),
-                SizedBox(height: 8),
-                Text('예약시간까지 배정인증을 해주세요.', style: TextStyle(fontSize: 15)),
-              ],
+        title: "예약 완료",
+        children: const [
+          Text("예약이 완료되었습니다.\n내 정보로 이동하여 배정인증을 해주세요."),
+        ],
+        actions: <Widget>[
+          TextButton(
+            child: const Text(
+              '확인',
+              style: TextStyle(color: Colors.blue),
             ),
-            actions: <Widget>[
-              TextButton(
-                child: Text(
-                  '확인',
-                  style: TextStyle(color: Colors.blue),
-                ),
-                onPressed: () {
-                  Get.back();
-                  Get.back();
-                },
-              ),
-            ],
-          );
-        },
+            onPressed: () {
+              Get.back();
+              Get.back();
+              MainViewController.instance.selectTab(2);
+            },
+          ),
+        ],
       );
     } else if (response.result == false) {
       showDialog(
@@ -90,7 +80,7 @@ class ListIncubatorViewController extends GetxController {
             ),
             actions: <Widget>[
               TextButton(
-                child: Text(
+                child: const Text(
                   '확인',
                   style: TextStyle(color: Colors.blue),
                 ),
@@ -108,135 +98,93 @@ class ListIncubatorViewController extends GetxController {
 
   void statesInit(int? roomNum) async {
     states.value = List.filled(16, 0);
-    int count = -2;
     int val = dates.value.indexOf(2);
     var todayIndex = today.weekday - 1;
     if (todayIndex == 5) {
-      today = today.add(Duration(days: 2)); // Add 2 days to skip the weekend
+      today =
+          today.add(const Duration(days: 2)); // Add 2 days to skip the weekend
       todayIndex = today.weekday - 1;
     }
     if (todayIndex == 6) {
-      today = today.add(Duration(days: 1)); // Add 2 days to skip the weekend
+      today =
+          today.add(const Duration(days: 1)); // Add 2 days to skip the weekend
       todayIndex = today.weekday - 1;
     }
-    String day = DateFormat('d').format(DateTime.utc(
-        today.year, today.month, today.day - (today.weekday - 1) + val));
-    String checkday = today.year.toString() + today.month.toString() + day;
-    print("checkday:" + checkday + " 오늘 날짜: " + day);
-    getAvailableReservation(roomNum.toString(), checkday);
+    DateTime selectday = DateTime.utc(
+        today.year, today.month, today.day - (today.weekday - 1) + val);
+    String checkday = selectday.year.toString() +
+        selectday.month.toString().padLeft(2, '0') +
+        selectday.day.toString().padLeft(2, '0');
+    String checknow = now.value.year.toString() +
+        now.value.month.toString().padLeft(2, '0') +
+        now.value.day.toString().padLeft(2, '0');
+    int parsedCheckday = int.parse(checkday);
+    int parsednow = int.parse(checknow);
 
-    if (now.value.hour >= 9) {
-      for (int i = 9; i <= now.value.hour; i++) {
-        if (i >= 17) {
-          count++;
-          break;
-        }
-        count += 2;
+    int currentTime = now.value.hour * 60 + now.value.minute;
+
+    if (parsedCheckday > parsednow) {
+      states.value = List.filled(17, 0);
+      await getAvailableReservation(roomNum.toString(), checkday);
+    } else if (parsedCheckday == parsednow) {
+      await getAvailableReservation(roomNum.toString(), checkday);
+      if (now.value.hour >= 9) {
+        // for (int i = 0; i < states.value.length; i++) {
+        //   if (currentTime >= 540 + (i + 1) * 30) {
+        //     print(currentTime);
+        //     print((540 + (i + 1) * 30));
+        //     states.value[i] = 3;
+        //   }
+        // }
+
       }
-    }
-    for (int i = 0; i <= count; i++) {
-      //현재 시각까지 안눌리게
-      states.value[i] = 2;
-    }
-    if (now.value.hour < 17) {
-      //30분이 넘었다면 앞타임도 안눌리게
-      if (now.value.minute >= 30) {
-        states.value[++count] = 2;
-      }
+    } else {
+      states.value = List.filled(17, 2);
     }
     states.refresh();
+  }
+
+  void changeStates(int index, int value) {
+    if (states.value[index] != 3) {
+      states.value[index] = value;
+    }
   }
 
   void selected(int index) {
     int start = states.value.indexOf(1);
     int end = 0;
+    // 0이 안눌림, 1이 눌림, 2는 안됨, 3은 예약됨
     if (states.value[index] == 0) {
       if (start == -1) {
         // 아무것도 안 눌림
-        states.value[index] = 1;
+        changeStates(index, 1);
 
         for (int i = index + 4; i < states.length; i++) {
           if (i < states.length) {
-            states.value[i] = 2;
+            changeStates(i, 2);
           }
         }
         for (int i = index - 1; i >= 0; i--) {
-          states.value[i] = 2;
+          changeStates(i, 2);
         }
       } else {
         // 무언가 눌림
-
         for (int i = start; i < index + 1; i++) {
-          states.value[i] = 1;
+          changeStates(i, 1);
         }
       }
     } else if (states.value[index] == 1) {
-      for (int i = index; i < start + 4; i++) {
-        states.value[i] = 0;
+      for (int i = index; i < (start + 4 > 15 ? 16 : start + 4); i++) {
+        if (states.value[i] != 2) {
+          changeStates(i, 0);
+        }
       }
       if (!states.value.contains(1)) {
         for (int i = 0; i < states.length; i++) {
-          states.value[i] = 0;
+          changeStates(i, 0);
         }
       }
-      // states.value.
-      // if (!states.value.contains(1)) {
-      //   for (int i = 0; i < states.length; i++) {
-      //     states.value[i] = 0;
-      //   }
-      // }
     }
-    // 취소
-    // if (states.value[index] == 1) {
-    //   states.value[index] = 0;
-    // } else if (states.value[index] == 0) {
-    //   states.value[index] = 1;
-    // }
-
-    // if (states.value[index] == 1) {
-    //   states.value[index] = 0;
-    //   int start = states.value.indexOf(1);
-    //   // 선택한 애 앞에 3개는 다 흰색
-    //   if (start != 0) {
-    //     for (int i = start + 1; i < (start + 4 > states.length ? states.length : start + 4); i++) {
-    //       if (start < index + 4) {
-    //         if (states.value[i] != 1) {
-    //           states.value[i] = 0;
-    //         }
-    //       }
-    //     }
-    //     for (int i = start - 1; i >= 0; i--) {
-    //       states.value[i] = 2;
-    //     }
-    //   }
-    //   start = states.value.indexOf(1);
-    //   if (start == -1) {
-    //     for (int i = 0; i < states.length; i++) {
-    //       states.value[i] = 0;
-    //     }
-    //   }
-    //   start = states.value.indexOf(1);
-    //   for (int i = index + 1; i < (index + 3 > states.length ? states.length : index + 3); i++) {
-    //     if (states.value[i] == 1) {
-    //       states.value[i] = 0;
-    //     }
-    //   }
-    // } else if (states.value[index] == 0) {
-    //   // 선택
-    //   states.value[index] = 1;
-    //   // 무조건 내뒤는 다 검정색
-    //   int start = states.value.indexOf(1);
-    //   if (start != 0) {
-    //     for (int i = start - 1; i >= 0; i--) {
-    //       states.value[i] = 2;
-    //     }
-    //   }
-
-    //   // 선택한 애 앞에 다 검정색
-    //   for (int i = index + 4; i < states.length; i++) {
-    //     states.value[i] = 2;
-    //   }
-    // }
 
     states.refresh();
   }
@@ -244,11 +192,13 @@ class ListIncubatorViewController extends GetxController {
   void datesInit() {
     var todayIndex = today.weekday - 1;
     if (todayIndex == 5) {
-      today = today.add(Duration(days: 2)); // Add 2 days to skip the weekend
+      today =
+          today.add(const Duration(days: 2)); // Add 2 days to skip the weekend
       todayIndex = today.weekday - 1;
     }
     if (todayIndex == 6) {
-      today = today.add(Duration(days: 1)); // Add 2 days to skip the weekend
+      today =
+          today.add(const Duration(days: 1)); // Add 2 days to skip the weekend
       todayIndex = today.weekday - 1;
     }
     dates.value = List.filled(7, 0);
@@ -286,21 +236,10 @@ class ListIncubatorViewController extends GetxController {
   }
 
   Rx<int> num = 0.obs;
-  Rx<int> roomnum = 0.obs;
 
   void numInit() {
     num.value = 0;
     num.refresh();
-  }
-
-  void roomnumInit() {
-    roomnum.value = 0;
-    roomnum.refresh();
-  }
-
-  void roomnumchange(int n) {
-    roomnum.value += n;
-    roomnum.refresh();
   }
 
   void numchange(int n) {
@@ -323,7 +262,9 @@ class ListIncubatorViewController extends GetxController {
     ApiResponse<IncubatorListResponse> response =
         await ApiService.instance.getIncubatorList();
     if (response.result) {
-      incubatorList.value = response.value!.incubators!;
+      if (response.value!.incubators!.isNotEmpty) {
+        incubatorList.value = response.value!.incubators!;
+      }
     }
     incubatorList.refresh();
   }
@@ -339,33 +280,24 @@ class ListIncubatorViewController extends GetxController {
   }
 
   Future<void> getAvailableReservation(String number, String date) async {
-    List<int> timelist = [];
-
+    isAvailable.value = false;
     ApiResponse<AvailableReservationResponse> responseresult =
         await ApiService.instance.getAvailableReservation(number, date);
-
     if (responseresult.result) {
-      print('1');
       reservations.value = responseresult.value!.reservations!;
-      print('2');
       for (var i in reservations) {
-        print("true");
+        if (i.state == 2) break;
         if (i.time != null) {
           print(i.time);
           for (var time in i.time!) {
-            timelist.forEach((time) {
-              print(time);
-              states.value[time] = 2;
-            });
+            print(time);
+            states.value[time] = 3;
           }
         }
       }
-      print("finish");
-    }
-    for (int i = 0; i < timelist.length; i++) {
-      int val = timelist[i];
-      print(val);
-      states.value[val] = 2;
+      isAvailable.value = true;
+    } else {
+      states.value = List.filled(16, 0);
     }
     states.refresh();
   }

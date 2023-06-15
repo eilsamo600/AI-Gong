@@ -1,3 +1,5 @@
+import 'package:ai_gong/Service/user_service.dart';
+import 'package:ai_gong/common/common.dart';
 import 'package:ai_gong/common/service_response.dart';
 import 'package:ai_gong/restAPI/api_service.dart';
 import 'package:ai_gong/restAPI/models/Classroom.dart';
@@ -21,14 +23,25 @@ class ListClassRoomViewController extends GetxController {
   }
 
   Future<void> getClassRoomList() async {
-    ApiResponse<ClassRoomListResponse> response = await ApiService.instance.getClassRoomList();
+    ApiResponse<ClassRoomListResponse> response;
+    if (onTapList.value[1]) {
+      response = await ApiService.instance.getClassRoomListByLike();
+    } else {
+      response = await ApiService.instance.getClassRoomList();
+    }
     if (response.result) {
       classRoomList.value = response.value!.classrooms!;
+      classRoomList.value = classRoomList.value
+          .where((classRoom) =>
+              (classRoom.usableLevel == 1 && onTapList.value[2]) ||
+              (classRoom.usableLevel == 2 && onTapList.value[3]) ||
+              (!onTapList.value[2] && !onTapList.value[3]))
+          .toList();
     }
     classRoomList.refresh();
   }
 
-  Future<void> getClassRoom(int id) async {
+  Future<void> getClassRoom(String id) async {
     lectures.value = -1;
     ApiResponse<ClassRoomResponse> response = await ApiService.instance.getClassRoom(id);
     await Future.delayed(const Duration(milliseconds: 250));
@@ -47,9 +60,34 @@ class ListClassRoomViewController extends GetxController {
     }
   }
 
+  Future<void> postLikeClassRoom(String id) async {
+    ApiResponse<ClassRoomResponse> response = await ApiService.instance.postLikeAndClassroom(id);
+    await Future.delayed(const Duration(milliseconds: 250));
+    if (response.result) {
+      classRoom.value.isLike = response.value!.classroom!.isLike;
+      classRoom.refresh();
+    } else {}
+  }
+
   void selectFilter(int index) {
-    index = index;
+    scrollcontroller.value.animateTo(0.0, duration: const Duration(milliseconds: 300), curve: Curves.ease);
+    if (index == 0) {
+      restFilter();
+      getClassRoomList();
+      return;
+    }
+    if (index == 1 && UserService.instance.logining == false) {
+      Common.loginPanel();
+      return;
+    }
+
     onTapList.value[index] = !onTapList.value[index];
+    if (index == 2) {
+      onTapList.value[3] = false;
+    } else if (index == 3) {
+      onTapList.value[2] = false;
+    }
+    getClassRoomList();
     onTapList.refresh();
   }
 
@@ -68,19 +106,6 @@ class ListClassRoomViewController extends GetxController {
     }
   }
 
-  void checkbookmark() {
-    if (bookmark.value == 1) {
-      bookmark.value = 0;
-    } else {
-      bookmark.value = 1;
-    }
-    bookmark.refresh();
-  }
-
-  void bookmarkInit() {
-    bookmark.value = 0;
-  }
-
   Rx<ScrollController> scrollcontroller = ScrollController().obs;
   Rx<DateTime> now = DateTime.now().obs;
 
@@ -89,5 +114,4 @@ class ListClassRoomViewController extends GetxController {
   RxList<ClassRoom> classRoomList = RxList<ClassRoom>();
   RxList<bool> onTapList = List.filled(4, false).obs;
   RxList<String> filterList = ['새로고침', '즐겨찾기', '바로', '곧 끝나는'].obs;
-  RxInt bookmark = 0.obs;
 }

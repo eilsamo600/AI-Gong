@@ -11,9 +11,21 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+// "OAuth2LoginFailureHandler" is a class that implements "AuthenticationFailureHandler" interface.
+// It is used to handle OAuth2 login failure.
 @Slf4j
 @Component("oauth2LoginFailureHandler")
 public class OAuth2LoginFailureHandler implements AuthenticationFailureHandler {
+    /*
+     * onAuthenticationFailure(), this method is called when OAuth2 login fails.
+     * 
+     * Args:
+     * - request: HttpServletRequest : HttpServletRequest object
+     * - response: HttpServletResponse : HttpServletResponse object
+     * 
+     * Return:
+     * - void
+     */
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
             AuthenticationException exception) throws IOException, ServletException {

@@ -9,7 +9,7 @@ class Common extends GetxService {
   static Common get instance => Get.find<Common>();
   static const bool isDev = true;
   static Logger logger = Logger(filter: MyFilter());
-  static const String baseUrl = "http://127.0.0.1:8000/";
+  static const String baseUrl = "https://ai-gong.com:8000/";
   static const String authbaseUrl = "https://ai-gong.com:8003/";
 
   static double get getWidth => GetPlatform.isMobile ? Get.width : 500;
@@ -22,16 +22,43 @@ class Common extends GetxService {
     return Get.rawSnackbar(
       borderRadius: 0,
       snackPosition: position,
-      margin: position == SnackPosition.BOTTOM
-          ? const EdgeInsets.only(top: 16, left: 16, right: 16)
-          : const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+      margin: position == SnackPosition.BOTTOM ? const EdgeInsets.only(top: 16, left: 16, right: 16) : const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
       messageText: Text(
         messageText,
-        style: TextStyle(
-            color: textColor, fontSize: 16, fontWeight: FontWeight.normal),
+        style: TextStyle(color: textColor, fontSize: 16, fontWeight: FontWeight.normal),
       ),
       backgroundColor: backgroundColor,
+    );
+  }
+
+  static void showAlertDialog({required BuildContext context, required String title, required List<Widget> children, List<Widget>? actions}) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            title,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: children,
+          ),
+          actions: actions ??
+              <Widget>[
+                TextButton(
+                  child: const Text(
+                    '확인',
+                    style: TextStyle(color: Colors.blue),
+                  ),
+                  onPressed: () {
+                    Get.back();
+                  },
+                ),
+              ],
+        );
+      },
     );
   }
 
@@ -41,72 +68,70 @@ class Common extends GetxService {
         context: Get.context!,
         builder: ((context) {
           return SizedBox(
-            height: 300,
+            height: 200,
             child: PanelComponent(
-              child: Center(
-                  child: Column(children: <Widget>[
-                const SizedBox(
-                  height: 35,
-                ),
-                const Text('간단하게 로그인 하고',
-                    style: TextStyle(fontSize: 24, color: Colors.black)),
-                const SizedBox(
-                  height: 5,
-                ),
-                const Text('더 많은 애공 서비스 누리기',
-                    style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black)),
-                const SizedBox(
-                  height: 20,
-                ),
-                const Text('애공은 가천 계정으로만 로그인 할 수 있어요!',
-                    style: TextStyle(fontSize: 15, color: Colors.black)),
-                const SizedBox(
-                  height: 5,
-                ),
-                const Text('ex) aigong@gachon.ac.kr',
-                    style: TextStyle(
-                        fontSize: 15,
-                        color: Colors.black45,
-                        fontStyle: FontStyle.italic)),
-                const SizedBox(
-                  height: 30,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 90.0, right: 90),
-                  child: ButtonTheme(
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
+              radius: 15,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        children: [
+                          const Text('AiGong', style: TextStyle(fontSize: 28, color: Colors.black, fontWeight: FontWeight.bold)),
+                          const Spacer(),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: const [
+                              Text('간단하게 로그인 하고', style: TextStyle(fontSize: 19, color: Colors.black)),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text('더 많은 애공 서비스 누리기', style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold, color: Colors.black)),
+                            ],
                           ),
-                          onPressed: () async {
-                            if (!UserService.instance.logining) {
-                              bool x = await UserService.instance.login();
-                              Navigator.pop(context);
-                              if (x) MainViewController.instance.selectTab(2);
-                            }
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset('assets/images/google.png',
-                                    width: 20),
-                                const SizedBox(width: 15),
-                                const Text('가천 계정으로 로그인하기',
-                                    style: TextStyle(
-                                        fontSize: 15, color: Colors.black)),
-                              ],
-                            ),
-                          ))),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-              ])),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  Center(
+                    child: SizedBox(
+                      width: 300,
+                      height: 40,
+                      child: ButtonTheme(
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.white,
+                              ),
+                              onPressed: () async {
+                                if (!await UserService.instance.isLogin()) {
+                                  bool x = await UserService.instance.login();
+                                  Navigator.pop(context);
+                                  if (x) MainViewController.instance.selectTab(2);
+                                }
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset('assets/images/google.png', width: 25),
+                                    const SizedBox(width: 15),
+                                    const Text('Google 계정으로 로그인하기', style: TextStyle(fontSize: 15, color: Colors.black, fontWeight: FontWeight.bold)),
+                                  ],
+                                ),
+                              ))),
+                    ),
+                  ),
+                ]),
+              ),
             ),
           );
         }));

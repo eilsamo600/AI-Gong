@@ -3,6 +3,7 @@ import 'package:ai_gong/common/common.dart';
 import 'package:ai_gong/common/widget/panel_component.dart';
 import 'package:ai_gong/pages/list_incubator/controller/list_incubator_view_controller.dart';
 import 'package:ai_gong/restAPI/models/Incubator.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -16,10 +17,8 @@ class IncubatorComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> buttons = [];
     final now = DateTime.now().toUtc().add(Duration(days: 2));
-    final firstTime = DateFormat('d')
-        .format(DateTime.utc(now.year, now.month, now.day - (now.weekday - 1)));
-    final lastTime = DateFormat('d')
-        .format(DateTime.utc(now.year, now.month, now.day + (7 - now.weekday)));
+    final firstTime = DateFormat('d').format(DateTime.utc(now.year, now.month, now.day - (now.weekday - 1)));
+    final lastTime = DateFormat('d').format(DateTime.utc(now.year, now.month, now.day + (7 - now.weekday)));
     final monthText = DateFormat('M월').format(DateTime(now.month, 5));
 
     final controller = Get.put(ListIncubatorViewController());
@@ -32,7 +31,6 @@ class IncubatorComponent extends StatelessWidget {
         controller.datesInit();
         controller.statesInit(model.roomNum);
         controller.numInit();
-        controller.roomnumInit();
         showModalBottomSheet(
             isScrollControlled: true,
             context: context,
@@ -49,8 +47,7 @@ class IncubatorComponent extends StatelessWidget {
                         SizedBox(
                           width: 15,
                         ),
-                        Text('소회의실 ${model.roomNum ?? '???'}호',
-                            style: textstyle2),
+                        Text('소회의실 ${model.roomNum ?? '???'}호', style: textstyle2),
                       ]),
                     ),
                     SizedBox(
@@ -63,85 +60,35 @@ class IncubatorComponent extends StatelessWidget {
                             SizedBox(
                               width: 15,
                             ),
-                            Text(monthText,
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    letterSpacing: 2.0)),
+                            Text(monthText, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, letterSpacing: 2.0)),
                           ],
                         )),
-                    // Padding(
-                    //   padding: const EdgeInsets.symmetric(
-                    //       horizontal: 30, vertical: 15),
-                    //   child: Row(
-                    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //     children: [
-                    //       for (var i = 0; i < 7; i++)
-                    //         Column(
-                    //           children: [
-                    //             Text(
-                    //               weeks[i],
-                    //               style: TextStyle(
-                    //                   color:
-                    //                       i > 4 ? Colors.grey : Colors.black),
-                    //             ),
-                    //             SizedBox(
-                    //               height: 10,
-                    //             ),
-                    //             Text(
-                    //               DateFormat('d').format(DateTime.utc(
-                    //                   now.year,
-                    //                   now.month,
-                    //                   now.day - (now.weekday - 1) + i)),
-                    //               style: TextStyle(
-                    //                   color: i > 4 ? Colors.grey : Colors.black,
-                    //                   decoration: i > 4
-                    //                       ? TextDecoration.lineThrough
-                    //                       : null),
-                    //             )
-                    //           ],
-                    //         )
-                    //     ],
-                    //   ),
-                    // ),
-
                     Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 30, vertical: 15),
+                        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            for (var i = 0, j = int.parse(firstTime);
-                                i < 7;
-                                i++, j++)
+                            for (var i = 0, j = int.parse(firstTime); i < 7; i++, j++)
                               InkWell(
                                 onTap: () {
-                                  controller.date(
-                                      i.toInt(), j.toInt(), model.roomNum);
+                                  controller.date(i.toInt(), j.toInt(), model.roomNum);
                                 },
                                 child: Obx(() => Container(
                                       width: 50,
                                       height: 65,
                                       decoration: BoxDecoration(
-                                        border:
-                                            controller.dates.value[i.toInt()] ==
-                                                    2
-                                                ? Border.all(
-                                                    color: Color(0xff567BE6),
-                                                    width: 2.0,
-                                                  )
-                                                // ) : Border.all(
-                                                //   color: Color(0xff567BE6),
-                                                //   width: 2.0,
-                                                // ),
-                                                : null,
-                                        color:
-                                            controller.dates.value[i.toInt()] ==
-                                                    2
-                                                ? Color(0xffEFF3FF)
-                                                : null,
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
+                                        border: controller.dates.value[i.toInt()] == 2
+                                            ? Border.all(
+                                                color: Color(0xff567BE6),
+                                                width: 2.0,
+                                              )
+                                            // ) : Border.all(
+                                            //   color: Color(0xff567BE6),
+                                            //   width: 2.0,
+                                            // ),
+                                            : null,
+                                        color: controller.dates.value[i.toInt()] == 2 ? Color(0xffEFF3FF) : null,
+                                        borderRadius: BorderRadius.circular(10.0),
                                       ),
                                       child: Column(
                                         children: [
@@ -150,28 +97,14 @@ class IncubatorComponent extends StatelessWidget {
                                           ),
                                           Text(
                                             weeks[i],
-                                            style: TextStyle(
-                                                color: i > 4
-                                                    ? Colors.grey
-                                                    : Colors.black),
+                                            style: TextStyle(color: i > 4 ? Colors.grey : Colors.black),
                                           ),
                                           SizedBox(
                                             height: 10,
                                           ),
                                           Text(
-                                            DateFormat('d').format(DateTime.utc(
-                                                now.year,
-                                                now.month,
-                                                now.day -
-                                                    (now.weekday - 1) +
-                                                    i)),
-                                            style: TextStyle(
-                                                color: i > 4
-                                                    ? Colors.grey
-                                                    : Colors.black,
-                                                decoration: i > 4
-                                                    ? TextDecoration.lineThrough
-                                                    : null),
+                                            DateFormat('d').format(DateTime.utc(now.year, now.month, now.day - (now.weekday - 1) + i)),
+                                            style: TextStyle(color: i > 4 ? Colors.grey : Colors.black, decoration: i > 4 ? TextDecoration.lineThrough : null),
                                           )
                                         ],
                                       ),
@@ -208,222 +141,236 @@ class IncubatorComponent extends StatelessWidget {
                             )
                           ],
                         )),
-                    Center(
-                      child: Wrap(
-                        spacing: 50.0, // 각 버튼 사이의 가로 간격
-                        runSpacing: 40.0, // 버튼 사이 세로 간격
-                        children: [
-                          for (double i = 9.0, j = 1.0, a = 0;
-                              i < 17.0;
-                              i += 0.5, j++, a++)
-                            InkWell(
-                              onTap: () {
-                                controller.selected(a.toInt());
-                              },
-                              child: Obx(
-                                () => Container(
-                                  decoration: BoxDecoration(
-                                      color:
-                                          controller.states.value[a.toInt()] ==
-                                                  0
-                                              ? Colors.white
-                                              : controller.states
-                                                          .value[a.toInt()] ==
-                                                      2
-                                                  ? Colors.white
-                                                  : //Color(0xffEFF3FF),
-                                                  Colors.white,
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          color: Color(0xffDDDDDD),
-                                          blurRadius: 3.0,
-                                          spreadRadius: 1.0,
-                                          offset: Offset(0.0, 0.0),
-                                        )
-                                      ],
-                                      border:
-                                          controller.states.value[a.toInt()] ==
-                                                  1
-                                              ? Border.all(
-                                                  color: Color(0xff567BE6),
-                                                  width: 2.0,
-                                                )
-                                              : null,
-                                      borderRadius: BorderRadius.circular(5)),
-                                  width: 110,
-                                  height: 55,
-                                  child: Center(
-                                    child: Text(
-                                      '${i.toInt()}:${(i % 1 == 0.5) ? "30" : "00"} ~ ${(i % 1 == 0.5) ? "${i.toInt() + 1}:00" : "${i.toInt()}:30"}',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: controller
-                                                    .states.value[a.toInt()] ==
-                                                0
-                                            ? Colors.black
-                                            : controller.states
-                                                        .value[a.toInt()] ==
-                                                    2
-                                                ? Color(0xffDEE0E4)
-                                                : Colors.black,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            )
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 40,
-                    ),
-
-                    Padding(
-                        padding: EdgeInsets.fromLTRB(35, 0, 35, 0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            // SizedBox(
-                            //   height: 10,
-                            // ),
-                            // SizedBox(
-                            //   width: 20,
-                            // ),
-                            Text(
-                              '인원',
-                              style: TextStyle(
-                                fontSize: 19,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Row(
+                    Obx(
+                      () => !controller.isAvailable.value
+                          ? Center(child: CupertinoActivityIndicator())
+                          : Column(
                               children: [
-                                InkWell(
-                                    onTap: () {
-                                      if (controller.num.value > 0) {
-                                        controller.numchange(-1);
-                                      }
-                                    },
-                                    child: Container(
-                                      height: 43,
-                                      width: 43,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        boxShadow: const [
-                                          BoxShadow(
-                                            color: Color(0xffDDDDDD),
-                                            blurRadius: 3.0,
-                                            spreadRadius: 0.5,
-                                            offset: Offset(0.0, 0.0),
-                                          )
-                                        ],
-                                        border: Border.all(
-                                          color: Color(0xffDDDDDD),
-                                          width: 2.0,
-                                        ),
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          '-',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 22,
+                                Center(
+                                  child: Wrap(
+                                    spacing: 50.0, // 각 버튼 사이의 가로 간격
+                                    runSpacing: 40.0, // 버튼 사이 세로 간격
+                                    children: [
+                                      for (double i = 9.0, j = 1.0, a = 0; i < 17.0; i += 0.5, j++, a++)
+                                        InkWell(
+                                          onTap: () {
+                                            controller.selected(a.toInt());
+                                          },
+                                          child: Obx(
+                                            () => Container(
+                                              decoration: BoxDecoration(
+                                                  color: controller.states.value[a.toInt()] == 0
+                                                      ? Colors.white
+                                                      : controller.states.value[a.toInt()] == 2
+                                                          ? Colors.white
+                                                          : //Color(0xffEFF3FF),
+                                                          Colors.white,
+                                                  boxShadow: const [
+                                                    BoxShadow(
+                                                      color: Color(0xffDDDDDD),
+                                                      blurRadius: 3.0,
+                                                      spreadRadius: 1.0,
+                                                      offset: Offset(0.0, 0.0),
+                                                    )
+                                                  ],
+                                                  border: controller.states.value[a.toInt()] == 1
+                                                      ? Border.all(
+                                                          color: Color(0xff567BE6),
+                                                          width: 2.0,
+                                                        )
+                                                      : null,
+                                                  borderRadius: BorderRadius.circular(5)),
+                                              width: 110,
+                                              height: 55,
+                                              child: Center(
+                                                child: Text(
+                                                  '${i.toInt()}:${(i % 1 == 0.5) ? "30" : "00"} ~ ${(i % 1 == 0.5) ? "${i.toInt() + 1}:00" : "${i.toInt()}:30"}',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    color: controller.states.value[a.toInt()] == 0
+                                                        ? Colors.black
+                                                        : controller.states.value[a.toInt()] == 2 || controller.states.value[a.toInt()] == 3
+                                                            ? Color(0xffDEE0E4)
+                                                            : Colors.black,
+                                                    fontSize: 14,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                      ),
-                                    )),
-                                SizedBox(
-                                  width: 15,
-                                ),
-                                Obx(
-                                  () => Text(
-                                    controller.num.value.toString(),
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 20,
-                                    ),
+                                        )
+                                    ],
                                   ),
                                 ),
                                 SizedBox(
-                                  width: 15,
+                                  height: 40,
                                 ),
-                                InkWell(
-                                    onTap: () {
-                                      if (controller.num.value < 7) {
-                                        controller.numchange(1);
-                                      }
-                                    },
-                                    child: Container(
-                                      height: 43,
-                                      width: 43,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        boxShadow: const [
-                                          BoxShadow(
-                                            color: Color(0xffDDDDDD),
-                                            blurRadius: 3.0,
-                                            spreadRadius: 0.5,
-                                            offset: Offset(0.0, 0.0),
-                                          )
-                                        ],
-                                        border: Border.all(
-                                          color: Color(0xffDDDDDD),
-                                          width: 2.0,
-                                        ),
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          '+',
-                                          textAlign: TextAlign.center,
+                                Padding(
+                                    padding: EdgeInsets.fromLTRB(35, 0, 35, 0),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        // SizedBox(
+                                        //   height: 10,
+                                        // ),
+                                        // SizedBox(
+                                        //   width: 20,
+                                        // ),
+                                        Text(
+                                          '인원',
                                           style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 22,
+                                            fontSize: 19,
+                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                      ),
+                                        Row(
+                                          children: [
+                                            InkWell(
+                                                onTap: () {
+                                                  if (controller.num.value > 0) {
+                                                    controller.numchange(-1);
+                                                  }
+                                                },
+                                                child: Container(
+                                                  height: 43,
+                                                  width: 43,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    boxShadow: const [
+                                                      BoxShadow(
+                                                        color: Color(0xffDDDDDD),
+                                                        blurRadius: 3.0,
+                                                        spreadRadius: 0.5,
+                                                        offset: Offset(0.0, 0.0),
+                                                      )
+                                                    ],
+                                                    border: Border.all(
+                                                      color: Color(0xffDDDDDD),
+                                                      width: 2.0,
+                                                    ),
+                                                    borderRadius: BorderRadius.circular(5),
+                                                  ),
+                                                  child: Center(
+                                                    child: Text(
+                                                      '-',
+                                                      textAlign: TextAlign.center,
+                                                      style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 22,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                )),
+                                            SizedBox(
+                                              width: 15,
+                                            ),
+                                            Obx(
+                                              () => Text(
+                                                controller.num.value.toString(),
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 20,
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: 15,
+                                            ),
+                                            InkWell(
+                                                onTap: () {
+                                                  if (controller.num.value < 7) {
+                                                    controller.numchange(1);
+                                                  }
+                                                },
+                                                child: Container(
+                                                  height: 43,
+                                                  width: 43,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    boxShadow: const [
+                                                      BoxShadow(
+                                                        color: Color(0xffDDDDDD),
+                                                        blurRadius: 3.0,
+                                                        spreadRadius: 0.5,
+                                                        offset: Offset(0.0, 0.0),
+                                                      )
+                                                    ],
+                                                    border: Border.all(
+                                                      color: Color(0xffDDDDDD),
+                                                      width: 2.0,
+                                                    ),
+                                                    borderRadius: BorderRadius.circular(5),
+                                                  ),
+                                                  child: Center(
+                                                    child: Text(
+                                                      '+',
+                                                      textAlign: TextAlign.center,
+                                                      style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 22,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                )),
+                                          ],
+                                        ),
+                                      ],
                                     )),
+                                SizedBox(
+                                  height: 60,
+                                ),
+                                Center(
+                                  child: Wrap(children: [
+                                    SizedBox(
+                                      width: 450,
+                                      height: 55,
+                                      child: OutlinedButton(
+                                        onPressed: () async {
+                                          if (!UserService.instance.logining) {
+                                            Common.showAlertDialog(
+                                                context: context,
+                                                children: [
+                                                  Text('로그인 후 이용해주세요.'),
+                                                ],
+                                                title: '알림');
+                                            return;
+                                          }
+
+                                          if (controller.states.value.contains(1) == false) {
+                                            Common.showAlertDialog(
+                                                context: context,
+                                                children: [
+                                                  Text('예약할 시간을 선택해주세요.'),
+                                                ],
+                                                title: '알림');
+                                            return;
+                                          }
+                                          if (controller.num.value == 0) {
+                                            Common.showAlertDialog(
+                                                context: context,
+                                                children: [
+                                                  Text('인원을 선택해주세요.'),
+                                                ],
+                                                title: '알림');
+                                            return;
+                                          }
+                                          controller.postReservation(context, model.roomNum);
+                                        },
+                                        child: Text(
+                                          '예약하기',
+                                          style: TextStyle(color: Colors.black, fontSize: 16),
+                                        ),
+                                      ),
+                                    ),
+                                  ]),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
                               ],
                             ),
-                          ],
-                        )),
-                    SizedBox(
-                      height: 60,
-                    ),
-                    Center(
-                      child: Wrap(children: [
-                        SizedBox(
-                          width: 450,
-                          height: 55,
-                          child: OutlinedButton(
-                            onPressed: () async {
-                              // bool islogin =
-                              //     await UserService.instance.isLogin();
-                              // if (!islogin) {
-                              //   Common.loginPanel();
-                              //   return;
-                              // }
-                              controller.roomnumchange(model.roomNum!.toInt());
-                              controller.postReservation(
-                                  context, model.roomNum);
-                            },
-                            child: Text(
-                              '예약하기',
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 16),
-                            ),
-                          ),
-                        ),
-                      ]),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
+                    )
                   ],
                 ),
               );
@@ -443,10 +390,12 @@ class IncubatorComponent extends StatelessWidget {
                 color: (model.usableLevel ?? 1) == 1
                     ? Colors.green
                     : model.usableLevel == 2
-                        ? Colors.orange
-                        : model.usableLevel == 4
-                            ? const Color.fromARGB(255, 206, 0, 0)
-                            : Colors.red,
+                        ? Colors.red
+                        : model.usableLevel == 3
+                            ? Colors.orange
+                            : model.usableLevel == 4
+                                ? const Color.fromARGB(255, 206, 0, 0)
+                                : Colors.red,
               ),
             ),
             const SizedBox(
@@ -457,8 +406,7 @@ class IncubatorComponent extends StatelessWidget {
               children: [
                 Text(
                   '소회의실 ${model.roomNum ?? '???'}',
-                  style: const TextStyle(
-                      fontSize: 25, fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(
                   height: 5,
@@ -470,8 +418,7 @@ class IncubatorComponent extends StatelessWidget {
                     children: [
                       Text(
                         'AI공학관 ${model.classNum ?? '???'}호',
-                        style: const TextStyle(
-                            fontSize: 12, color: Colors.black54),
+                        style: const TextStyle(fontSize: 12, color: Colors.black54),
                       ),
                       const SizedBox(
                         height: 7,
@@ -484,28 +431,21 @@ class IncubatorComponent extends StatelessWidget {
             const Spacer(),
             Padding(
               padding: const EdgeInsets.only(top: 12.0),
-              child: model.usableLevel == null
-                  ? const Text(
-                      '다음 예약이 없습니다.',
-                      style: TextStyle(fontSize: 12, color: Colors.black87),
-                    )
-                  : Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          '현재 사용중',
-                          style: TextStyle(fontSize: 12, color: Colors.black87),
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          'AI공학관 ${model.classNum ?? '???'}호',
-                          style: const TextStyle(
-                              fontSize: 12, color: Colors.black87),
-                        ),
-                      ],
-                    ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    (model.usableLevel ?? 1) == 1
+                        ? '현재 사용 가능'
+                        : model.usableLevel == 2
+                            ? '현재 사용 중'
+                            : model.usableLevel == 3
+                                ? '현재 예약 중'
+                                : '현재 사용 불가',
+                    style: TextStyle(fontSize: 13, color: Colors.black87),
+                  ),
+                ],
+              ),
             )
           ],
         ),

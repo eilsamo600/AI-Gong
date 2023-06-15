@@ -18,18 +18,43 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
+// "AuthorizationHeaderFilter", used to filter the authorization header
+// used to check if the user is logged in
+// used to check if the user is authorized to access the service
+
 @Slf4j
 @Component
 public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<AuthorizationHeaderFilter.Config> {
     private final JwtService jwtService;
     private final UserRepository userRepository;
 
+    /*
+     * AuthorizationHeaderFilter(Config config) -> AuthorizationHeaderFilter
+     * This constructor is used to initialize the JwtService and UserRepository
+     * 
+     * Args:
+     * - JwtService jwtService: used to generate and verify JWT
+     * - UserRepository userRepository: used to query the database
+     * 
+     * Return:
+     * - AuthorizationHeaderFilter: the AuthorizationHeaderFilter object
+     */
     public AuthorizationHeaderFilter(JwtService jwtService, UserRepository userRepository) {
         super(Config.class);
         this.jwtService = jwtService;
         this.userRepository = userRepository;
     }
 
+    /*
+     * apply(Config config) -> GatewayFilter
+     * This method is used to filter the authorization header
+     * 
+     * Args:
+     * - Config config: the configuration of the filter
+     * 
+     * Return:
+     * - GatewayFilter: the GatewayFilter object
+     */
     @Override
     public GatewayFilter apply(AuthorizationHeaderFilter.Config config) {
         return (exchange, chain) -> {
@@ -64,6 +89,16 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
         };
     }
 
+    /*
+     * reIssueRefreshToken(User user) -> String
+     * This method is used to re-issue the refresh token
+     * 
+     * Args:
+     * - User user: the user object
+     * 
+     * Return:
+     * - String: the re-issued refresh token
+     */
     private String reIssueRefreshToken(User user) {
         String reIssuedRefreshToken = jwtService.createRefreshToken();
         user.updateRefreshToken(reIssuedRefreshToken);
@@ -71,6 +106,18 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
         return reIssuedRefreshToken;
     }
 
+    /*
+     * onError(ServerWebExchange exchange, String err, HttpStatus httpStatus) ->
+     * Mono<Void> This method is used to handle the error
+     * 
+     * Args:
+     * - ServerWebExchange exchange: the server web exchange object
+     * - String err: the error message
+     * - HttpStatus httpStatus: the http status
+     * 
+     * Return:
+     * - Mono<Void>: the Mono<Void> object
+     */
     private Mono<Void> onError(ServerWebExchange exchange, String err, HttpStatus httpStatus) {
         ServerHttpResponse response = exchange.getResponse();
         response.setStatusCode(httpStatus);

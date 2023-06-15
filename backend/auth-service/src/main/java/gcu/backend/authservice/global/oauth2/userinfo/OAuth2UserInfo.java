@@ -2,6 +2,8 @@ package gcu.backend.authservice.global.oauth2.userinfo;
 
 import java.util.Map;
 
+// "OAuth2UserInfo" Abstract Class
+// this data is extracted from the OAuth2 service to which the user is connected
 public abstract class OAuth2UserInfo {
 
     protected Map<String, Object> attributes;

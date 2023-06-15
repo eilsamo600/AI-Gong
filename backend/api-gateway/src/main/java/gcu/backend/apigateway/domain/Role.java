@@ -3,6 +3,7 @@ package gcu.backend.apigateway.domain;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+// "Role", used to specify the role
 @Getter
 @RequiredArgsConstructor
 public enum Role {

@@ -8,6 +8,7 @@ class ClassRoom {
   int? usableLevel;
   Map? currentLecture;
   Map? lectures;
+  bool? isLike;
 
   ClassRoom(
       {this.roomid,
@@ -17,7 +18,8 @@ class ClassRoom {
       this.scale,
       this.usableLevel,
       this.currentLecture,
-      this.lectures});
+      this.lectures,
+      this.isLike});
 
   // JSON deserialization constructor
   ClassRoom.fromJson(Map<String, dynamic> json) {
@@ -29,6 +31,7 @@ class ClassRoom {
     usableLevel = json['usableLevel'];
     currentLecture = json['currentLecture'];
     lectures = json['강의목록'];
+    isLike = json['isLike'];
   }
 
   // JSON serialization method
@@ -42,6 +45,7 @@ class ClassRoom {
     data['usableLevel'] = usableLevel;
     data['currentLecture'] = currentLecture;
     data['강의목록'] = lectures;
+    data['isLike'] = isLike;
     return data;
   }
 }
