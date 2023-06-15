@@ -2,6 +2,7 @@
 // GetReservationListResponse is used to handle the response from get reservation list api
 // This class is used to convert json to dart object
 class ClassRoom {
+  //attributes of clasroom table
   String? roomid;
   String? department;
   int? floor;
@@ -12,8 +13,18 @@ class ClassRoom {
   Map? lectures;
   bool? isLike;
 
-  ClassRoom({this.roomid, this.department, this.floor, this.capacity, this.scale, this.usableLevel, this.currentLecture, this.lectures, this.isLike});
+  ClassRoom(
+      {this.roomid,
+      this.department,
+      this.floor,
+      this.capacity,
+      this.scale,
+      this.usableLevel,
+      this.currentLecture,
+      this.lectures,
+      this.isLike});
 
+  // JSON deserialization constructor
   ClassRoom.fromJson(Map<String, dynamic> json) {
     roomid = json['호'];
     department = json['전공'];
@@ -26,6 +37,7 @@ class ClassRoom {
     isLike = json['isLike'];
   }
 
+  // JSON serialization method
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['호'] = roomid;
