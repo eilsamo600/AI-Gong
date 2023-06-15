@@ -151,6 +151,31 @@ GetMapping to get all the classroom information stored in the DB.
         return new ResponseEntity<List<ClassRoom>>(classRoomList, HttpStatus.OK);
     }
 ```
+Add the token to the header before sending the request.
+The isLogin() function checks to see if you are logged in.
+```java
+  /*
+  * setAuth() is used to set the user information
+  * @param: String refresh, the access token
+  * @param: String refresh, the refresh token
+  */
+  Future<void> setAuth({required String access, required String refresh}) async {
+    var storage = const FlutterSecureStorage();
+    ApiService.instance.dio.options.headers["Authorization"] = "Bearer $access";
+    await storage.write(key: 'access_token', value: access);
+    await storage.write(key: 'refresh_token', value: refresh);
+  }
+  /*
+  * isLogin() is used to check if the user is logged in
+  * @param: none
+  * @return: bool, true if the user is logged in, false if the user is not logged in
+  */
+
+  Future<bool> isLogin() async {
+    var storage = const FlutterSecureStorage();
+    return (await storage.read(key: "access_token") ?? '') != '' ? logining : false;
+  }
+```
 
 
 
