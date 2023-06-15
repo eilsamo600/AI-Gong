@@ -1,4 +1,5 @@
 class ClassRoom {
+  //attributes of clasroom table
   String? roomid;
   String? department;
   int? floor;
@@ -8,8 +9,17 @@ class ClassRoom {
   Map? currentLecture;
   Map? lectures;
 
-  ClassRoom({this.roomid, this.department, this.floor, this.capacity, this.scale, this.usableLevel, this.currentLecture, this.lectures});
+  ClassRoom(
+      {this.roomid,
+      this.department,
+      this.floor,
+      this.capacity,
+      this.scale,
+      this.usableLevel,
+      this.currentLecture,
+      this.lectures});
 
+  // JSON deserialization constructor
   ClassRoom.fromJson(Map<String, dynamic> json) {
     roomid = json['호'];
     department = json['전공'];
@@ -21,6 +31,7 @@ class ClassRoom {
     lectures = json['강의목록'];
   }
 
+  // JSON serialization method
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['호'] = roomid;

@@ -1,4 +1,5 @@
 class Reservation {
+  // JSON serialization method
   String? email;
   String? number;
   List<int>? time;
@@ -18,6 +19,7 @@ class Reservation {
     state = json['state'];
   }
 
+  // JSON serialization method
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['email'] = email;

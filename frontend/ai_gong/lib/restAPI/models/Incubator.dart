@@ -1,12 +1,19 @@
 class Incubator {
+  //attributes of clasroom table
   int? floar;
   String? classNum;
   int? roomNum;
   String? capacity;
   int? usableLevel;
 
-  Incubator({this.floar, this.classNum, this.roomNum, this.capacity, this.usableLevel});
+  Incubator(
+      {this.floar,
+      this.classNum,
+      this.roomNum,
+      this.capacity,
+      this.usableLevel});
 
+  // JSON serialization method
   Incubator.fromJson(Map<String, dynamic> json) {
     floar = json['층'];
     classNum = json['호'];
@@ -15,6 +22,7 @@ class Incubator {
     usableLevel = json['usableLevel'];
   }
 
+  // JSON serialization method
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['층'] = floar;

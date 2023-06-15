@@ -22,6 +22,8 @@ class ApiService extends GetxService {
   Dio dio = Dio(BaseOptions(
       baseUrl: Common.baseUrl,
       headers: {"Flutter-Rest-Api": "true", "Authorization": "Bearer 0000"}));
+
+  // Initialize the ApiService
   Future<ApiService> init() async {
     Common.logger.d('$runtimeType init!');
     if (Common.isDev) {
@@ -30,6 +32,7 @@ class ApiService extends GetxService {
     return this;
   }
 
+  // Get the list of classrooms
   Future<ApiResponse<ClassRoomListResponse>> getClassRoomList() async {
     try {
       var response = await dio.get(
@@ -56,6 +59,7 @@ class ApiService extends GetxService {
     }
   }
 
+  // Get user information
   Future<ApiResponse<UserResponse>> getUserInfo() async {
     try {
       var storage = const FlutterSecureStorage();
@@ -86,6 +90,7 @@ class ApiService extends GetxService {
     }
   }
 
+  // Get a specific classroom by ID
   Future<ApiResponse<ClassRoomResponse>> getClassRoom(int id) async {
     try {
       var response = await dio.get(
@@ -112,6 +117,7 @@ class ApiService extends GetxService {
     }
   }
 
+  // Get a list of incubators
   Future<ApiResponse<IncubatorListResponse>> getIncubatorList() async {
     try {
       var response = await dio.get(
@@ -139,6 +145,7 @@ class ApiService extends GetxService {
     }
   }
 
+  // Get a list of reservations for a user
   Future<ApiResponse<ReservationListResponse>> getReservationList(
       String email) async {
     try {
@@ -166,6 +173,7 @@ class ApiService extends GetxService {
     }
   }
 
+  // Get a specific incubator by ID
   Future<ApiResponse<IncubatorResponse>> getIncubator(int id) async {
     try {
       var response = await dio.get(
@@ -192,6 +200,7 @@ class ApiService extends GetxService {
     }
   }
 
+  // Post a reservation
   Future<ApiResponse> postReservation(Reservation data) async {
     try {
       var response = await dio.post(
@@ -204,6 +213,7 @@ class ApiService extends GetxService {
     }
   }
 
+  // Get available reservations for a specific number and date
   Future<ApiResponse<AvailableReservationResponse>> getAvailableReservation(
       String number, String date) async {
     try {
