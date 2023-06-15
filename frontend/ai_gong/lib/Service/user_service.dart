@@ -60,7 +60,7 @@ class UserService extends GetxService {
 
   Future<bool> isLogin() async {
     var storage = const FlutterSecureStorage();
-    return (await storage.read(key: "access_token") ?? '') != '' ? true : false;
+    return (await storage.read(key: "access_token") ?? '') != '' ? logining : false;
   }
 
   void logout() async {
@@ -68,6 +68,7 @@ class UserService extends GetxService {
     MainViewController.instance.selectTab(0);
     await storage.deleteAll();
     await setAuth(refresh: "", access: "");
+    logining = false;
 
     Common.showSnackBar(messageText: '로그아웃이 되었습니다.');
   }
@@ -100,7 +101,6 @@ class UserService extends GetxService {
         if (popupWin != null) {
           popupWin!.close();
         }
-        logining = false;
         return true;
       }
     } on Exception {

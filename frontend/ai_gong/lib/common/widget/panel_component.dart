@@ -4,7 +4,12 @@ import 'package:get/get.dart';
 
 class PanelComponent extends StatelessWidget {
   Widget child;
-  PanelComponent({super.key, required this.child});
+  double radius;
+  PanelComponent({
+    super.key,
+    required this.child,
+    this.radius = 20,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +31,7 @@ class PanelComponent extends StatelessWidget {
               height: Get.height * 0.8,
               width: Common.getWidth,
               decoration:
-                  const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+                  BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(radius), topRight: Radius.circular(radius))),
               child: SingleChildScrollView(child: child)),
         )
       ],

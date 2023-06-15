@@ -1,3 +1,4 @@
+import 'package:ai_gong/Service/user_service.dart';
 import 'package:ai_gong/common/widget/TimeTable.dart';
 import 'package:ai_gong/common/widget/panel_component.dart';
 import 'package:ai_gong/pages/list_classroom/controller/list_classroom_view_controller.dart';
@@ -37,7 +38,7 @@ class ClassRoomComponent extends StatelessWidget {
                         const Spacer(),
                         Container(
                             padding: const EdgeInsets.fromLTRB(20, 0, 15, 0),
-                            child: Obx(() => controller.classRoom.value.isLike == null
+                            child: Obx(() => controller.classRoom.value.isLike == null || UserService.instance.logining == false
                                 ? const SizedBox()
                                 : controller.classRoom.value.isLike == true
                                     ? IconButton(
