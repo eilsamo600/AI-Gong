@@ -1,5 +1,8 @@
 import '../models/Reservation.dart';
 
+// Summary:
+// ReservationListResponse is used to parse the response from the server
+// This class is used in the controller
 class ReservationListResponse {
   List<Reservation>? reservations;
 

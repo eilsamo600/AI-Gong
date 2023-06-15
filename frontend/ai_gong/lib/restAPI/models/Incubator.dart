@@ -1,4 +1,6 @@
-// Summary
+// Summary :
+// Incubator is used to handle the response from get incubator list api
+// This class is used to convert json to dart object
 class Incubator {
   //attributes of clasroom table
   int? floar;

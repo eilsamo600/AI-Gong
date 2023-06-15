@@ -1,3 +1,6 @@
+// Summary:
+// Reservation is used to handle the response from get reservation list api
+// This class is used to convert json to dart object
 class Reservation {
   // JSON serialization method
   String? email;

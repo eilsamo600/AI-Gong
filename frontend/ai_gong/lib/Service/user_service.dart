@@ -11,11 +11,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart' hide Response;
 
+// Summary:
+// UserService is used to manage the user information
+// This class is used in the controller
 class UserService extends GetxService {
   static UserService get instance => Get.find<UserService>();
 
   bool logining = false;
   Rx<User> user = User().obs;
+  /*
+  * init() is used to initialize the user information
+  * @param: none
+  * @return: UserService, the instance of the UserService
+  */
   Future<UserService> init() async {
     Common.logger.d('$runtimeType init!');
     await loadUserInfo();
@@ -23,6 +31,11 @@ class UserService extends GetxService {
     return this;
   }
 
+  /*
+  * loadUserInfo() is used to load the user information
+  * @param: none
+  * @return: none
+  */
   Future<void> loadUserInfo() async {
     var storage = const FlutterSecureStorage();
     ApiService.instance.dio.options.headers["Authorization"] = "Bearer ${await storage.read(key: "access_token") ?? "0000"}";
@@ -51,17 +64,33 @@ class UserService extends GetxService {
     print(x);
   }
 
+  /*
+  * setAuth() is used to set the user information
+  * @param: String refresh, the access token
+  * @param: String refresh, the refresh token
+  */
   Future<void> setAuth({required String access, required String refresh}) async {
     var storage = const FlutterSecureStorage();
     ApiService.instance.dio.options.headers["Authorization"] = "Bearer $access";
     await storage.write(key: 'access_token', value: access);
     await storage.write(key: 'refresh_token', value: refresh);
   }
+  /*
+  * isLogin() is used to check if the user is logged in
+  * @param: none
+  * @return: bool, true if the user is logged in, false if the user is not logged in
+  */
 
   Future<bool> isLogin() async {
     var storage = const FlutterSecureStorage();
     return (await storage.read(key: "access_token") ?? '') != '' ? logining : false;
   }
+
+  /*
+  * logout() is used to log out the user
+  * @param: none
+  * @return: none
+  */
 
   void logout() async {
     var storage = const FlutterSecureStorage();
@@ -73,6 +102,12 @@ class UserService extends GetxService {
     Common.showSnackBar(messageText: '로그아웃이 되었습니다.');
   }
 
+/*
+  * login() is used to log in the user
+  * @param: none
+  * @return: bool, true if the user is logged in, false if the user is not logged in
+  */
+  
   Future<bool> login() async {
     try {
       logining = true;

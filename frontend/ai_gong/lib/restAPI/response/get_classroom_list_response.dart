@@ -1,5 +1,8 @@
 import 'package:ai_gong/restAPI/models/Classroom.dart';
 
+// Summary:
+// ClassRoomListResponse is used to parse the response from the server
+// This class is used in the controller
 class ClassRoomListResponse {
   List<ClassRoom>? classrooms;
 

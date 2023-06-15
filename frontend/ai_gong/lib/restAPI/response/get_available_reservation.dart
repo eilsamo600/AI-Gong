@@ -1,5 +1,8 @@
 import 'package:ai_gong/restAPI/models/Reservation.dart';
 
+// Summary:
+// AvailableReservationResponse is used to parse the response from the server
+// This class is used in the controller
 class AvailableReservationResponse {
   List<Reservation>? reservations;
 

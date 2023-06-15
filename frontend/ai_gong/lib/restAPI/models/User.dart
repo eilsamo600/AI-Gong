@@ -1,3 +1,6 @@
+// Summary:
+// User is used to handle the response from get user api
+// This class is used to convert json to dart object
 class User {
   //attributes of clasroom table
   String? nickname;

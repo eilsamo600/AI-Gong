@@ -17,9 +17,14 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
+// Summary:
+// ApiService is used to communicate with the server
+// This class is used in the controller
 class ApiService extends GetxService {
   static ApiService get instance => Get.find<ApiService>();
 
+  // Dio is a powerful Http client for Dart, which supports Interceptors, FormData, Request Cancellation, File Downloading, Timeout etc.
+  // https://pub.dev/packages/dio
   Dio dio = Dio(BaseOptions(
       baseUrl: Common.baseUrl,
       headers: {"Flutter-Rest-Api": "true", "Authorization": "Bearer 0000"}));
@@ -31,7 +36,14 @@ class ApiService extends GetxService {
     return this;
   }
 
-  // Get the list of classrooms
+  /*
+   Get Request, getClassRoomList()
+    This function is used to get the list of classrooms from the server
+    Args:
+      None
+    Returns:
+      ApiResponse<ClassRoomListResponse> : The response from the server, which contains the list of classrooms
+  */
   Future<ApiResponse<ClassRoomListResponse>> getClassRoomList() async {
     try {
       var response = await dio.get(
@@ -58,6 +70,14 @@ class ApiService extends GetxService {
     }
   }
 
+  /*
+   Get Request, getClassRoomListByLike()
+    This function is used to get the list of classrooms from the server
+    Args:
+      None
+    Returns:
+      ApiResponse<ClassRoomListResponse> : The response from the server, which contains the list of classrooms
+  */
   Future<ApiResponse<ClassRoomListResponse>> getClassRoomListByLike() async {
     try {
       var response = await dio.get(
@@ -84,7 +104,14 @@ class ApiService extends GetxService {
     }
   }
 
-  // Get user information
+  /*
+    Get Request, getUserInfo()
+    This function is used to get the user information from the server
+    Args:
+      None
+    Returns:
+      ApiResponse<UserResponse> : The response from the server, which contains the user information
+  */
   Future<ApiResponse<UserResponse>> getUserInfo() async {
     try {
       var storage = const FlutterSecureStorage();
@@ -115,7 +142,14 @@ class ApiService extends GetxService {
     }
   }
 
-  // Get a specific classroom by ID
+  /*
+    Get Request, getClassRoom()
+      This function is used to get the information of a classroom from the server
+      Args:
+        int id : The id of the classroom
+      Returns:
+        ApiResponse<ClassRoomResponse> : The response from the server, which contains the information of the classroom
+  */
   Future<ApiResponse<ClassRoomResponse>> getClassRoom(int id) async {
     try {
       var response = await dio.get(
@@ -142,6 +176,14 @@ class ApiService extends GetxService {
     }
   }
 
+  /*
+    Get Request, postLikeAndClassroom()
+      This function is used to like a classroom
+      Args:
+        String roomid : The id of the classroom
+      Returns:
+        ApiResponse<ClassRoomResponse> : The response from the server, which contains the information of the classroom
+  */
   Future<ApiResponse<ClassRoomResponse>> postLikeAndClassroom(
       String roomid) async {
     try {
@@ -169,7 +211,14 @@ class ApiService extends GetxService {
     }
   }
 
-  // Get a list of incubators
+  /*
+    Get Request, getIncubatorList()
+      This function is used to get the list of incubators from the server
+      Args:
+        None
+      Returns:
+        ApiResponse<IncubatorListResponse> : The response from the server, which contains the list of incubators
+  */
   Future<ApiResponse<IncubatorListResponse>> getIncubatorList() async {
     try {
       var response = await dio.get(
@@ -197,7 +246,14 @@ class ApiService extends GetxService {
     }
   }
 
-  // Get a list of reservations for a user
+  /*
+    Get Request, getReservationList()
+      This function is used to get the list of reservations from the server
+      Args:
+        String email : The email of the user
+      Returns:
+        ApiResponse<ReservationListResponse> : The response from the server, which contains the list of reservations
+   */
   Future<ApiResponse<ReservationListResponse>> getReservationList(
       String email) async {
     try {
@@ -226,6 +282,15 @@ class ApiService extends GetxService {
     }
   }
 
+  /*
+    Post Request, postReservationState()
+      This function is used to change the state of a reservation
+      Args:
+        String id : The id of the reservation
+        int state : The state of the reservation
+      Returns:
+        ApiResponse : The response from the server
+  */
   Future<ApiResponse> postReservationState(String id, int state) async {
     try {
       var response = await dio.post(
@@ -238,6 +303,14 @@ class ApiService extends GetxService {
     }
   }
 
+  /*
+    Delete Request, deleteReservation()
+      This function is used to delete a reservation
+      Args:
+        String id : The id of the reservation
+      Returns:
+        ApiResponse : The response from the server
+  */
   Future<ApiResponse> deleteReservation(String id) async {
     try {
       var response = await dio.delete(
@@ -250,7 +323,14 @@ class ApiService extends GetxService {
     }
   }
 
-  // Get a specific incubator by ID
+  /*
+    Get Request, getIncubator()
+      This function is used to get the information of an incubator
+      Args:
+        int id : The id of the incubator
+      Returns:
+        ApiResponse<IncubatorResponse> : The response from the server, which contains the information of the incubator
+  */
   Future<ApiResponse<IncubatorResponse>> getIncubator(int id) async {
     try {
       var response = await dio.get(
@@ -277,7 +357,14 @@ class ApiService extends GetxService {
     }
   }
 
-  // Post a reservation
+  /*
+    Post Request, postReservation()
+      This function is used to post a reservation
+      Args:
+        Reservation data : The reservation data to be posted
+      Returns:
+        ApiResponse : The response from the server
+   */
   Future<ApiResponse> postReservation(Reservation data) async {
     try {
       var response = await dio.post(
@@ -290,7 +377,15 @@ class ApiService extends GetxService {
     }
   }
 
-  // Get available reservations for a specific number and date
+  /*
+    Get Request, getAvailableReservation()
+      This function is used to get the available reservation of an incubator
+      Args:
+        String number : The number of the incubator
+        String date : The date of the reservation
+      Returns:
+        ApiResponse<AvailableReservationResponse> : The response from the server, which contains the available reservation of the incubator
+  */
   Future<ApiResponse<AvailableReservationResponse>> getAvailableReservation(
       String number, String date) async {
     try {
