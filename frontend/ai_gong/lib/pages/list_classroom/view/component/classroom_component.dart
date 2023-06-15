@@ -7,6 +7,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+// Summary:
+// ClassRoomComponent is used to show the classroom component
+// This component is used to show the classroom component
 class ClassRoomComponent extends StatelessWidget {
   final ClassRoom model;
   const ClassRoomComponent({super.key, required this.model});

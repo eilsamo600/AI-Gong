@@ -1,3 +1,6 @@
+// Summary:
+// GetReservationListResponse is used to handle the response from get reservation list api
+// This class is used to convert json to dart object
 class ClassRoom {
   String? roomid;
   String? department;

@@ -4,6 +4,10 @@ import 'package:get/get.dart';
 
 import '../controller/main_view_controller.dart';
 
+// Summary:
+// MainViewPage is used to show the main view
+// Features:
+// - Show the main view
 class MainViewPage extends StatelessWidget {
   const MainViewPage({super.key});
 

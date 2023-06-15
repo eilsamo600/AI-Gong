@@ -6,6 +6,9 @@ import 'package:ai_gong/pages/my_info/view/component/myInfo_component.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+// Summary:
+// MyInfoViewPage is used to show the my info view
+// This view is GetX view
 class MyInfoViewPage extends StatelessWidget {
   const MyInfoViewPage({super.key});
 

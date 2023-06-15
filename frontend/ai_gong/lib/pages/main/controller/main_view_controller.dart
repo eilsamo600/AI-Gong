@@ -8,6 +8,9 @@ import 'package:ai_gong/pages/my_info/view/my_info_view_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+// Summary:
+// MainViewController is used to control the main view
+// This controller is GetX controller
 class MainViewController extends GetxController {
   RxInt pageIndex = 0.obs;
 

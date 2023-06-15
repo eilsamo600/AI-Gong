@@ -2,6 +2,9 @@ import 'package:ai_gong/pages/list_classroom/controller/list_classroom_view_cont
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
+// Summary:
+// FilterComponent is used to control the filter component
+// This component is used to control the filter component
 class FilterComponent extends StatelessWidget {
   final int index;
   const FilterComponent({super.key, required this.index});

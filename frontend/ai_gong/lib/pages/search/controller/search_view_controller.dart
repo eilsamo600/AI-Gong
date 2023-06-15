@@ -4,6 +4,9 @@ import 'package:ai_gong/restAPI/models/Classroom.dart';
 import 'package:ai_gong/restAPI/response/get_classroom_list_response.dart';
 import 'package:get/get.dart';
 
+// Summary:
+// SearchViewController is used to control the search view
+// This controller is GetX controller
 class SearchViewController extends GetxController {
   RxList<ClassRoom> classRoomList = RxList<ClassRoom>();
   RxList<ClassRoom> storeList = RxList<ClassRoom>();

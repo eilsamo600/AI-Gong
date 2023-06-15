@@ -5,6 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // ignore_for_file: prefer_const_constructors
 
+
+// Summary:
+// ListIncubatorViewPage is used to show the list incubator view
+// This page is used to show the list incubator view
 class ListIncubatorViewPage extends StatelessWidget {
   const ListIncubatorViewPage({super.key});
 

@@ -5,6 +5,9 @@ import 'package:get/get.dart';
 
 import '../../../restAPI/response/get_reservation_list_response.dart';
 
+// Summary:
+// MyInfoViewController is used to control the my info view
+// This controller is GetX controller
 class MyInfoViewController extends GetxController {
   static MyInfoViewController get instance => Get.find<MyInfoViewController>();
 

@@ -9,6 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart' hide Response;
 
+// Summary:
+// RouteViewPage is used to display the route view
+// This page is used to test the route
 class RouteViewPage extends StatelessWidget {
   const RouteViewPage({super.key});
 

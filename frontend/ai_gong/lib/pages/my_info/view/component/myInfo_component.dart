@@ -5,6 +5,9 @@ import 'package:get/get.dart';
 
 import '../../../../restAPI/models/Reservation.dart';
 
+// Summary:
+// MyInfoComponent is used to show the reservation information
+// This component is GetX component
 class MyInfoComponent extends StatelessWidget {
   final Reservation model;
   const MyInfoComponent({super.key, required this.model});

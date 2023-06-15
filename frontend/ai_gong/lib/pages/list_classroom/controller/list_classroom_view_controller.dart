@@ -8,6 +8,9 @@ import 'package:ai_gong/restAPI/response/get_classroom_response.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+// Summary:
+// ListClassRoomViewController is used to control the list classroom view
+// This controller is used to control the list classroom view
 class ListClassRoomViewController extends GetxController {
   static ListClassRoomViewController get instance => Get.find<ListClassRoomViewController>();
 

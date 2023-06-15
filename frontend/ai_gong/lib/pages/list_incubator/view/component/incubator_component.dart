@@ -9,6 +9,9 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 // ignore_for_file: prefer_const_constructors
 
+// Summary:
+// IncubatorComponent is used to control the incubator component
+// This component is used to control the incubator component
 class IncubatorComponent extends StatelessWidget {
   final Incubator model;
   const IncubatorComponent({super.key, required this.model});

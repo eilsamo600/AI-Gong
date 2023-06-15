@@ -5,6 +5,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+// Summary:
+// SearchViewPage is used to show the search view
+// Searching ClassRoom.
 class SearchViewPage extends StatelessWidget {
   const SearchViewPage({super.key});
 

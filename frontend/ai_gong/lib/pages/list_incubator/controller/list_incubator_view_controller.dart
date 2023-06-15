@@ -11,6 +11,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+// Summary:
+// ListIncubatorViewController is used to control the list incubator view
+// This controller is used to control the list incubator view
 class ListIncubatorViewController extends GetxController {
   static ListIncubatorViewController get instance =>
       Get.find<ListIncubatorViewController>();

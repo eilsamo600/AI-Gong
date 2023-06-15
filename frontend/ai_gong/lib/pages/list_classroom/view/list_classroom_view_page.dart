@@ -6,6 +6,9 @@ import 'package:ai_gong/pages/search/view/search_view_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+// Summary:
+// ListClassRoomViewPage is used to show the list classroom view
+// This page is used to show the list classroom view
 class ListClassRoomViewPage extends StatelessWidget {
   const ListClassRoomViewPage({super.key});
 

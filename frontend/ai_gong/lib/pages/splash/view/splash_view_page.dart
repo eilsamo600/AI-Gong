@@ -2,6 +2,9 @@ import 'package:ai_gong/pages/splash/controller/splash_view_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+// Summary:
+// SplashViewPage is used to show the splash view
+// This page is used to show the splash view
 class SplashViewPage extends StatelessWidget {
   const SplashViewPage({super.key});
 
