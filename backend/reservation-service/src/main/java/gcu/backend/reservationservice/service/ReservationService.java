@@ -30,6 +30,16 @@ public class ReservationService {
 
     // 사용가능한지 확인
     // level 1 : 사용가능, level 2 : 사용중, level 3 : 예약중, level 4 : 사용 안됨
+    /*
+     * getUsableLevel(String number) -> int
+     * This method is used to check if the room is available
+     * 
+     * Args:
+     * - String number: the number of the room
+     * 
+     * Return:
+     * - int: the level of the room
+     */
     public int getUsableLevel(String number) {
         LocalTime now = LocalTime.now();
         LocalDate today = LocalDate.now();

@@ -14,24 +14,35 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.Optional;
 
+// "JwtService", used to generate and verify JWT
+// used to extract the email from the JWTs
 @Service
 @RequiredArgsConstructor
 @Getter
 @Slf4j
 public class JwtService {
-
+    // Field 'secretKey', type 'String'
+    // This value is used to generate JWT
     @Value("${jwt.secretKey}")
     private String secretKey;
 
+    // Field 'accessTokenExpirationPeriod', type 'Long'
+    // This value is used to set the expiration period of access token
     @Value("${jwt.access.expiration}")
     private Long accessTokenExpirationPeriod;
 
+    // Field 'refreshTokenExpirationPeriod', type 'Long'
+    // This value is used to set the expiration period of refresh token
     @Value("${jwt.refresh.expiration}")
     private Long refreshTokenExpirationPeriod;
 
+    // Field 'accessHeader', type 'String'
+    // This value is used to set the header of access token
     @Value("${jwt.access.header}")
     private String accessHeader;
 
+    // Field 'refreshHeader', type 'String'
+    // This value is used to set the header of refresh token
     @Value("${jwt.refresh.header}")
     private String refreshHeader;
 

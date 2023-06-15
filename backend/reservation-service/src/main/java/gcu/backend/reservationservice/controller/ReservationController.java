@@ -29,23 +29,44 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.http.HttpStatus;
 
+// "ReservationController", used to specify the reservation controller
+// @RestController, used to specify the reservation controller
+// @Tag, used to specify the reservation controller
 @RestController
 @Tag(name = "Reservation", description = "예약 API")
 @Slf4j
 public class ReservationController {
 
+    // "ReservationRepository", used to specify the reservation repository
     @Autowired
     private ReservationRepository reservationRepository;
 
+    // "IncubatorRepository", used to specify the incubator repository
     @Autowired
     private IncubatorRepository incubatorRepository;
 
+    // "JwtService", used to specify the jwt service
     @Autowired
     private JwtService jwtService;
 
+    // "ReservationService", used to specify the reservation service
     @Autowired
     private ReservationService reservationService;
 
+    /*
+     * PostMapping("/reservation") -> ResponseEntity<Reservation>
+     * This method is used to send reservation information to the server
+     * 
+     * Args:
+     * - String value: JWT token
+     * - Reservation reservation: reservation information
+     * 
+     * Return:
+     * - ResponseEntity<Reservation>: reservation information
+     * 
+     * Exception:
+     * - EmptyResultDataAccessException: if the reservation information is not found
+     */
     @PostMapping("/reservation")
     @Operation(summary = "예약 내역 보내기", description = "예약 내역 보내요~.")
     public ResponseEntity<Reservation> postReservation(@RequestHeader("Authorization") String value,
@@ -62,6 +83,16 @@ public class ReservationController {
 
     }
 
+    /*
+     * GetMapping("/reservation") -> ResponseEntity<List<Reservation>>
+     * This method is used to get reservation information from the server
+     * 
+     * Args:
+     * - String value: JWT token
+     * 
+     * Return:
+     * - ResponseEntity<List<Reservation>>: reservation information
+     */
     @GetMapping("/reservation")
     @Operation(summary = "사용자 예약 테이블 조회", description = "예약 테이블 정보입니다.")
     public ResponseEntity<List<Reservation>> getReservations(@RequestHeader("Authorization") String value) {
@@ -77,6 +108,17 @@ public class ReservationController {
         return new ResponseEntity<List<Reservation>>(reservations, HttpStatus.OK);
     }
 
+    /*
+     * GetMapping("/reservation/{number}/{date}") ->
+     * ResponseEntity<List<Reservation>>
+     * This method is used to get reservation information from the server
+     * 
+     * Args:
+     * - String number: incubator number
+     * 
+     * Return:
+     * - ResponseEntity<List<Reservation>>: reservation information
+     */
     @GetMapping("/reservation/{number}/{date}")
     @Operation(summary = "예약 정보 조회", description = "예약정보입니다")
     public ResponseEntity<List<Reservation>> getAvailableReservation(@PathVariable String number,
@@ -85,6 +127,16 @@ public class ReservationController {
         return new ResponseEntity<List<Reservation>>(reservation, HttpStatus.OK);
     }
 
+    /*
+     * GetMapping("/reservation/{id}") -> ResponseEntity<Reservation>
+     * This method is used to get reservation information from the server
+     * 
+     * Args:
+     * - String value: JWT token
+     * 
+     * Return:
+     * - ResponseEntity<Reservation>: reservation information
+     */
     @PostMapping("/reservation/{id}/{state}")
     @Operation(summary = "예약 상태 업데이트", description = "예약 배정완료, 배정하기, 취소완료 상태 업데이트")
     public ResponseEntity<String> updateReservationState(@RequestHeader("Authorization") String value,
@@ -120,6 +172,16 @@ public class ReservationController {
         }
     }
 
+    /*
+     * DeleteMapping("/reservation/{id}") -> ResponseEntity<String>
+     * This method is used to delete reservation information from the server
+     * 
+     * Args:
+     * - String value: JWT token
+     * 
+     * Return:
+     * - ResponseEntity<String>: reservation information
+     */
     @DeleteMapping("/reservation/{id}")
     @Operation(summary = "특정 예약정보 삭제", description = "특정 예약정보를 삭제합니다.")
     public ResponseEntity<String> deleteReservation(@RequestHeader("Authorization") String value,
@@ -141,6 +203,13 @@ public class ReservationController {
         }
     }
 
+    /*
+     * GetMapping("/incubators") -> ResponseEntity<List<Incubator>>
+     * This method is used to get incubator information from the server
+     * 
+     * Return:
+     * - ResponseEntity<List<Incubator>>: incubator information
+     */
     @GetMapping("/incubators")
     @Operation(summary = "인큐베이터 목록 조회", description = "인큐베이터 정보입니다.")
     public ResponseEntity<List<Incubator>> getIncubators() {
