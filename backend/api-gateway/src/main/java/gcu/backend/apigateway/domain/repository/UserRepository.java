@@ -7,11 +7,15 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import gcu.backend.apigateway.domain.SocialType;
 import gcu.backend.apigateway.domain.User;
 
+// "UserRepository", used to specify the user repository, MongoRepository
 public interface UserRepository extends MongoRepository<User, Long> {
+    // Method 'findByEmail', used to find the user by email
     Optional<User> findByEmail(String email);
 
+    // Method 'findByNickname', used to find the user by nickname
     Optional<User> findByNickname(String nickname);
 
+    // Method 'findByRefreshToken', used to find the user by refresh token
     Optional<User> findByRefreshToken(String refreshToken);
 
     /**

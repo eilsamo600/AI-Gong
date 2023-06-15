@@ -2,7 +2,17 @@ package gcu.backend.authservice.global.jwt.util;
 
 import java.util.Random;
 
+// "PasswordUtil" Class, this class is used to generate a random password.
 public class PasswordUtil {
+    /*
+     * generateRandomPassword(), this method is used to generate a random password.
+     * 
+     * Args:
+     * - None
+     * 
+     * Return:
+     * - String : random password
+     */
     public static String generateRandomPassword() {
         int index = 0;
         char[] charSet = new char[] {

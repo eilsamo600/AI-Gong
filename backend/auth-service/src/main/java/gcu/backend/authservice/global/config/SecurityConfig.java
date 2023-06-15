@@ -34,11 +34,29 @@ import gcu.backend.authservice.global.oauth2.service.CustomOAuth2UserService;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+        // "jwtService" is a service class for JWT.
+        // "userRepository" is a repository class for "User" entity.
+        // "oAuth2LoginSuccessHandler" is a handler class for OAuth2 login success.
+        // "oAuth2LoginFailureHandler" is a handler class for OAuth2 login failure.
+        // "customOAuth2UserService" is a service class for OAuth2 login.
         private final JwtService jwtService;
         private final UserRepository userRepository;
         private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
         private final OAuth2LoginFailureHandler oAuth2LoginFailureHandler;
         private final CustomOAuth2UserService customOAuth2UserService;
+
+        /*
+         * filterChain() is a method to configure security filter chain.
+         * csrf is disabled.
+         * CORS is enabled.
+         * SecurityContextRepository is set to "delegatingSecurityContextRepository()".
+         * 
+         * Args:
+         * - http: HttpSecurity : HttpSecurity object
+         * 
+         * Return:
+         * - SecurityFilterChain : SecurityFilterChain object
+         */
 
         @Bean
         public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -87,6 +105,12 @@ public class SecurityConfig {
                 return http.build();
         }
 
+        /*
+         * corsConfigurationSource() is a method to configure CORS.
+         * 
+         * Return:
+         * - CorsConfigurationSource : CorsConfigurationSource object
+         */
         @Bean
         public CorsConfigurationSource corsConfigurationSource() {
                 CorsConfiguration configuration = new CorsConfiguration();
@@ -102,12 +126,27 @@ public class SecurityConfig {
                 return source;
         }
 
+        /*
+         * delegatingSecurityContextRepository() is a method to configure
+         * SecurityContextRepository, which is used to save SecurityContext.
+         * 
+         * Return:
+         * - DelegatingSecurityContextRepository : DelegatingSecurityContextRepository
+         */
         @Bean
         public DelegatingSecurityContextRepository delegatingSecurityContextRepository() {
                 return new DelegatingSecurityContextRepository(
                                 new RequestAttributeSecurityContextRepository());
         }
 
+        /*
+         * jwtAuthenticationProcessingFilter() is a method to configure
+         * JwtAuthenticationProcessingFilter, which is used to refresh AccessToken and
+         * RefreshToken.
+         * 
+         * Return:
+         * - JwtAuthenticationProcessingFilter : JwtAuthenticationProcessingFilter
+         */
         @Bean
         public JwtAuthenticationProcessingFilter jwtAuthenticationProcessingFilter() {
                 JwtAuthenticationProcessingFilter jwtAuthenticationFilter = new JwtAuthenticationProcessingFilter(

@@ -4,6 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
+
+// This is the main class for the Classroom Service
 @SpringBootApplication
 @EnableDiscoveryClient
 public class ClassroomServiceApplication {

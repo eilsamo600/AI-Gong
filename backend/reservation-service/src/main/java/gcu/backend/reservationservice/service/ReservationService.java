@@ -15,11 +15,14 @@ import gcu.backend.reservationservice.repository.ReservationRepository;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
+// "ReservationService", used to check if the room is available
 @Service
 @Data
 @Slf4j
 public class ReservationService {
 
+    // Field 'reservationRepository', type 'ReservationRepository'
+    // This value is used to access the database
     @Autowired
     private ReservationRepository reservationRepository;
     private int START_TIME = 540;

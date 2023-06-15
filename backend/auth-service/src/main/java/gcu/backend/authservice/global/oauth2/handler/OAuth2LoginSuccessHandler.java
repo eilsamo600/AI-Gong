@@ -19,14 +19,26 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Enumeration;
 
+// "OAuth2LoginSuccessHandler" is a handler class that implements "AuthenticationSuccessHandler" interface.
 @Slf4j
 @Component("oauth2LoginSuccessHandler")
 @RequiredArgsConstructor
 // @Transactional
 public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 
+    // "userRepository" is a repository class for "User" entity.
     private final JwtService jwtService;
 
+    /*
+     * onAuthenticationSuccess(), this method is called when OAuth2 login succeeds.
+     * 
+     * Args:
+     * - request: HttpServletRequest : HttpServletRequest object
+     * - response: HttpServletResponse : HttpServletResponse object
+     * 
+     * Return:
+     * - void
+     */
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
             Authentication authentication) throws IOException, ServletException {
@@ -55,6 +67,15 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 
     }
 
+    /*
+     * loginSuccess(), this method is called when OAuth2 login succeeds.
+     * 
+     * Args:
+     * - response: HttpServletResponse : HttpServletResponse object
+     * 
+     * Return:
+     * - void
+     */
     // TODO : 소셜 로그인 시에도 무조건 토큰 생성하지 말고 JWT 인증 필터처럼 RefreshToken 유/무에 따라 다르게 처리해보기
     private void loginSuccess(HttpServletResponse response, CustomOAuth2User oAuth2User)
             throws IOException {

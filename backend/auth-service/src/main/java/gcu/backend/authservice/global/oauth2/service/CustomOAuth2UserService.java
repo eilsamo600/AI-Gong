@@ -19,16 +19,28 @@ import gcu.backend.authservice.global.oauth2.OAuthAttributes;
 import java.util.Collections;
 import java.util.Map;
 
+// "CustomOAuth2UserService" is a service class that implements "OAuth2UserService" interface.
+// It is used to get user information from OAuth2 service provider.
 @Slf4j
 @Service("customOAuth2UserService")
 @RequiredArgsConstructor
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
+    // "userRepository" is used to access the database.
     private final UserRepository userRepository;
 
     private static final String NAVER = "naver";
     private static final String KAKAO = "kakao";
 
+    /*
+     * loadUser(), this method is called when the user logs in using OAuth2.
+     * 
+     * Args:
+     * - userRequest: OAuth2UserRequest : OAuth2UserRequest object
+     * 
+     * Return:
+     * - OAuth2User : OAuth2User object
+     */
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         log.info("CustomOAuth2UserService.loadUser() 실행 - OAuth2 로그인 요청 진입");
@@ -68,6 +80,15 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 createdUser.getRole());
     }
 
+    /**
+     * getSocialType(), this method is used to get the social type of the user.
+     * 
+     * Args:
+     * - registrationId: String : registrationId of the user
+     * 
+     * Return:
+     * - SocialType : SocialType of the user
+     */
     private SocialType getSocialType(String registrationId) {
         if (NAVER.equals(registrationId)) {
             return SocialType.NAVER;

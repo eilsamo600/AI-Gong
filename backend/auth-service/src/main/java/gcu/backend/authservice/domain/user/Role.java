@@ -3,6 +3,7 @@ package gcu.backend.authservice.domain.user;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+// "Role", used to specify the role of the user
 @Getter
 @RequiredArgsConstructor
 public enum Role {

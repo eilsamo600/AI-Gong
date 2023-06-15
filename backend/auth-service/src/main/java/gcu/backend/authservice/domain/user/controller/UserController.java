@@ -16,14 +16,28 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+// "UserController", RestController Class, used to handle user-related requests
 @RestController
 @RequiredArgsConstructor
 @Tag(name = "User", description = "인증&유저 API")
 @Slf4j
 public class UserController {
+
+    // JwtService, used to generate and verify JWT
     private final JwtService jwtService;
+    // UserRepository, used to query the database
     private final UserRepository userRepository;
 
+    /*
+     * GetMapping("/info") -> ResponseEntity<User> getInfo()
+     * This method is used to get user information
+     * 
+     * Args:
+     * - String value: the value of the Authorization header
+     * 
+     * Return:
+     * - ResponseEntity<User>: the user information
+     */
     @GetMapping("/info")
     @Operation(summary = "Get User Info", description = "Access 토큰을 이용해서 유저 정보를 가져옵니다.")
     public ResponseEntity<User> getInfo(@RequestHeader("Authorization") String value) {
@@ -43,6 +57,11 @@ public class UserController {
         return ResponseEntity.ok(user.get());
     }
 
+    /*
+     * GetMapping("/test") -> String testest()
+     * This method is used to test if the server is running
+     * 
+     */
     @GetMapping("/test")
     public String testest() {
         return "Test 요청 성공";
